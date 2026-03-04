@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import React from 'react';
+import { Link } from 'expo-router';
 
-import backgroundImage from '@/assets/images/background.avif';
+import backgroundImage from '@/assets/images/background1.png';
 
 const app = () => {
   return (
@@ -12,6 +13,9 @@ const app = () => {
         style={styles.image}
       >
         <Text style={styles.text}>Collexion</Text>
+        <Link href="/explore" style={styles.link}>
+          Go to Explore
+        </Link>
       </ImageBackground>
     </View>
   );
@@ -36,9 +40,18 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     fontSize: 42,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  link: {
+    color: 'white',
+    fontSize: 42,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    padding: 4,
   },
 });
