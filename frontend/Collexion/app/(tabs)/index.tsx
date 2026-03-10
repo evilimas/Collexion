@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  TextInput,
+} from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
 
@@ -12,10 +19,21 @@ const app = () => {
         resizeMode="cover"
         style={styles.image}
       >
-        <Text style={styles.text}>Collexion</Text>
-        <Link href="/explore" style={styles.link}>
-          Go to Explore
-        </Link>
+        <View style={styles.overlay}>
+          <Image
+            source={require('@/assets/images/logo2.png')}
+            style={styles.logo}
+          />
+          <TextInput
+            placeholder="Search for games, consoles, and more..."
+            placeholderTextColor="white"
+            style={styles.search}
+          />
+
+          <Link href="/(tabs)/consoles" style={styles.link}>
+            Go to Explore
+          </Link>
+        </View>
       </ImageBackground>
     </View>
   );
@@ -27,23 +45,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
+
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Dark overlay - adjust opacity (0.0 to 1.0)
+    width: '100%',
+    height: '100%',
+  },
+
   image: {
     width: '100%',
     height: '100%',
     textShadowColor: 'black',
     textShadowOffset: { width: 1, height: 4 },
     textShadowRadius: 6,
-    // flex: 1,
+
     resizeMode: 'cover',
-    justifyContent: 'center',
   },
-  text: {
-    color: 'white',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    fontSize: 42,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  logo: {
+    width: '100%',
+    height: 90,
+    marginTop: 6,
+    alignContent: 'center',
   },
   link: {
     color: 'white',
@@ -53,5 +78,17 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     padding: 4,
+  },
+  search: {
+    color: 'white',
+    fontSize: 15,
+    backgroundColor: 'rgba(56, 56, 56, 0.5)',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginHorizontal: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
+    marginBottom: 20,
   },
 });
