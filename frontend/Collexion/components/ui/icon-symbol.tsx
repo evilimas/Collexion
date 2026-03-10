@@ -1,24 +1,47 @@
 // Fallback for using MaterialIcons on Android and web.
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { SymbolWeight, SymbolViewProps } from 'expo-symbols';
-import { ComponentProps } from 'react';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { SymbolWeight } from 'expo-symbols';
+
 import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
 
-type IconMapping = Record<SymbolViewProps['name'], ComponentProps<typeof MaterialIcons>['name']>;
-type IconSymbolName = keyof typeof MAPPING;
+type IconSymbolName =
+  | 'house.fill'
+  | 'paperplane.fill'
+  | 'chevron.left.forwardslash.chevron.right'
+  | 'chevron.right'
+  | 'console.fill'
+  | 'handheld.fill'
+  | 'controller.fill';
+
+type IconConfig = {
+  name: string;
+  library: 'MaterialIcons' | 'MaterialCommunityIcons';
+};
+
+type IconMapping = Record<IconSymbolName, IconConfig>;
 
 /**
  * Add your SF Symbols to Material Icons mappings here.
  * - see Material Icons in the [Icons Directory](https://icons.expo.fyi).
  * - see SF Symbols in the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
  */
-const MAPPING = {
-  'house.fill': 'home',
-  'paperplane.fill': 'send',
-  'chevron.left.forwardslash.chevron.right': 'code',
-  'chevron.right': 'chevron-right',
-} as IconMapping;
+const MAPPING: IconMapping = {
+  'house.fill': { name: 'home', library: 'MaterialIcons' },
+  'paperplane.fill': { name: 'send', library: 'MaterialIcons' },
+  'chevron.left.forwardslash.chevron.right': {
+    name: 'code',
+    library: 'MaterialIcons',
+  },
+  'chevron.right': { name: 'chevron-right', library: 'MaterialIcons' },
+  'console.fill': { name: 'tv', library: 'MaterialIcons' },
+  'handheld.fill': {
+    name: 'nintendo-game-boy',
+    library: 'MaterialCommunityIcons',
+  },
+  'controller.fill': { name: 'sports-esports', library: 'MaterialIcons' },
+};
 
 /**
  * An icon component that uses native SF Symbols on iOS, and Material Icons on Android and web.
@@ -37,5 +60,25 @@ export function IconSymbol({
   style?: StyleProp<TextStyle>;
   weight?: SymbolWeight;
 }) {
-  return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
+  const iconConfig = MAPPING[name];
+
+  if (iconConfig.library === 'MaterialCommunityIcons') {
+    return (
+      <MaterialCommunityIcons
+        color={color}
+        size={size}
+        name={iconConfig.name as any}
+        style={style}
+      />
+    );
+  }
+
+  return (
+    <MaterialIcons
+      color={color}
+      size={size}
+      name={iconConfig.name as any}
+      style={style}
+    />
+  );
 }
