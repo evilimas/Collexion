@@ -14,7 +14,7 @@ import backgroundImage from '@/assets/images/background1.png';
 type CollectionSquare = {
   id: string;
   name: string;
-  image: string;
+  image: any;
   tab: string;
 };
 
