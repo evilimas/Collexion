@@ -17,12 +17,14 @@ const Consoles = () => {
         resizeMode="cover"
         style={styles.image}
       >
-        <Text style={styles.text}>Consoles</Text>
-        <TextInput
-          placeholder="Search Consoles"
-          placeholderTextColor="rgba(255, 255, 255, 0.7)"
-          style={styles.searchInput}
-        />
+        <View style={styles.overlay}>
+          <Text style={styles.text}>Consoles</Text>
+          <TextInput
+            placeholder="Search Consoles"
+            placeholderTextColor="rgba(255, 255, 255, 0.7)"
+            style={styles.searchInput}
+          />
+        </View>
       </ImageBackground>
     </View>
   );
@@ -32,8 +34,15 @@ export default Consoles;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     flex: 1,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    width: '100%',
+    height: '100%',
+    paddingHorizontal: 10,
   },
 
   image: {
