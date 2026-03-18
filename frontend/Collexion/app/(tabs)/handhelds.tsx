@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Image,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
@@ -12,18 +13,22 @@ import { Link } from 'expo-router';
 const Handhelds = () => {
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require('@/assets/images/background3.jpg')}
-        resizeMode="cover"
-        style={styles.image}
-      >
-        <Text style={styles.text}>Handhelds</Text>
-        <TextInput
-          placeholder="Search Handhelds"
-          placeholderTextColor="rgba(255, 255, 255, 0.7)"
-          style={styles.searchInput}
-        />
-      </ImageBackground>
+      <ScrollView>
+        <ImageBackground
+          source={require('@/assets/images/background3.jpg')}
+          resizeMode="cover"
+          style={styles.image}
+        >
+          <View style={styles.overlay}>
+            <Text style={styles.text}>Handhelds</Text>
+            <TextInput
+              placeholder="Search Handhelds"
+              placeholderTextColor="rgba(255, 255, 255, 0.7)"
+              style={styles.searchInput}
+            />
+          </View>
+        </ImageBackground>
+      </ScrollView>
     </View>
   );
 };
@@ -32,8 +37,15 @@ export default Handhelds;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     flex: 1,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    width: '100%',
+    height: '100%',
+    paddingHorizontal: 10,
   },
 
   image: {
