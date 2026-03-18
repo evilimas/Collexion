@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Image,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
@@ -14,7 +15,7 @@ import backgroundImage from '@/assets/images/background1.png';
 type CollectionSquare = {
   id: string;
   name: string;
-  image: any;
+  image?: any;
   tab: string;
 };
 
@@ -80,68 +81,103 @@ const Collections: CollectionSquare[] = [
     tab: '/(tabs)/home',
   },
 ];
+const ConsoleCollections: CollectionSquare[] = [
+  {
+    id: '1',
+    name: 'PS5',
+    // image: require('@/assets/images/ps5.png'),
+    tab: '/(tabs)/home',
+  },
+  {
+    id: '2',
+    name: 'Xbox Series',
+    // image: require('@/assets/images/xbox.png'),
+    tab: '/(tabs)/home',
+  },
+  {
+    id: '3',
+    name: 'PS4',
+    // image: require('@/assets/images/playstation.png'),
+    tab: '/(tabs)/home',
+  },
+];
 
 const app = () => {
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={backgroundImage}
-        resizeMode="cover"
-        style={styles.image}
-      >
-        <View style={styles.overlay}>
-          <Image
-            source={require('@/assets/images/logo3.png')}
-            style={styles.logo}
-          />
-          <TextInput
-            placeholder="🔍 Search for games, consoles, and more..."
-            placeholderTextColor="gray"
-            style={styles.search}
-          />
+      <ScrollView>
+        <ImageBackground
+          source={backgroundImage}
+          resizeMode="cover"
+          style={styles.image}
+        >
+          <View style={styles.overlay}>
+            <Image
+              source={require('@/assets/images/logo3.png')}
+              style={styles.logo}
+            />
+            <TextInput
+              placeholder="🔍 Search for games, consoles, and more..."
+              placeholderTextColor="gray"
+              style={styles.search}
+            />
 
-          <Text style={styles.text}>Your Collection</Text>
-          <View style={styles.collectionContainer}>
-            {homeCollections.map((collection) => (
-              <Link
-                key={collection.id}
-                href={collection.tab as any}
-                style={styles.link}
-              >
-                <Image source={collection.image} style={styles.colImg} />
-                {collection.name}
-              </Link>
-            ))}
-          </View>
-          <Text style={styles.text}>Recently Added</Text>
-          <View style={styles.recentlyContainer}>
-            {recentlyAdded.map((item) => (
-              <Link
-                key={item.id}
-                href={item.tab as any}
-                style={styles.recentLink}
-              >
-                {/* <Image source={require('')} style={styles.colImg} />
+            <Text style={styles.text}>Your Collection</Text>
+            <View style={styles.collectionContainer}>
+              {homeCollections.map((collection) => (
+                <Link
+                  key={collection.id}
+                  href={collection.tab as any}
+                  style={styles.link}
+                >
+                  <Image source={collection.image} style={styles.colImg} />
+                  {collection.name}
+                </Link>
+              ))}
+            </View>
+            <Text style={styles.text}>Recently Added</Text>
+            <View style={styles.recentlyContainer}>
+              {recentlyAdded.map((item) => (
+                <Link
+                  key={item.id}
+                  href={item.tab as any}
+                  style={styles.recentLink}
+                >
+                  {/* <Image source={require('')} style={styles.colImg} />
                 {item.name} */}
-                {item.name}
-              </Link>
-            ))}
+                  {item.name}
+                </Link>
+              ))}
+            </View>
+            <Text style={styles.text}>Collections</Text>
+            <View style={styles.collectionContainer}>
+              {Collections.map((collection) => (
+                <Link
+                  key={collection.id}
+                  href={collection.tab as any}
+                  style={styles.link}
+                >
+                  <Image source={collection.image} style={styles.colImg} />
+                  {collection.name}
+                </Link>
+              ))}
+            </View>
+            <Text style={styles.text}>Console Collections</Text>
+            <View style={styles.collectionContainer}>
+              {ConsoleCollections.map((collection) => (
+                <Link
+                  key={collection.id}
+                  href={collection.tab as any}
+                  style={styles.link}
+                >
+                  <Image source={collection.image} style={styles.colImg} />
+                  {collection.name}
+                </Link>
+              ))}
+            </View>
           </View>
-          <Text style={styles.text}>Collections</Text>
-          <View style={styles.collectionContainer}>
-            {Collections.map((collection) => (
-              <Link
-                key={collection.id}
-                href={collection.tab as any}
-                style={styles.link}
-              >
-                <Image source={collection.image} style={styles.colImg} />
-                {collection.name}
-              </Link>
-            ))}
-          </View>
-        </View>
-      </ImageBackground>
+        </ImageBackground>
+      </ScrollView>
     </View>
   );
 };
