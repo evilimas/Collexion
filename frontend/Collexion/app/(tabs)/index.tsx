@@ -84,20 +84,38 @@ const Collections: CollectionSquare[] = [
 const ConsoleCollections: CollectionSquare[] = [
   {
     id: '1',
-    name: 'PS5',
-    // image: require('@/assets/images/ps5.png'),
+    name: 'PS3',
+    image: require('@/assets/images/ps3.svg'),
     tab: '/(tabs)/home',
   },
   {
     id: '2',
-    name: 'Xbox Series',
-    // image: require('@/assets/images/xbox.png'),
+    name: 'PS4',
+    image: require('@/assets/images/ps4.png'),
     tab: '/(tabs)/home',
   },
   {
     id: '3',
-    name: 'PS4',
-    // image: require('@/assets/images/playstation.png'),
+    name: 'PS5',
+    image: require('@/assets/images/ps5.png'),
+    tab: '/(tabs)/home',
+  },
+  {
+    id: '4',
+    name: 'Nintendo Switch',
+    image: require('@/assets/images/nswitch.png'),
+    tab: '/(tabs)/home',
+  },
+  {
+    id: '5',
+    name: 'Xbox Series',
+    image: require('@/assets/images/xboxseries.png'),
+    tab: '/(tabs)/home',
+  },
+  {
+    id: '6',
+    name: 'Xbox 360',
+    image: require('@/assets/images/xbox3601.png'),
     tab: '/(tabs)/home',
   },
 ];
@@ -162,15 +180,18 @@ const app = () => {
                 </Link>
               ))}
             </View>
-            <Text style={styles.text}>Console Collections</Text>
-            <View style={styles.collectionContainer}>
+            <Text style={styles.text}>Collections by console</Text>
+            <View style={styles.collectionContainerConsole}>
               {ConsoleCollections.map((collection) => (
                 <Link
                   key={collection.id}
                   href={collection.tab as any}
-                  style={styles.link}
+                  style={styles.linkConsole}
                 >
-                  <Image source={collection.image} style={styles.colImg} />
+                  <Image
+                    source={collection.image}
+                    style={styles.colImgConsoles}
+                  />
                   {collection.name}
                 </Link>
               ))}
@@ -197,6 +218,13 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     // objectFit: 'cover',
   },
+  colImgConsoles: {
+    width: 70,
+    height: 70,
+    // marginBottom: 1,
+    resizeMode: 'contain',
+    // objectFit: 'cover',
+  },
 
   overlay: {
     flex: 1,
@@ -214,6 +242,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 6,
     resizeMode: 'cover',
   },
+
   logo: {
     width: '50%',
     height: 80,
@@ -235,6 +264,23 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
   },
+  linkConsole: {
+    display: 'flex',
+    flexDirection: 'column',
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingHorizontal: 22,
+    paddingVertical: 10,
+    alignItems: 'center',
+    textAlign: 'center',
+    borderRadius: 8,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 1,
+    width: '32%',
+    marginBottom: 7,
+  },
   recentLink: {
     display: 'flex',
     flexDirection: 'column',
@@ -248,6 +294,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
+    gap: 5,
   },
   search: {
     color: 'white',
@@ -266,6 +313,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
+    borderBottomColor: 'rgba(24, 24, 24, 0.5)',
+    borderBottomWidth: 2,
+    paddingBottom: 8,
+  },
+  collectionContainerConsole: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    marginTop: 10,
+    // marginBottom: 10,
     borderBottomColor: 'rgba(24, 24, 24, 0.5)',
     borderBottomWidth: 2,
     paddingBottom: 8,
