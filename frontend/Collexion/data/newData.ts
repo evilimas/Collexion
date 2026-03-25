@@ -225,4 +225,14 @@ export const collection: CollectionItem[] = [
     condition: 'Good',
     picture: require('@/assets/images/ps3.png'),
   },
+  {
+    id: '20',
+    type: 'Controller',
+    name: 'DualShock 4',
+    color: 'Gray',
+    edition: '20th Anniversary Edition',
+    manufacturer: 'Sony',
+    condition: 'Good',
+    picture: require('@/assets/images/ps3.png'),
+  },
 ];
