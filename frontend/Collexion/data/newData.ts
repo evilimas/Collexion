@@ -15,7 +15,6 @@ export type CollectionItem = {
   reshell?: boolean;
 };
 
-// Tabs-only data: every console listed here is owned by you.
 export const collection: CollectionItem[] = [
   {
     id: '1',
@@ -198,6 +197,30 @@ export const collection: CollectionItem[] = [
     model: 'Street | E1000 model',
     color: 'Black',
     edition: 'Standard Edition',
+    manufacturer: 'Sony',
+    condition: 'Good',
+    picture: require('@/assets/images/ps3.png'),
+  },
+  {
+    id: '18',
+    type: 'Handheld',
+    name: 'PSP',
+    model: '2000 model',
+    color: 'Crystal White',
+    edition: 'Standard Edition',
+    reshell: true,
+    manufacturer: 'Sony',
+    condition: 'Good',
+    picture: require('@/assets/images/ps3.png'),
+  },
+  {
+    id: '19',
+    type: 'Handheld',
+    name: 'PSP',
+    model: '3000 model',
+    color: 'Blue',
+    edition: 'Standard Edition',
+    reshell: true,
     manufacturer: 'Sony',
     condition: 'Good',
     picture: require('@/assets/images/ps3.png'),
