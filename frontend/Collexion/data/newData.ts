@@ -235,4 +235,14 @@ export const collection: CollectionItem[] = [
     condition: 'Good',
     picture: require('@/assets/images/ps3.png'),
   },
+  {
+    id: '21',
+    type: 'Controller',
+    name: 'Xbox Elite Controller Series 1',
+    color: 'White',
+    // edition: '20th Anniversary Edition',
+    manufacturer: 'Microsoft',
+    condition: 'Like New',
+    picture: require('@/assets/images/ps3.png'),
+  },
 ];
