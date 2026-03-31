@@ -244,4 +244,13 @@ export const collection: CollectionItem[] = [
     condition: 'Like New',
     picture: require('@/assets/images/ps3.png'),
   },
+  {
+    id: '22',
+    type: 'Controller',
+    name: 'Xbox Elite Controller Series 1',
+    color: 'White',
+    manufacturer: 'Microsoft',
+    condition: 'Like New',
+    picture: require('@/assets/images/ps3.png'),
+  },
 ];
