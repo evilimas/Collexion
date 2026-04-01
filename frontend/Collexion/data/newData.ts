@@ -247,7 +247,8 @@ export const collection: CollectionItem[] = [
   {
     id: '22',
     type: 'Controller',
-    name: 'Xbox Elite Controller Series 1',
+    name: 'Xbox Series S|X Controller',
+    edition: 'Starfield Edition',
     color: 'White',
     manufacturer: 'Microsoft',
     condition: 'Like New',
