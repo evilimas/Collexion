@@ -257,8 +257,9 @@ export const collection: CollectionItem[] = [
   {
     id: '23',
     type: 'Controller',
-    name: 'Xbox Elite Controller Series 1',
-    color: 'White',
+    name: 'Xbox Series S|X Controller',
+    color: 'Blue',
+    edition: 'Blue see-through edition',
     manufacturer: 'Microsoft',
     condition: 'Like New',
     picture: require('@/assets/images/ps3.png'),
