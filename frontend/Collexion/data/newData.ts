@@ -252,6 +252,7 @@ export const collection: CollectionItem[] = [
     color: 'White',
     manufacturer: 'Microsoft',
     condition: 'Like New',
+    reshell: true,
     picture: require('@/assets/images/ps3.png'),
   },
   {
@@ -261,6 +262,7 @@ export const collection: CollectionItem[] = [
     color: 'Blue',
     edition: 'Blue see-through edition',
     manufacturer: 'Microsoft',
+    reshell: true,
     condition: 'Like New',
     picture: require('@/assets/images/ps3.png'),
   },
