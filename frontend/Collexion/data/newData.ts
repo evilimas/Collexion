@@ -260,7 +260,7 @@ export const collection: CollectionItem[] = [
     type: 'Controller',
     name: 'Xbox Series S|X Controller',
     color: 'Blue',
-    edition: 'Blue see-through edition',
+    edition: 'Blue see-through(crystal) edition',
     manufacturer: 'Microsoft',
     reshell: true,
     condition: 'Like New',
