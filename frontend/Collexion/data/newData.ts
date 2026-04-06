@@ -242,6 +242,7 @@ export const collection: CollectionItem[] = [
     color: 'White',
     manufacturer: 'Microsoft',
     condition: 'Like New',
+    reshell: false,
     picture: require('@/assets/images/ps3.png'),
   },
   {
