@@ -7,10 +7,20 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'expo-router';
+import { collection, CollectionItem } from '@/data/newData';
 
 const Handhelds = () => {
+  const [handhelds, setHandhelds] = useState<CollectionItem[]>([]);
+
+  useEffect(() => {
+    const filteredHandhelds = collection.filter(
+      (item) => item.type === 'Handheld',
+    );
+    setHandhelds(filteredHandhelds);
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView>
