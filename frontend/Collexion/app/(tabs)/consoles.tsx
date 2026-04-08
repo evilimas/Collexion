@@ -6,10 +6,13 @@ import {
   Image,
   TextInput,
 } from 'react-native';
+import { collection } from '@/data/newData';
 import React from 'react';
 import { Link } from 'expo-router';
 
 const Consoles = () => {
+  const consoles = collection.filter((item) => item.type === 'Console');
+
   return (
     <View style={styles.container}>
       <ImageBackground
