@@ -8,8 +8,10 @@ import {
 } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
+import { collection } from '@/data/newData';
 
 const Controllers = () => {
+  const controllers = collection.filter((item) => item.type === 'Controller');
   return (
     <View style={styles.container}>
       <ImageBackground
