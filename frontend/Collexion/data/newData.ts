@@ -10,7 +10,7 @@ export type CollectionItem = {
   edition?: string;
   console?: string; // Only for controllers and handhelds
   manufacturer?: string;
-  picture: ImageSourcePropType;
+  picture?: ImageSourcePropType;
   description?: string;
   reshell?: boolean;
 };
@@ -25,7 +25,7 @@ export const collection: CollectionItem[] = [
     edition: 'Standard Edition',
     condition: 'Good',
     manufacturer: 'Sony',
-    picture: require('@/assets/images/ps3.png'),
+    picture: require('@/assets/images/ps3.svg'),
   },
   {
     id: '2',
@@ -40,7 +40,7 @@ export const collection: CollectionItem[] = [
   },
   {
     id: '3',
-    type: 'Console',
+    type: 'Handheld',
     name: 'Nintendo Switch',
     model: 'OLED',
     color: 'Black',
@@ -166,7 +166,7 @@ export const collection: CollectionItem[] = [
     edition: 'Black Ops edition',
     manufacturer: 'Sony',
     condition: 'Good',
-    picture: require('@/assets/images/psvita.png'),
+    // picture: require('@/assets/images/psvita.png'),
   },
   {
     id: '15',
@@ -264,6 +264,17 @@ export const collection: CollectionItem[] = [
     edition: 'Blue see-through(crystal) edition',
     manufacturer: 'Microsoft',
     reshell: true,
+    condition: 'Like New',
+    picture: require('@/assets/images/ps3.png'),
+  },
+  {
+    id: '24',
+    type: 'Console',
+    name: 'Xbox One',
+    color: 'Black',
+    edition: 'Xbox One X',
+    manufacturer: 'Microsoft',
+    reshell: false,
     condition: 'Like New',
     picture: require('@/assets/images/ps3.png'),
   },
