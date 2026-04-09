@@ -3,15 +3,31 @@ import {
   Text,
   StyleSheet,
   ImageBackground,
-  Image,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import { collection } from '@/data/newData';
-import React from 'react';
-import { Link } from 'expo-router';
+import React, { useState } from 'react';
+import ConsoleGroup from '@/components/Consoles';
 
 const Consoles = () => {
-  const consoles = collection.filter((item) => item.type === 'Console');
+  const [search, setSearch] = useState('');
+
+  const allConsoles = collection.filter((item) => item.type === 'Console');
+
+  // Group consoles by name (e.g. 2x PS4 → one card with badge "2")
+  const grouped = allConsoles.reduce(
+    (acc, item) => {
+      if (!acc[item.name]) acc[item.name] = [];
+      acc[item.name].push(item);
+      return acc;
+    },
+    {} as Record<string, typeof allConsoles>,
+  );
+
+  const groups = Object.entries(grouped).filter(([name]) =>
+    name.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
     <View style={styles.container}>
@@ -21,12 +37,27 @@ const Consoles = () => {
         style={styles.image}
       >
         <View style={styles.overlay}>
-          <Text style={styles.text}>Consoles</Text>
+          <Text style={styles.title}>Consoles</Text>
           <TextInput
             placeholder="Search Consoles"
             placeholderTextColor="rgba(255, 255, 255, 0.7)"
             style={styles.searchInput}
+            value={search}
+            onChangeText={setSearch}
           />
+          <ScrollView
+            contentContainerStyle={styles.grid}
+            showsVerticalScrollIndicator={false}
+          >
+            {groups.map(([name, items]) => (
+              <ConsoleGroup
+                key={name}
+                name={name}
+                count={items.length}
+                picture={items[0].picture}
+              />
+            ))}
+          </ScrollView>
         </View>
       </ImageBackground>
     </View>
@@ -37,53 +68,28 @@ export default Consoles;
 
 const styles = StyleSheet.create({
   container: {
-    // paddingHorizontal: 10,
     flex: 1,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
-    width: '100%',
-    height: '100%',
     paddingHorizontal: 10,
   },
-
-  image: {
-    width: '100%',
-    height: '100%',
-    textShadowColor: 'black',
-    textShadowOffset: { width: 1, height: 4 },
-    textShadowRadius: 6,
-    resizeMode: 'cover',
-  },
-  text: {
+  title: {
     color: 'white',
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
     textAlign: 'center',
     marginTop: 20,
-  },
-  linkContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingHorizontal: 20,
-  },
-  link: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    alignItems: 'center',
-    borderRadius: 8,
-    borderColor: 'rgba(255, 255, 255, 0.5)',
-    borderWidth: 1,
-    marginBottom: 10,
-  },
-  searchContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingHorizontal: 20,
-    marginTop: 20,
+    marginBottom: 12,
+    textShadowColor: 'black',
+    textShadowOffset: { width: 1, height: 4 },
+    textShadowRadius: 6,
   },
   searchInput: {
     color: 'white',
@@ -95,7 +101,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 15,
-    marginBottom: 10,
-    // width: '100%',
+    marginBottom: 14,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 5,
+    paddingBottom: 20,
   },
 });
