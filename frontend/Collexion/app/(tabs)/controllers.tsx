@@ -36,7 +36,6 @@ export default Controllers;
 
 const styles = StyleSheet.create({
   container: {
-    // paddingHorizontal: 10,
     flex: 1,
   },
   overlay: {
