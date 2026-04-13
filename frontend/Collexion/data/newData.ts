@@ -276,6 +276,17 @@ export const collection: CollectionItem[] = [
     manufacturer: 'Microsoft',
     reshell: false,
     condition: 'Like New',
+    picture: require('@/assets/images/xbox.png'),
+  },
+  {
+    id: '25',
+    type: 'Console',
+    name: 'PS3',
+    color: 'Black',
+    edition: 'PS3 Super Slim',
+    manufacturer: 'Sony',
+    reshell: false,
+    condition: 'Like New',
     picture: require('@/assets/images/ps3.png'),
   },
 ];
