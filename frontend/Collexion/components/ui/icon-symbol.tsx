@@ -13,7 +13,8 @@ type IconSymbolName =
   | 'chevron.right'
   | 'console.fill'
   | 'handheld.fill'
-  | 'controller.fill';
+  | 'controller.fill'
+  | 'plus.circle.fill';
 
 type IconConfig = {
   name: string;
@@ -41,6 +42,7 @@ const MAPPING: IconMapping = {
     library: 'MaterialCommunityIcons',
   },
   'controller.fill': { name: 'sports-esports', library: 'MaterialIcons' },
+  'plus.circle.fill': { name: 'add-circle', library: 'MaterialIcons' },
 };
 
 /**
