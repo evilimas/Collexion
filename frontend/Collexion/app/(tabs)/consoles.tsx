@@ -9,13 +9,15 @@ import {
 import { collection } from '@/data/newData';
 import React, { useState } from 'react';
 import ConsoleGroup from '@/components/Consoles';
+import Console from '@/components/Console';
 
 const Consoles = () => {
   const [search, setSearch] = useState('');
+  const [selectedName, setSelectedName] = useState<string | null>(null);
 
   const allConsoles = collection.filter((item) => item.type === 'Console');
 
-  // Group consoles by name (e.g. 2x PS4 → one card with badge "2")
+  // Group consoles by name and count how many of each model there are
   const grouped = allConsoles.reduce(
     (acc, item) => {
       if (!acc[item.name]) acc[item.name] = [];
@@ -29,6 +31,8 @@ const Consoles = () => {
     name.toLowerCase().includes(search.toLowerCase()),
   );
 
+  const selectedItems = selectedName ? (grouped[selectedName] ?? []) : [];
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -39,24 +43,46 @@ const Consoles = () => {
         <View style={styles.overlay}>
           <Text style={styles.title}>Consoles</Text>
           <TextInput
-            placeholder="Search Consoles"
+            placeholder={
+              selectedName
+                ? 'Filter groups (tap Back to change)'
+                : 'Search Consoles'
+            }
             placeholderTextColor="rgba(255, 255, 255, 0.7)"
             style={styles.searchInput}
             value={search}
             onChangeText={setSearch}
           />
+          {selectedName ? (
+            <Text style={styles.backText} onPress={() => setSelectedName(null)}>
+              Back to Consoles
+            </Text>
+          ) : null}
           <ScrollView
-            contentContainerStyle={styles.grid}
+            contentContainerStyle={selectedName ? styles.list : styles.grid}
             showsVerticalScrollIndicator={false}
           >
-            {groups.map(([name, items]) => (
-              <ConsoleGroup
-                key={name}
-                name={name}
-                count={items.length}
-                picture={items[0].picture}
-              />
-            ))}
+            {selectedName
+              ? selectedItems.map((item) => (
+                  <Console
+                    key={item.id}
+                    name={item.name}
+                    model={item.model}
+                    edition={item.edition}
+                    color={item.color}
+                    condition={item.condition}
+                    picture={item.picture}
+                  />
+                ))
+              : groups.map(([name, items]) => (
+                  <ConsoleGroup
+                    key={name}
+                    name={name}
+                    count={items.length}
+                    picture={items[0].picture}
+                    onPress={() => setSelectedName(name)}
+                  />
+                ))}
           </ScrollView>
         </View>
       </ImageBackground>
@@ -109,5 +135,23 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 5,
     paddingBottom: 20,
+  },
+  list: {
+    paddingHorizontal: 5,
+    paddingBottom: 20,
+  },
+  backText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
+    marginLeft: 8,
+    marginBottom: 10,
+    // textDecorationLine: 'underline',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    alignSelf: 'flex-start',
   },
 });
