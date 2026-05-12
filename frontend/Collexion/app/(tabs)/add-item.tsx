@@ -30,10 +30,38 @@ const AddItem = () => {
     ],
     [],
   );
+  const radioButtonsCondition: RadioButtonProps[] = useMemo(
+    () => [
+      {
+        id: '1', // acts as primary key, should be unique and non-empty string
+        label: 'Mint',
+        value: 'mint',
+      },
+      {
+        id: '2',
+        label: 'Like New',
+        value: 'like_new',
+      },
+      {
+        id: '3',
+        label: 'Good',
+        value: 'good',
+      },
+      {
+        id: '4',
+        label: 'Fair',
+        value: 'fair',
+      },
+    ],
+    [],
+  );
 
   const [type, setType] = useState<string>('1');
+  const [condition, setCondition] = useState<string>('1');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [model, setModel] = useState('');
+  const [color, setColor] = useState('');
 
   return (
     <View style={styles.container}>
@@ -44,14 +72,21 @@ const AddItem = () => {
       >
         <View style={styles.overlay}>
           <Text style={styles.text}>Add item to collection</Text>
-          <View style={{ padding: 20 }}>
+          <View style={{ padding: 14 }}>
             <RadioGroup
+              layout="row"
+              labelStyle={{
+                color: 'white',
+                fontSize: 17,
+                fontWeight: 'bold',
+                marginBottom: 10,
+              }}
               radioButtons={radioButtons}
               onPress={setType}
               selectedId={type}
             />
             <TextInput
-              placeholder="Name"
+              placeholder="* Name"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.inputStyle}
               value={name}
@@ -63,6 +98,31 @@ const AddItem = () => {
               style={styles.inputStyle}
               value={description}
               onChangeText={setDescription}
+            />
+            <TextInput
+              placeholder="Model"
+              placeholderTextColor="rgba(255, 255, 255, 0.7)"
+              style={styles.inputStyle}
+              value={description}
+              onChangeText={setDescription}
+            />
+            <TextInput
+              placeholder="* Color"
+              placeholderTextColor="rgba(255, 255, 255, 0.7)"
+              style={styles.inputStyle}
+              value={color}
+              onChangeText={setColor}
+            />
+            <RadioGroup
+              layout="row"
+              radioButtons={radioButtonsCondition}
+              onPress={setCondition}
+              selectedId={condition}
+              labelStyle={{
+                color: 'white',
+                fontSize: 14,
+                fontWeight: 'bold',
+              }}
             />
           </View>
         </View>
@@ -113,20 +173,4 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
   },
-  //   linkContainer: {
-  //     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  //     paddingHorizontal: 20,
-  //   },
-  //   link: {
-  //     color: 'white',
-  //     fontSize: 18,
-  //     fontWeight: 'bold',
-  //     paddingHorizontal: 20,
-  //     paddingVertical: 10,
-  //     alignItems: 'center',
-  //     borderRadius: 8,
-  //     borderColor: 'rgba(255, 255, 255, 0.5)',
-  //     borderWidth: 1,
-  //     marginBottom: 10,
-  //   },
 });
