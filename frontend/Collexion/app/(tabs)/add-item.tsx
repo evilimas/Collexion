@@ -79,7 +79,6 @@ const AddItem = () => {
                 color: 'white',
                 fontSize: 17,
                 fontWeight: 'bold',
-                marginBottom: 10,
               }}
               radioButtons={radioButtons}
               onPress={setType}
@@ -113,17 +112,25 @@ const AddItem = () => {
               value={color}
               onChangeText={setColor}
             />
-            <RadioGroup
-              layout="row"
-              radioButtons={radioButtonsCondition}
-              onPress={setCondition}
-              selectedId={condition}
-              labelStyle={{
-                color: 'white',
-                fontSize: 14,
-                fontWeight: 'bold',
+            <View
+              style={{
+                borderColor: 'rgba(255, 255, 255, 0.5)',
+                borderWidth: 1,
+                borderRadius: 8,
               }}
-            />
+            >
+              <RadioGroup
+                layout="row"
+                radioButtons={radioButtonsCondition}
+                onPress={setCondition}
+                selectedId={condition}
+                labelStyle={{
+                  color: 'white',
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                }}
+              />
+            </View>
           </View>
         </View>
       </ImageBackground>
