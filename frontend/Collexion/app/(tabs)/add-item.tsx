@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
+import type { CollectionItem } from '@/data/newData';
 import React, { useMemo, useState } from 'react';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 
@@ -55,13 +56,14 @@ const AddItem = () => {
     ],
     [],
   );
-
+  const [collectionItem, setCollectionItem] = useState<CollectionItem>();
   const [type, setType] = useState<string>('1');
   const [condition, setCondition] = useState<string>('1');
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [model, setModel] = useState('');
-  const [color, setColor] = useState('');
+  const [name, setName] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [model, setModel] = useState<string>('');
+  const [color, setColor] = useState<string>('');
+  const [edition, setEdition] = useState<string>('');
 
   return (
     <View style={styles.container}>
@@ -73,17 +75,19 @@ const AddItem = () => {
         <View style={styles.overlay}>
           <Text style={styles.text}>Add item to collection</Text>
           <View style={{ padding: 14 }}>
-            <RadioGroup
-              layout="row"
-              labelStyle={{
-                color: 'white',
-                fontSize: 17,
-                fontWeight: 'bold',
-              }}
-              radioButtons={radioButtons}
-              onPress={setType}
-              selectedId={type}
-            />
+            <View>
+              <RadioGroup
+                layout="row"
+                labelStyle={{
+                  color: 'white',
+                  fontSize: 17,
+                  fontWeight: 'bold',
+                }}
+                radioButtons={radioButtons}
+                onPress={setType}
+                selectedId={type}
+              />
+            </View>
             <TextInput
               placeholder="* Name"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
@@ -102,8 +106,8 @@ const AddItem = () => {
               placeholder="Model"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.inputStyle}
-              value={description}
-              onChangeText={setDescription}
+              value={model}
+              onChangeText={setModel}
             />
             <TextInput
               placeholder="* Color"
@@ -117,6 +121,7 @@ const AddItem = () => {
                 borderColor: 'rgba(255, 255, 255, 0.5)',
                 borderWidth: 1,
                 borderRadius: 8,
+                marginBottom: 10,
               }}
             >
               <RadioGroup
@@ -131,6 +136,13 @@ const AddItem = () => {
                 }}
               />
             </View>
+            <TextInput
+              placeholder="* Edition"
+              placeholderTextColor="rgba(255, 255, 255, 0.7)"
+              style={styles.inputStyle}
+              value={edition}
+              onChangeText={setEdition}
+            />
           </View>
         </View>
       </ImageBackground>
