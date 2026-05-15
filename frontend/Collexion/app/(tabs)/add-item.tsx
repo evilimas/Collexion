@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Image,
   TextInput,
+  Button,
 } from 'react-native';
 import type { CollectionItem } from '@/data/newData';
 import React, { useMemo, useState } from 'react';
@@ -56,6 +57,22 @@ const AddItem = () => {
     ],
     [],
   );
+  const radioButtonsReshell: RadioButtonProps[] = useMemo(
+    () => [
+      {
+        id: '1', // acts as primary key, should be unique and non-empty string
+        label: 'Yes',
+        value: 'true',
+      },
+      {
+        id: '2',
+        label: 'No',
+        value: 'false',
+      },
+    ],
+    [],
+  );
+
   const [collectionItem, setCollectionItem] = useState<CollectionItem>();
   const [type, setType] = useState<string>('1');
   const [condition, setCondition] = useState<string>('1');
@@ -64,6 +81,13 @@ const AddItem = () => {
   const [model, setModel] = useState<string>('');
   const [color, setColor] = useState<string>('');
   const [edition, setEdition] = useState<string>('');
+  const [console, setConsole] = useState<string>('');
+  const [manufacturer, setManufacturer] = useState<string>('');
+  const [reshell, setReshell] = useState<string>('2');
+
+  const handleAddItem = () => {
+    // Handle the logic to add the item to the collection
+  };
 
   return (
     <View style={styles.container}>
@@ -143,6 +167,55 @@ const AddItem = () => {
               value={edition}
               onChangeText={setEdition}
             />
+            <TextInput
+              placeholder="Console "
+              placeholderTextColor="rgba(255, 255, 255, 0.7)"
+              style={styles.inputStyle}
+              value={console}
+              onChangeText={setConsole}
+            />
+            <TextInput
+              placeholder="Manufacturer "
+              placeholderTextColor="rgba(255, 255, 255, 0.7)"
+              style={styles.inputStyle}
+              value={manufacturer}
+              onChangeText={setManufacturer}
+            />
+            <View
+              style={{
+                borderColor: 'rgba(255, 255, 255, 0.5)',
+                borderWidth: 1,
+                borderRadius: 8,
+                marginBottom: 10,
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  marginBottom: 6,
+                  marginLeft: 10,
+                }}
+              >
+                Reshelled?
+              </Text>
+              <RadioGroup
+                layout="row"
+                radioButtons={radioButtonsReshell}
+                onPress={setReshell}
+                selectedId={reshell}
+                labelStyle={{
+                  color: 'white',
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                }}
+              />
+            </View>
+            <Button title="Add Item" onPress={handleAddItem} />
           </View>
         </View>
       </ImageBackground>
