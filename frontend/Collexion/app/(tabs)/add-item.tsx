@@ -10,8 +10,18 @@ import {
 import type { CollectionItem } from '@/data/newData';
 import React, { useMemo, useState } from 'react';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
+import { collection } from '@/data/newData';
+import SelectDropdown from 'react-native-select-dropdown';
 
 const AddItem = () => {
+  const consoleOptions = [
+    { title: 'Xbox Series S|X', value: 'Xbox Series S|X' },
+    { title: 'PlayStation 5', value: 'PlayStation 5' },
+    { title: 'Nintendo Switch', value: 'Nintendo Switch' },
+    { title: 'Xbox One', value: 'Xbox One' },
+    { title: 'PlayStation 4', value: 'PlayStation 4' },
+    { title: 'Xbox 360', value: 'Xbox 360' },
+  ];
   const radioButtons: RadioButtonProps[] = useMemo(
     () => [
       {
@@ -81,12 +91,35 @@ const AddItem = () => {
   const [model, setModel] = useState<string>('');
   const [color, setColor] = useState<string>('');
   const [edition, setEdition] = useState<string>('');
-  const [console, setConsole] = useState<string>('');
+  const [consoleName, setConsoleName] = useState<string>('');
   const [manufacturer, setManufacturer] = useState<string>('');
   const [reshell, setReshell] = useState<string>('2');
 
   const handleAddItem = () => {
-    // Handle the logic to add the item to the collection
+    setCollectionItem({
+      id: collection.length + 1 + '',
+      type: type === '1' ? 'Console' : type === '2' ? 'Handheld' : 'Controller',
+      condition:
+        condition === '1'
+          ? 'Mint'
+          : condition === '2'
+            ? 'Like New'
+            : condition === '3'
+              ? 'Good'
+              : 'Fair',
+      name,
+      description,
+      model,
+      color,
+      edition,
+      consoleName,
+      manufacturer,
+      reshell: reshell === '1' ? true : false,
+    });
+    console.log(collectionItem);
+    if (collectionItem) {
+      collection.push(collectionItem);
+    }
   };
 
   return (
@@ -171,8 +204,8 @@ const AddItem = () => {
               placeholder="Console "
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.inputStyle}
-              value={console}
-              onChangeText={setConsole}
+              value={consoleName}
+              onChangeText={setConsoleName}
             />
             <TextInput
               placeholder="Manufacturer "
