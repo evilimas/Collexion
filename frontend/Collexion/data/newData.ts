@@ -8,7 +8,7 @@ export type CollectionItem = {
   color: string;
   condition: 'Mint' | 'Like New' | 'Good' | 'Fair';
   edition?: string;
-  console?: string; // Only for controllers and handhelds
+  consoleName?: string; // Only for controllers and handhelds
   manufacturer?: string;
   picture?: ImageSourcePropType;
   description?: string;
@@ -98,7 +98,7 @@ export const collection: CollectionItem[] = [
     id: '8',
     type: 'Controller',
     name: 'Xbox Elite Controller Series 2',
-    console: 'Xbox Series S|X',
+    consoleName: 'Xbox Series S|X',
     color: 'Black',
     condition: 'Like New',
     manufacturer: 'Microsoft',
@@ -108,7 +108,7 @@ export const collection: CollectionItem[] = [
     id: '9',
     type: 'Controller',
     name: 'DualShock 4',
-    console: 'PlayStation 4',
+    consoleName: 'PlayStation 4',
     color: 'Midnight Blue',
     condition: 'Good',
     manufacturer: 'Sony',
@@ -118,7 +118,7 @@ export const collection: CollectionItem[] = [
     id: '10',
     type: 'Controller',
     name: 'Switch Pro Controller',
-    console: 'Nintendo Switch',
+    consoleName: 'Nintendo Switch',
     color: 'Black',
     condition: 'Like New',
     manufacturer: 'Nintendo',
@@ -128,7 +128,7 @@ export const collection: CollectionItem[] = [
     id: '11',
     type: 'Controller',
     name: 'Xbox 360 Wireless Controller',
-    console: 'Xbox 360',
+    consoleName: 'Xbox 360',
     color: 'White',
     condition: 'Good',
     manufacturer: 'Microsoft',
