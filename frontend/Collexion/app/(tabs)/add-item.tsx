@@ -13,8 +13,17 @@ import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { collection } from '@/data/newData';
 import SelectDropdown from 'react-native-select-dropdown';
 
+type AddItemProps = {
+  // Define any props if needed
+};
+
+type ConsolesOptions = {
+  title: string;
+  value: string;
+};
+
 const AddItem = () => {
-  const consoleOptions = [
+  const consoleOptions: ConsolesOptions[] = [
     { title: 'Xbox Series S|X', value: 'Xbox Series S|X' },
     { title: 'PlayStation 5', value: 'PlayStation 5' },
     { title: 'Nintendo Switch', value: 'Nintendo Switch' },
@@ -153,13 +162,6 @@ const AddItem = () => {
               onChangeText={setName}
             />
             <TextInput
-              placeholder="Description"
-              placeholderTextColor="rgba(255, 255, 255, 0.7)"
-              style={styles.inputStyle}
-              value={description}
-              onChangeText={setDescription}
-            />
-            <TextInput
               placeholder="Model"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.inputStyle}
@@ -214,6 +216,13 @@ const AddItem = () => {
               value={manufacturer}
               onChangeText={setManufacturer}
             />
+            <TextInput
+              placeholder="Description"
+              placeholderTextColor="rgba(255, 255, 255, 0.7)"
+              style={styles.inputStyle}
+              value={description}
+              onChangeText={setDescription}
+            />
             <View
               style={{
                 borderColor: 'rgba(255, 255, 255, 0.5)',
@@ -248,7 +257,11 @@ const AddItem = () => {
                 }}
               />
             </View>
-            <Button title="Add Item" onPress={handleAddItem} />
+            <Button
+              title="Add Item"
+              onPress={handleAddItem}
+              style={styles.button}
+            />
           </View>
         </View>
       </ImageBackground>
@@ -297,5 +310,9 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
     marginBottom: 10,
+  },
+  button: {
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
   },
 });
