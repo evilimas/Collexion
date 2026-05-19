@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   Button,
+  Pressable,
 } from 'react-native';
 import type { CollectionItem } from '@/data/newData';
 import React, { useMemo, useState } from 'react';
@@ -257,13 +258,11 @@ const AddItem = () => {
                 }}
               />
             </View>
-            <Button
-              title="Add Item"
-              onPress={handleAddItem}
-              style={styles.button}
-            />
           </View>
         </View>
+        <button onClick={handleAddItem} style={styles.button}>
+          Add Item
+        </button>
       </ImageBackground>
     </View>
   );
@@ -312,7 +311,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    backgroundColor: 'rgb(9, 0, 141)',
+    color: 'white',
+    fontSize: 18,
+    marginBottom: 10,
+    padding: 14,
+    borderRadius: 8,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 1,
   },
 });
