@@ -5,7 +5,6 @@ import {
   ImageBackground,
   Image,
   TextInput,
-  Button,
   Pressable,
 } from 'react-native';
 import type { CollectionItem } from '@/data/newData';
