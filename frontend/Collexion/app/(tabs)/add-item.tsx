@@ -203,13 +203,15 @@ const AddItem = () => {
               value={edition}
               onChangeText={setEdition}
             />
-            <TextInput
-              placeholder="Console "
-              placeholderTextColor="rgba(255, 255, 255, 0.7)"
-              style={styles.inputStyle}
-              value={consoleName}
-              onChangeText={setConsoleName}
-            />
+            {type === '3' && (
+              <TextInput
+                placeholder="For Console "
+                placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                style={styles.inputStyle}
+                value={consoleName}
+                onChangeText={setConsoleName}
+              />
+            )}
             <TextInput
               placeholder="Manufacturer "
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
