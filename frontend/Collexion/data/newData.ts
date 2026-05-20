@@ -8,7 +8,7 @@ export type CollectionItem = {
   color: string;
   condition: 'Mint' | 'Like New' | 'Good' | 'Fair';
   edition?: string;
-  consoleName?: string; // Only for controllers and handhelds
+  consoleName?: string; // Only for controllers
   manufacturer?: string;
   picture?: ImageSourcePropType;
   description?: string;
