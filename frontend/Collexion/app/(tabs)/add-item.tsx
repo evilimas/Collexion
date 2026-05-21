@@ -3,34 +3,33 @@ import {
   Text,
   StyleSheet,
   ImageBackground,
-  Image,
   TextInput,
+  Modal,
   Pressable,
+  ScrollView,
 } from 'react-native';
 import type { CollectionItem } from '@/data/newData';
 import React, { useMemo, useState } from 'react';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { collection } from '@/data/newData';
-import SelectDropdown from 'react-native-select-dropdown';
-
-type AddItemProps = {
-  // Define any props if needed
-};
-
-type ConsolesOptions = {
-  title: string;
-  value: string;
-};
 
 const AddItem = () => {
-  const consoleOptions: ConsolesOptions[] = [
-    { title: 'Xbox Series S|X', value: 'Xbox Series S|X' },
-    { title: 'PlayStation 5', value: 'PlayStation 5' },
-    { title: 'Nintendo Switch', value: 'Nintendo Switch' },
-    { title: 'Xbox One', value: 'Xbox One' },
-    { title: 'PlayStation 4', value: 'PlayStation 4' },
-    { title: 'Xbox 360', value: 'Xbox 360' },
+  const consoleOptions: string[] = [
+    'PlayStation 5',
+    'PlayStation 4',
+    'PlayStation 3',
+    'PlayStation 2',
+    'Xbox Series S|X',
+    'Xbox One',
+    'Xbox 360',
+    'Xbox Original(OG)',
   ];
+  const handheldOptions: string[] = [
+    'Nintendo Switch',
+    'PlayStation Vita(PSV)',
+    'PlayStation Portable(PSP)',
+  ];
+
   const radioButtons: RadioButtonProps[] = useMemo(
     () => [
       {
@@ -92,7 +91,6 @@ const AddItem = () => {
     [],
   );
 
-  const [collectionItem, setCollectionItem] = useState<CollectionItem>();
   const [type, setType] = useState<string>('1');
   const [condition, setCondition] = useState<string>('1');
   const [name, setName] = useState<string>('');
@@ -103,9 +101,11 @@ const AddItem = () => {
   const [consoleName, setConsoleName] = useState<string>('');
   const [manufacturer, setManufacturer] = useState<string>('');
   const [reshell, setReshell] = useState<string>('2');
+  const [isConsoleSelectOpen, setIsConsoleSelectOpen] =
+    useState<boolean>(false);
 
   const handleAddItem = () => {
-    setCollectionItem({
+    const newItem: CollectionItem = {
       id: collection.length + 1 + '',
       type: type === '1' ? 'Console' : type === '2' ? 'Handheld' : 'Controller',
       condition:
@@ -124,11 +124,9 @@ const AddItem = () => {
       consoleName,
       manufacturer,
       reshell: reshell === '1' ? true : false,
-    });
-    console.log(collectionItem);
-    if (collectionItem) {
-      collection.push(collectionItem);
-    }
+    };
+
+    collection.push(newItem);
   };
 
   return (
@@ -154,6 +152,43 @@ const AddItem = () => {
                 selectedId={type}
               />
             </View>
+            <Pressable
+              style={styles.dropdownButtonStyle}
+              onPress={() => setIsConsoleSelectOpen(true)}
+            >
+              <Text style={styles.dropdownButtonTxtStyle}>
+                {consoleName || 'Select console'}
+              </Text>
+            </Pressable>
+
+            <Modal
+              visible={isConsoleSelectOpen}
+              transparent
+              animationType="fade"
+              onRequestClose={() => setIsConsoleSelectOpen(false)}
+            >
+              <Pressable
+                style={styles.modalBackdrop}
+                onPress={() => setIsConsoleSelectOpen(false)}
+              >
+                <Pressable style={styles.dropdownMenuStyle}>
+                  <ScrollView>
+                    {consoleOptions.map((item) => (
+                      <Pressable
+                        key={item}
+                        style={styles.dropdownItemStyle}
+                        onPress={() => {
+                          setConsoleName(item);
+                          setIsConsoleSelectOpen(false);
+                        }}
+                      >
+                        <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                      </Pressable>
+                    ))}
+                  </ScrollView>
+                </Pressable>
+              </Pressable>
+            </Modal>
             <TextInput
               placeholder="* Name"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
@@ -261,9 +296,9 @@ const AddItem = () => {
             </View>
           </View>
         </View>
-        <button onClick={handleAddItem} style={styles.button}>
-          Add Item
-        </button>
+        <Pressable onPress={handleAddItem} style={styles.button}>
+          <Text style={styles.buttonText}>Add Item</Text>
+        </Pressable>
       </ImageBackground>
     </View>
   );
@@ -313,12 +348,66 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: 'rgb(9, 0, 141)',
-    color: 'white',
-    fontSize: 18,
     marginBottom: 10,
     padding: 14,
     borderRadius: 8,
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  // dropdown styles
+  dropdownButtonStyle: {
+    width: '100%',
+    height: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 8,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginBottom: 10,
+  },
+  dropdownButtonTxtStyle: {
+    flex: 1,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  dropdownMenuStyle: {
+    backgroundColor: '#1f1f1f',
+    borderRadius: 8,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 1,
+    width: '90%',
+    maxHeight: 320,
+  },
+  dropdownItemStyle: {
+    width: '100%',
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 12,
+  },
+  dropdownItemTxtStyle: {
+    flex: 1,
+    fontSize: 18,
+    fontWeight: '500',
+    color: 'white',
+  },
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
   },
 });
