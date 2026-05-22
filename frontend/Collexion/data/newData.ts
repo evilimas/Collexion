@@ -8,7 +8,7 @@ export type CollectionItem = {
   color: string;
   condition: 'Mint' | 'Like New' | 'Good' | 'Fair';
   edition?: string;
-  consoleName?: string; // Only for controllers
+  forConsole?: string; // Only for controllers
   manufacturer?: string;
   picture?: ImageSourcePropType;
   description?: string;
@@ -98,7 +98,7 @@ export const collection: CollectionItem[] = [
     id: '8',
     type: 'Controller',
     name: 'Xbox Elite Controller Series 2',
-    consoleName: 'Xbox Series S|X',
+    forConsole: 'Xbox Series S|X',
     color: 'Black',
     condition: 'Like New',
     manufacturer: 'Microsoft',
@@ -107,8 +107,8 @@ export const collection: CollectionItem[] = [
   {
     id: '9',
     type: 'Controller',
+    forConsole: 'PlayStation 4',
     name: 'DualShock 4',
-    consoleName: 'PlayStation 4',
     color: 'Midnight Blue',
     condition: 'Good',
     manufacturer: 'Sony',
@@ -117,8 +117,8 @@ export const collection: CollectionItem[] = [
   {
     id: '10',
     type: 'Controller',
+    forConsole: 'Nintendo Switch',
     name: 'Switch Pro Controller',
-    consoleName: 'Nintendo Switch',
     color: 'Black',
     condition: 'Like New',
     manufacturer: 'Nintendo',
@@ -127,8 +127,8 @@ export const collection: CollectionItem[] = [
   {
     id: '11',
     type: 'Controller',
+    forConsole: 'Xbox 360',
     name: 'Xbox 360 Wireless Controller',
-    consoleName: 'Xbox 360',
     color: 'White',
     condition: 'Good',
     manufacturer: 'Microsoft',
@@ -228,6 +228,7 @@ export const collection: CollectionItem[] = [
   {
     id: '20',
     type: 'Controller',
+      forConsole: 'PlayStation 4',
     name: 'DualShock 4',
     color: 'Gray',
     edition: '20th Anniversary Edition',
@@ -238,6 +239,7 @@ export const collection: CollectionItem[] = [
   {
     id: '21',
     type: 'Controller',
+    forConsole: 'Xbox One',
     name: 'Xbox Elite Controller Series 1',
     color: 'White',
     manufacturer: 'Microsoft',
@@ -248,6 +250,7 @@ export const collection: CollectionItem[] = [
   {
     id: '22',
     type: 'Controller',
+      forConsole: 'Xbox Series S|X',
     name: 'Xbox Series S|X Controller',
     edition: 'Starfield Edition',
     color: 'White',
@@ -259,6 +262,7 @@ export const collection: CollectionItem[] = [
   {
     id: '23',
     type: 'Controller',
+    forConsole: 'Xbox Series S|X',
     name: 'Xbox Series S|X Controller',
     color: 'Blue',
     edition: 'Blue see-through(crystal) edition',
