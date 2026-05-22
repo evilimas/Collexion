@@ -28,6 +28,21 @@ const AddItem = () => {
     'Nintendo Switch',
     'PlayStation Vita(PSV)',
     'PlayStation Portable(PSP)',
+    'Nintendo 3DS',
+    'Nintendo DS',
+    'Game Boy Advance(GBA)',
+    'Game Boy',
+  ];
+  const controllerOptions: string[] = [
+    'DualSense',
+    'DualShock 4',
+    'DualShock 3',
+    'DualShock 2',
+    'Xbox Series S|X Controller',
+    'Xbox One Controller',
+    'Xbox 360 Controller',
+    'Xbox Original(OG) Controller',
+    'Nintendo Switch Pro Controller',
   ];
 
   const radioButtons: RadioButtonProps[] = useMemo(
