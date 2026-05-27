@@ -114,6 +114,7 @@ const AddItem = () => {
   const [color, setColor] = useState<string>('');
   const [edition, setEdition] = useState<string>('');
   const [consoleName, setConsoleName] = useState<string>('');
+  const [forConsole, setForConsole] = useState<string>('');
   const [manufacturer, setManufacturer] = useState<string>('');
   const [reshell, setReshell] = useState<string>('2');
   const [isConsoleSelectOpen, setIsConsoleSelectOpen] =
@@ -136,7 +137,7 @@ const AddItem = () => {
       model,
       color,
       edition,
-      consoleName,
+      forConsole,
       manufacturer,
       reshell: reshell === '1' ? true : false,
     };
