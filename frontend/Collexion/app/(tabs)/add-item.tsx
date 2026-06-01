@@ -114,6 +114,8 @@ const AddItem = () => {
   const [color, setColor] = useState<string>('');
   const [edition, setEdition] = useState<string>('');
   const [consoleName, setConsoleName] = useState<string>('');
+  const [handheldName, setHandheldName] = useState<string>('');
+  const [controllerName, setControllerName] = useState<string>('');
   const [forConsole, setForConsole] = useState<string>('');
   const [manufacturer, setManufacturer] = useState<string>('');
   const [reshell, setReshell] = useState<string>('2');
@@ -168,15 +170,36 @@ const AddItem = () => {
                 selectedId={type}
               />
             </View>
-            <Pressable
-              style={styles.dropdownButtonStyle}
-              onPress={() => setIsConsoleSelectOpen(true)}
-            >
-              <Text style={styles.dropdownButtonTxtStyle}>
-                {consoleName || 'Select console'}
-              </Text>
-            </Pressable>
-
+            {type === '1' && (
+              <Pressable
+                style={styles.dropdownButtonStyle}
+                onPress={() => setIsConsoleSelectOpen(true)}
+              >
+                <Text style={styles.dropdownButtonTxtStyle}>
+                  {consoleName || 'Select console'}
+                </Text>
+              </Pressable>
+            )}
+            {type === '2' && (
+              <Pressable
+                style={styles.dropdownButtonStyle}
+                onPress={() => setIsConsoleSelectOpen(true)}
+              >
+                <Text style={styles.dropdownButtonTxtStyle}>
+                  {handheldName || 'Select handheld'}
+                </Text>
+              </Pressable>
+            )}
+            {type === '3' && (
+              <Pressable
+                style={styles.dropdownButtonStyle}
+                onPress={() => setIsConsoleSelectOpen(true)}
+              >
+                <Text style={styles.dropdownButtonTxtStyle}>
+                  {controllerName || 'Select controller'}
+                </Text>
+              </Pressable>
+            )}
             <Modal
               visible={isConsoleSelectOpen}
               transparent
@@ -188,20 +211,60 @@ const AddItem = () => {
                 onPress={() => setIsConsoleSelectOpen(false)}
               >
                 <Pressable style={styles.dropdownMenuStyle}>
-                  <ScrollView>
-                    {consoleOptions.map((item) => (
-                      <Pressable
-                        key={item}
-                        style={styles.dropdownItemStyle}
-                        onPress={() => {
-                          setConsoleName(item);
-                          setIsConsoleSelectOpen(false);
-                        }}
-                      >
-                        <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-                      </Pressable>
-                    ))}
-                  </ScrollView>
+                  {type === '1' && (
+                    <ScrollView>
+                      {consoleOptions.map((item) => (
+                        <Pressable
+                          key={item}
+                          style={styles.dropdownItemStyle}
+                          onPress={() => {
+                            setConsoleName(item);
+                            setIsConsoleSelectOpen(false);
+                          }}
+                        >
+                          <Text style={styles.dropdownItemTxtStyle}>
+                            {item}
+                          </Text>
+                        </Pressable>
+                      ))}
+                    </ScrollView>
+                  )}
+                  {type === '3' && (
+                    <ScrollView>
+                      {controllerOptions.map((item) => (
+                        <Pressable
+                          key={item}
+                          style={styles.dropdownItemStyle}
+                          onPress={() => {
+                            setControllerName(item);
+                            setIsConsoleSelectOpen(false);
+                          }}
+                        >
+                          <Text style={styles.dropdownItemTxtStyle}>
+                            {item}
+                          </Text>
+                        </Pressable>
+                      ))}
+                    </ScrollView>
+                  )}
+                  {type === '2' && (
+                    <ScrollView>
+                      {handheldOptions.map((item) => (
+                        <Pressable
+                          key={item}
+                          style={styles.dropdownItemStyle}
+                          onPress={() => {
+                            setHandheldName(item);
+                            setIsConsoleSelectOpen(false);
+                          }}
+                        >
+                          <Text style={styles.dropdownItemTxtStyle}>
+                            {item}
+                          </Text>
+                        </Pressable>
+                      ))}
+                    </ScrollView>
+                  )}
                 </Pressable>
               </Pressable>
             </Modal>
