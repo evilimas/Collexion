@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Image,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
@@ -14,20 +15,22 @@ const Controllers = () => {
   const controllers = collection.filter((item) => item.type === 'Controller');
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require('@/assets/images/background3.jpg')}
-        resizeMode="cover"
-        style={styles.image}
-      >
-        <View style={styles.overlay}>
-          <Text style={styles.text}>Controllers</Text>
-          <TextInput
-            placeholder="Search Controllers"
-            placeholderTextColor="rgba(255, 255, 255, 0.7)"
-            style={styles.searchInput}
-          />
-        </View>
-      </ImageBackground>
+      <ScrollView>
+        <ImageBackground
+          source={require('@/assets/images/background3.jpg')}
+          resizeMode="cover"
+          style={styles.image}
+        >
+          <View style={styles.overlay}>
+            <Text style={styles.text}>Controllers</Text>
+            <TextInput
+              placeholder="Search Controllers"
+              placeholderTextColor="rgba(255, 255, 255, 0.7)"
+              style={styles.searchInput}
+            />
+          </View>
+        </ImageBackground>
+      </ScrollView>
     </View>
   );
 };
