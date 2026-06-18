@@ -47,23 +47,19 @@ export default Handhelds;
 
 const styles = StyleSheet.create({
   container: {
-    // paddingHorizontal: 10,
     flex: 1,
   },
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
-    width: '100%',
-    height: '100%',
+
     paddingHorizontal: 10,
   },
 
   image: {
     width: '100%',
     height: '100%',
-    textShadowColor: 'black',
-    textShadowOffset: { width: 1, height: 4 },
-    textShadowRadius: 6,
+
     resizeMode: 'cover',
   },
   text: {
@@ -106,6 +102,5 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 15,
     marginBottom: 10,
-    // width: '100%',
   },
 });
