@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { useEffect, useState } from 'react';
-import { Link } from 'expo-router';
+// import { Link } from 'expo-router';
 import { collection, CollectionItem } from '@/data/newData';
 
 const Handhelds = () => {
