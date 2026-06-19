@@ -12,7 +12,7 @@ import { Link } from 'expo-router';
 import { collection, CollectionItem } from '@/data/newData';
 
 const Handhelds = () => {
-  const [handheld, setHandhelds] = useState<CollectionItem[]>([]);
+  const [handhelds, setHandhelds] = useState<CollectionItem[]>([]);
 
   useEffect(() => {
     const filteredHandhelds = collection.filter(
