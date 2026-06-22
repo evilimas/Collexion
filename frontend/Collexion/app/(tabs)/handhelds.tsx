@@ -28,16 +28,16 @@ const Handhelds = () => {
         resizeMode="cover"
         style={styles.image}
       >
-        <ScrollView>
-          <View style={styles.overlay}>
-            <Text style={styles.text}>Handhelds</Text>
+        <View style={styles.overlay}>
+          <Text style={styles.text}>Handhelds</Text>
+          <ScrollView>
             <TextInput
               placeholder="Search Handhelds"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.searchInput}
             />
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </ImageBackground>
     </View>
   );
