@@ -20,16 +20,16 @@ const Controllers = () => {
         resizeMode="cover"
         style={styles.image}
       >
-        <ScrollView>
-          <View style={styles.overlay}>
+        <View style={styles.overlay}>
+          <ScrollView>
             <Text style={styles.text}>Controllers</Text>
             <TextInput
               placeholder="Search Controllers"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.searchInput}
             />
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </ImageBackground>
     </View>
   );
