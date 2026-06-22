@@ -23,12 +23,12 @@ const Handhelds = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <ImageBackground
-          source={require('@/assets/images/background3.jpg')}
-          resizeMode="cover"
-          style={styles.image}
-        >
+      <ImageBackground
+        source={require('@/assets/images/background3.jpg')}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <ScrollView>
           <View style={styles.overlay}>
             <Text style={styles.text}>Handhelds</Text>
             <TextInput
@@ -37,8 +37,8 @@ const Handhelds = () => {
               style={styles.searchInput}
             />
           </View>
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };
