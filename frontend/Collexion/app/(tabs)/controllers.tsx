@@ -15,12 +15,12 @@ const Controllers = () => {
   const controllers = collection.filter((item) => item.type === 'Controller');
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <ImageBackground
-          source={require('@/assets/images/background3.jpg')}
-          resizeMode="cover"
-          style={styles.image}
-        >
+      <ImageBackground
+        source={require('@/assets/images/background3.jpg')}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <ScrollView>
           <View style={styles.overlay}>
             <Text style={styles.text}>Controllers</Text>
             <TextInput
@@ -29,8 +29,8 @@ const Controllers = () => {
               style={styles.searchInput}
             />
           </View>
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };
