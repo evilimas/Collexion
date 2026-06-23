@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import type { ImageSourcePropType } from 'react-native';
 
@@ -9,6 +9,7 @@ type Props = {
   color: string;
   condition: 'Mint' | 'Like New' | 'Good' | 'Fair';
   picture?: ImageSourcePropType;
+  onPress?: () => void;
 };
 
 const Console = ({
@@ -18,20 +19,23 @@ const Console = ({
   color,
   condition,
   picture,
+  onPress,
 }: Props) => {
   return (
-    <View style={styles.card}>
-      {picture ? (
-        <Image source={picture} style={styles.image} resizeMode="contain" />
-      ) : null}
-      <View style={styles.content}>
-        <Text style={styles.name}>{name}</Text>
-        {model ? <Text style={styles.meta}>Model: {model}</Text> : null}
-        {edition ? <Text style={styles.meta}>Edition: {edition}</Text> : null}
-        <Text style={styles.meta}>Color: {color}</Text>
-        <Text style={styles.meta}>Condition: {condition}</Text>
+    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {picture ? (
+          <Image source={picture} style={styles.image} resizeMode="contain" />
+        ) : null}
+        <View style={styles.content}>
+          <Text style={styles.name}>{name}</Text>
+          {model ? <Text style={styles.meta}>Model: {model}</Text> : null}
+          {edition ? <Text style={styles.meta}>Edition: {edition}</Text> : null}
+          <Text style={styles.meta}>Color: {color}</Text>
+          <Text style={styles.meta}>Condition: {condition}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -44,9 +48,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.15)',
     padding: 12,
+    display: 'flex',
     marginBottom: 12,
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   image: {
     width: 72,
