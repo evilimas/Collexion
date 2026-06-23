@@ -10,6 +10,8 @@ import { collection } from '@/data/newData';
 import React, { useState } from 'react';
 import ConsoleGroup from '@/components/Consoles';
 import Console from '@/components/Console';
+import { Link } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 
 const Consoles = () => {
   const [search, setSearch] = useState('');
@@ -64,15 +66,28 @@ const Consoles = () => {
           >
             {selectedName
               ? selectedItems.map((item) => (
-                  <Console
+                  <Link
                     key={item.id}
-                    name={item.name}
-                    model={item.model}
-                    edition={item.edition}
-                    color={item.color}
-                    condition={item.condition}
-                    picture={item.picture}
-                  />
+                    href={{
+                      pathname: '/console-details',
+                      params: {
+                        name: item.name,
+                        model: item.model,
+                        edition: item.edition,
+                        color: item.color,
+                        condition: item.condition,
+                      },
+                    }}
+                  >
+                    <Console
+                      name={item.name}
+                      model={item.model}
+                      edition={item.edition}
+                      color={item.color}
+                      condition={item.condition}
+                      picture={item.picture}
+                    />
+                  </Link>
                 ))
               : groups.map(([name, items]) => (
                   <ConsoleGroup
