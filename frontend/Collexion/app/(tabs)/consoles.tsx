@@ -76,6 +76,8 @@ const Consoles = () => {
                         edition: item.edition,
                         color: item.color,
                         condition: item.condition,
+                        manufacturer: item.manufacturer,
+                        description: item.description,
                       },
                     }}
                   >
@@ -86,6 +88,8 @@ const Consoles = () => {
                       color={item.color}
                       condition={item.condition}
                       picture={item.picture}
+                      manufacturer={item.manufacturer}
+                      description={item.description}
                     />
                   </Link>
                 ))
