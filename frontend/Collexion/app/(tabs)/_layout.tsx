@@ -62,6 +62,12 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="console-details"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

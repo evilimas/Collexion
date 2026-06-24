@@ -19,6 +19,8 @@ const ConsoleDetail = () => {
   const edition = params.edition as string;
   const color = params.color as string;
   const condition = params.condition as string;
+  const manufacturer = params.manufacturer as string;
+  const description = params.description as string;
   // Note: picture can't be passed directly through URL, we'll handle this differently
 
   return (
@@ -41,6 +43,8 @@ const ConsoleDetail = () => {
             )}
             <Text style={styles.detailInfo}>Color: {color}</Text>
             <Text style={styles.detailInfo}>Condition: {condition}</Text>
+            <Text style={styles.detailInfo}>Manufacturer: {manufacturer}</Text>
+            <Text style={styles.detailInfo}>Description: {description}</Text>
           </View>
         </View>
       </ImageBackground>
