@@ -25,6 +25,7 @@ export const collection: CollectionItem[] = [
     edition: 'Standard Edition',
     condition: 'Good',
     manufacturer: 'Sony',
+    description: 'PS3 slim 2500model with Hen CFW',
     picture: require('@/assets/images/ps3.svg'),
   },
   {
@@ -228,7 +229,7 @@ export const collection: CollectionItem[] = [
   {
     id: '20',
     type: 'Controller',
-      forConsole: 'PlayStation 4',
+    forConsole: 'PlayStation 4',
     name: 'DualShock 4',
     color: 'Gray',
     edition: '20th Anniversary Edition',
@@ -250,7 +251,7 @@ export const collection: CollectionItem[] = [
   {
     id: '22',
     type: 'Controller',
-      forConsole: 'Xbox Series S|X',
+    forConsole: 'Xbox Series S|X',
     name: 'Xbox Series S|X Controller',
     edition: 'Starfield Edition',
     color: 'White',
