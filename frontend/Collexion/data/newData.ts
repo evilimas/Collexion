@@ -292,6 +292,6 @@ export const collection: CollectionItem[] = [
     manufacturer: 'Sony',
     reshell: false,
     condition: 'Like New',
-    picture: require('@/assets/images/ps3.png'),
+    picture: require('@/assets/images/ps3.svg'),
   },
 ];
