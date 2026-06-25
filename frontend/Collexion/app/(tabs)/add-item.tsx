@@ -335,7 +335,7 @@ const AddItem = () => {
             <TextInput
               placeholder="Description"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
-              style={styles.inputStyle}
+              style={styles.descriptionInputStyle}
               value={description}
               onChangeText={setDescription}
             />
@@ -424,6 +424,20 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
     marginBottom: 10,
+  },
+  descriptionInputStyle: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 1,
+    marginBottom: 10,
+    height: 100,
+    textAlignVertical: 'top',
   },
   button: {
     backgroundColor: 'rgb(9, 0, 141)',
