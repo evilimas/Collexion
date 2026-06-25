@@ -8,6 +8,8 @@ type Props = {
   edition?: string;
   color: string;
   condition: 'Mint' | 'Like New' | 'Good' | 'Fair';
+  description?: string;
+  manufacturer?: string;
   picture?: ImageSourcePropType;
   onPress?: () => void;
 };

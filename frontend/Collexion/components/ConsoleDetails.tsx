@@ -8,6 +8,8 @@ type Props = {
   color: string;
   condition: 'Mint' | 'Like New' | 'Good' | 'Fair';
   picture?: ImageSourcePropType;
+  description?: string;
+  manufacturer?: string;
 };
 
 const ConsoleDetails = ({
@@ -23,12 +25,12 @@ const ConsoleDetails = ({
       {/* {picture ? (
         <Image source={picture} resizeMode="contain" />
       ) : null} */}
-      <View >
-        <Text >{name}</Text>
-        {model ? <Text >Model: {model}</Text> : null}
-        {edition ? <Text >Edition: {edition}</Text> : null}
-        <Text >Color: {color}</Text>
-        <Text >Condition: {condition}</Text>
+      <View>
+        <Text>{name}</Text>
+        {model ? <Text>Model: {model}</Text> : null}
+        {edition ? <Text>Edition: {edition}</Text> : null}
+        <Text>Color: {color}</Text>
+        <Text>Condition: {condition}</Text>
       </View>
     </View>
   );
