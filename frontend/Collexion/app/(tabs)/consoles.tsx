@@ -11,7 +11,6 @@ import React, { useState } from 'react';
 import ConsoleGroup from '@/components/Consoles';
 import Console from '@/components/Console';
 import { Link } from 'expo-router';
-import { useNavigation } from '@react-navigation/native';
 
 const Consoles = () => {
   const [search, setSearch] = useState('');
