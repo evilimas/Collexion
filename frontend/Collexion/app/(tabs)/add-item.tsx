@@ -134,7 +134,7 @@ const AddItem = () => {
             : condition === '3'
               ? 'Good'
               : 'Fair',
-      name,
+      name: consoleName || handheldName || controllerName,
       description,
       model,
       color,
@@ -142,10 +142,28 @@ const AddItem = () => {
       forConsole,
       manufacturer,
       reshell: reshell === '1' ? true : false,
+      picture: picture,
     };
 
     collection.push(newItem);
   };
+
+  const picture = useMemo(() => {
+    if (type === '1') {
+      const consoleItem = collection.find((item) => item.name === consoleName);
+      return consoleItem?.picture;
+    } else if (type === '2') {
+      const handheldItem = collection.find(
+        (item) => item.name === handheldName,
+      );
+      return handheldItem?.picture;
+    } else if (type === '3') {
+      const controllerItem = collection.find(
+        (item) => item.name === controllerName,
+      );
+      return controllerItem?.picture;
+    }
+  }, [type, consoleName, handheldName, controllerName, collection]);
 
   return (
     <View style={styles.container}>
@@ -268,13 +286,13 @@ const AddItem = () => {
                 </Pressable>
               </Pressable>
             </Modal>
-            <TextInput
+            {/* <TextInput
               placeholder="* Name"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.inputStyle}
               value={name}
               onChangeText={setName}
-            />
+            /> */}
             <TextInput
               placeholder="Model"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
@@ -318,7 +336,7 @@ const AddItem = () => {
             />
             {type === '3' && (
               <TextInput
-                placeholder="For Console "
+                placeholder="For What Console "
                 placeholderTextColor="rgba(255, 255, 255, 0.7)"
                 style={styles.inputStyle}
                 value={consoleName}
@@ -336,6 +354,7 @@ const AddItem = () => {
               placeholder="Description"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.descriptionInputStyle}
+              multiline={true}
               value={description}
               onChangeText={setDescription}
             />
