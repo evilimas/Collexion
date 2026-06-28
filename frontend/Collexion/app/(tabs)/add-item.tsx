@@ -355,6 +355,7 @@ const AddItem = () => {
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.descriptionInputStyle}
               multiline={true}
+              numberOfLines={4}
               value={description}
               onChangeText={setDescription}
             />
