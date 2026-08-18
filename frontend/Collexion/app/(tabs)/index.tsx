@@ -11,7 +11,7 @@ import React from 'react';
 import { Link } from 'expo-router';
 
 // import backgroundImage from '@/assets/images/background1.png';
-// import backgroundImage from '@/assets/images/background3.jpg';
+
 
 type CollectionSquare = {
   id: string;
