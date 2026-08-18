@@ -294,7 +294,7 @@ const AddItem = () => {
               onChangeText={setName}
             /> */}
             <TextInput
-              placeholder="Model"
+              placeholder="Model (e.g. Slim, Pro, OLED)"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.inputStyle}
               value={model}
@@ -328,7 +328,7 @@ const AddItem = () => {
               />
             </View>
             <TextInput
-              placeholder="* Edition"
+              placeholder="* Edition (e.g. Standard, Limited, Special)"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.inputStyle}
               value={edition}
