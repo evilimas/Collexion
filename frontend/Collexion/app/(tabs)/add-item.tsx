@@ -35,6 +35,8 @@ const AddItem = () => {
     'Game Boy Color',
     'Game Gear',
     'Neo Geo Pocket',
+    'Neo Geo Pocket Color',
+    'WonderSwan',
   ];
   const controllerOptions: string[] = [
     'DualSense(PS5)',
