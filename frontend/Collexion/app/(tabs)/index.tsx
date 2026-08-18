@@ -10,7 +10,8 @@ import {
 import React from 'react';
 import { Link } from 'expo-router';
 
-import backgroundImage from '@/assets/images/background1.png';
+// import backgroundImage from '@/assets/images/background1.png';
+// import backgroundImage from '@/assets/images/background3.jpg';
 
 type CollectionSquare = {
   id: string;
@@ -125,7 +126,7 @@ const app = () => {
     <View style={styles.container}>
       <ScrollView>
         <ImageBackground
-          source={backgroundImage}
+          source={require('@/assets/images/background3.jpg')}
           resizeMode="cover"
           style={styles.image}
         >

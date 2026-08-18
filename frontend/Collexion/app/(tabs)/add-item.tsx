@@ -32,17 +32,28 @@ const AddItem = () => {
     'Nintendo DS',
     'Game Boy Advance(GBA)',
     'Game Boy',
+    'Game Boy Color',
+    'Game Gear',
+    'Neo Geo Pocket',
   ];
   const controllerOptions: string[] = [
-    'DualSense',
-    'DualShock 4',
-    'DualShock 3',
-    'DualShock 2',
+    'DualSense(PS5)',
+    'DualShock 4(PS4)',
+    'DualShock 3(PS3)',
+    'DualShock 2(PS2)',
     'Xbox Series S|X Controller',
     'Xbox One Controller',
     'Xbox 360 Controller',
     'Xbox Original(OG) Controller',
     'Nintendo Switch Pro Controller',
+  ];
+
+  const manufacturerOptions: string[] = [
+    'Sony',
+    'Microsoft',
+    'Nintendo',
+    'Sega',
+    'SNK',
   ];
 
   const radioButtons: RadioButtonProps[] = useMemo(
@@ -108,7 +119,7 @@ const AddItem = () => {
 
   const [type, setType] = useState<string>('1');
   const [condition, setCondition] = useState<string>('1');
-  const [name, setName] = useState<string>('');
+  // const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [model, setModel] = useState<string>('');
   const [color, setColor] = useState<string>('');
@@ -120,6 +131,8 @@ const AddItem = () => {
   const [manufacturer, setManufacturer] = useState<string>('');
   const [reshell, setReshell] = useState<string>('2');
   const [isConsoleSelectOpen, setIsConsoleSelectOpen] =
+    useState<boolean>(false);
+  const [isManufacturerSelectOpen, setIsManufacturerSelectOpen] =
     useState<boolean>(false);
 
   const handleAddItem = () => {
@@ -163,7 +176,7 @@ const AddItem = () => {
       );
       return controllerItem?.picture;
     }
-  }, [type, consoleName, handheldName, controllerName, collection]);
+  }, [type, consoleName, handheldName, controllerName]);
 
   return (
     <View style={styles.container}>
@@ -343,19 +356,49 @@ const AddItem = () => {
                 onChangeText={setConsoleName}
               />
             )}
-            <TextInput
-              placeholder="Manufacturer "
-              placeholderTextColor="rgba(255, 255, 255, 0.7)"
-              style={styles.inputStyle}
-              value={manufacturer}
-              onChangeText={setManufacturer}
-            />
+            <Pressable
+              style={styles.dropdownButtonStyle}
+              onPress={() => setIsManufacturerSelectOpen(true)}
+            >
+              <Text style={styles.dropdownButtonTxtStyle}>
+                {manufacturer || 'Select manufacturer'}
+              </Text>
+            </Pressable>
+            <Modal
+              visible={isManufacturerSelectOpen}
+              transparent
+              animationType="fade"
+              onRequestClose={() => setIsManufacturerSelectOpen(false)}
+            >
+              <Pressable
+                style={styles.modalBackdrop}
+                onPress={() => setIsManufacturerSelectOpen(false)}
+              >
+                <Pressable style={styles.dropdownMenuStyle}>
+                  <ScrollView>
+                    {manufacturerOptions.map((item) => (
+                      <Pressable
+                        key={item}
+                        style={styles.dropdownItemStyle}
+                        onPress={() => {
+                          setManufacturer(item);
+                          setIsManufacturerSelectOpen(false);
+                        }}
+                      >
+                        <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                      </Pressable>
+                    ))}
+                  </ScrollView>
+                </Pressable>
+              </Pressable>
+            </Modal>
+
             <TextInput
               placeholder="Description"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.descriptionInputStyle}
               multiline={true}
-              numberOfLines={6}
+              numberOfLines={4}
               value={description}
               onChangeText={setDescription}
             />
