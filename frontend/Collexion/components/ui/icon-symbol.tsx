@@ -14,7 +14,8 @@ type IconSymbolName =
   | 'console.fill'
   | 'handheld.fill'
   | 'controller.fill'
-  | 'plus.circle.fill';
+  | 'plus.circle.fill'
+  | 'person.fill';
 
 type IconConfig = {
   name: string;
@@ -43,6 +44,7 @@ const MAPPING: IconMapping = {
   },
   'controller.fill': { name: 'sports-esports', library: 'MaterialIcons' },
   'plus.circle.fill': { name: 'add-circle', library: 'MaterialIcons' },
+  'person.fill': { name: 'person', library: 'MaterialIcons' },
 };
 
 /**
