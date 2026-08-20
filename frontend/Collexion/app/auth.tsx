@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Image,
   View,
+  Text,
 } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
@@ -54,6 +55,11 @@ export default function AuthScreen() {
       }
     } catch (e: any) {
       console.error('Sign in error:', e);
+      if (e?.errors?.[0]?.code === 'session_exists') {
+        // A session is already active on this device; just proceed into the app.
+        router.replace('/(tabs)');
+        return;
+      }
       setError(e?.errors?.[0]?.message ?? e.message ?? 'Sign in failed.');
     }
   };
@@ -62,15 +68,25 @@ export default function AuthScreen() {
     if (!signUpLoaded) return;
     try {
       console.log('Signing up with:', email);
-      await signUp.create({
+      const attempt = await signUp.create({
         emailAddress: email,
         password,
         firstName,
       });
-      console.log('Sign up created, sending verification email...');
-      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
-      console.log('Verification email sent');
-      setPendingVerification(true);
+      console.log('Sign up attempt:', attempt.status);
+      if (attempt.status === 'complete') {
+        // Account created and no verification needed: activate the session now,
+        // otherwise it lingers unset and later sign-in attempts fail with
+        // "session already exists".
+        await setActiveSignUp({ session: attempt.createdSessionId });
+        router.replace('/(tabs)');
+      } else {
+        console.log('Sending verification email...');
+        await signUp.prepareEmailAddressVerification({
+          strategy: 'email_code',
+        });
+        setPendingVerification(true);
+      }
     } catch (e: any) {
       console.error('Sign up error:', e);
       setError(e?.errors?.[0]?.message ?? e.message ?? 'Sign up failed.');
@@ -126,10 +142,10 @@ export default function AuthScreen() {
             source={require('@/assets/images/logo3.png')}
             style={styles.logo}
           />
-          <ThemedText type="title">
-            <Pressable style={styles.backButton} onPress={() => router.back()}>
-              Back
-            </Pressable>
+          <Pressable style={styles.backButton} onPress={() => router.back()}>
+            <Text>Back</Text>
+          </Pressable>
+          <ThemedText type="title" style={styles.titleText}>
             {pendingVerification
               ? 'Verify Email'
               : mode === 'sign-in'
@@ -149,6 +165,7 @@ export default function AuthScreen() {
               keyboardType="number-pad"
               value={code}
               onChangeText={setCode}
+              placeholderTextColor="#aaa"
             />
           ) : (
             <>
@@ -160,6 +177,7 @@ export default function AuthScreen() {
                     autoCapitalize="words"
                     value={firstName}
                     onChangeText={setFirstName}
+                    placeholderTextColor="#aaa"
                   />
                   {/* <TextInput
                 style={styles.input}
@@ -177,6 +195,7 @@ export default function AuthScreen() {
                 keyboardType="email-address"
                 value={email}
                 onChangeText={setEmail}
+                placeholderTextColor="#aaa"
               />
               <TextInput
                 style={styles.input}
@@ -184,6 +203,7 @@ export default function AuthScreen() {
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
+                placeholderTextColor="#aaa"
               />
             </>
           )}
@@ -262,17 +282,19 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    color: 'gray',
+    color: 'white',
     backgroundColor: 'rgba(15, 15, 15, 0.5)',
     marginBottom: 12,
   },
+
   logo: {
     width: '50%',
     height: 80,
-    // marginTop: 10,
     alignContent: 'center',
     alignSelf: 'center',
-    // justifyContent: 'flex-start',
+    position: 'absolute',
+
+    top: 30,
   },
   backButton: {
     position: 'absolute',
@@ -311,5 +333,16 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 4 },
     textShadowRadius: 6,
     resizeMode: 'cover',
+  },
+  titleText: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 12,
+    textShadowColor: 'black',
+    textShadowOffset: { width: 1, height: 4 },
+    textShadowRadius: 6,
   },
 });
