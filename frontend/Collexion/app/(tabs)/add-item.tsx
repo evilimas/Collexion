@@ -188,13 +188,13 @@ const AddItem = () => {
       >
         <View style={styles.overlay}>
           <Text style={styles.text}>Add item to collection</Text>
-          <View style={{ padding: 14 }}>
+          <View style={{ padding: 10 }}>
             <View>
               <RadioGroup
                 layout="row"
                 labelStyle={{
                   color: 'white',
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: 'bold',
                 }}
                 radioButtons={radioButtons}
@@ -336,8 +336,9 @@ const AddItem = () => {
                 selectedId={condition}
                 labelStyle={{
                   color: 'white',
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: 'bold',
+                  marginLeft: 5,
                 }}
               />
             </View>
@@ -417,7 +418,7 @@ const AddItem = () => {
               <Text
                 style={{
                   color: 'white',
-                  fontSize: 14,
+                  fontSize: 15,
                   fontWeight: 'bold',
                   marginBottom: 6,
                   marginLeft: 10,
@@ -480,7 +481,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     color: 'white',
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -504,12 +505,15 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   button: {
-    backgroundColor: 'rgb(9, 0, 141)',
+    backgroundColor: 'rgb(7, 0, 105)',
     marginBottom: 10,
     padding: 14,
     borderRadius: 8,
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
+    width: '90%',
+    alignSelf: 'center',
+    // marginTop: 10,
   },
   buttonText: {
     color: 'white',

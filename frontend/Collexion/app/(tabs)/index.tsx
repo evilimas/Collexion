@@ -6,12 +6,12 @@ import {
   Image,
   TextInput,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
 
 // import backgroundImage from '@/assets/images/background1.png';
-
 
 type CollectionSquare = {
   id: string;
@@ -144,56 +144,54 @@ const app = () => {
             <Text style={styles.text}>Your Collection</Text>
             <View style={styles.collectionContainer}>
               {homeCollections.map((collection) => (
-                <Link
-                  key={collection.id}
-                  href={collection.tab as any}
-                  style={styles.link}
-                >
-                  <Image source={collection.image} style={styles.colImg} />
-                  {collection.name}
+                <Link key={collection.id} href={collection.tab as any} asChild>
+                  <Pressable style={styles.link}>
+                    <Image source={collection.image} style={styles.colImg} />
+                    <Text style={{ textAlign: 'center', color: 'white' }}>
+                      {collection.name}
+                    </Text>
+                  </Pressable>
                 </Link>
               ))}
             </View>
             <Text style={styles.text}>Recently Added</Text>
             <View style={styles.recentlyContainer}>
               {recentlyAdded.map((item) => (
-                <Link
-                  key={item.id}
-                  href={item.tab as any}
-                  style={styles.recentLink}
-                >
-                  {/* <Image source={require('')} style={styles.colImg} />
-                {item.name} */}
-                  {item.name}
+                <Link key={item.id} href={item.tab as any} asChild>
+                  <Pressable style={styles.recentLink}>
+                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                      {item.name}
+                    </Text>
+                  </Pressable>
                 </Link>
               ))}
             </View>
             <Text style={styles.text}>Collections</Text>
             <View style={styles.collectionContainer}>
               {Collections.map((collection) => (
-                <Link
-                  key={collection.id}
-                  href={collection.tab as any}
-                  style={styles.link}
-                >
-                  <Image source={collection.image} style={styles.colImg} />
-                  {collection.name}
+                <Link key={collection.id} href={collection.tab as any} asChild>
+                  <Pressable style={styles.link}>
+                    <Image source={collection.image} style={styles.colImg} />
+                    <Text style={{ textAlign: 'center', color: 'white' }}>
+                      {collection.name}
+                    </Text>
+                  </Pressable>
                 </Link>
               ))}
             </View>
             <Text style={styles.text}>Collections by console</Text>
             <View style={styles.collectionContainerConsole}>
               {ConsoleCollections.map((collection) => (
-                <Link
-                  key={collection.id}
-                  href={collection.tab as any}
-                  style={styles.linkConsole}
-                >
-                  <Image
-                    source={collection.image}
-                    style={styles.colImgConsoles}
-                  />
-                  {collection.name}
+                <Link key={collection.id} href={collection.tab as any} asChild>
+                  <Pressable style={styles.linkConsole}>
+                    <Image
+                      source={collection.image}
+                      style={styles.colImgConsoles}
+                    />
+                    <Text style={{ textAlign: 'center', color: 'white' }}>
+                      {collection.name}
+                    </Text>
+                  </Pressable>
                 </Link>
               ))}
             </View>
@@ -259,7 +257,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     paddingHorizontal: 22,
-    paddingVertical: 10,
+    paddingVertical: 19,
     alignItems: 'center',
     borderRadius: 8,
     borderColor: 'rgba(255, 255, 255, 0.5)',
@@ -313,10 +311,11 @@ const styles = StyleSheet.create({
   collectionContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 10,
+    // flexWrap: 'wrap',
+    marginTop: 20,
     borderBottomColor: 'rgba(24, 24, 24, 0.5)',
     borderBottomWidth: 2,
-    paddingBottom: 8,
+    paddingBottom: 10,
   },
   collectionContainerConsole: {
     flexDirection: 'row',

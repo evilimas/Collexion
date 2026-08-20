@@ -31,7 +31,10 @@ const ConsoleDetail = () => {
         style={styles.image}
       >
         <View style={styles.overlay}>
-          <Pressable onPress={() => router.back()} style={styles.backButton}>
+          <Pressable
+            onPress={() => router.push('/(tabs)/consoles')}
+            style={styles.backButton}
+          >
             <Text style={styles.backText}>← Back</Text>
           </Pressable>
 
