@@ -128,7 +128,7 @@ const AddItem = () => {
   const [consoleName, setConsoleName] = useState<string>('');
   const [handheldName, setHandheldName] = useState<string>('');
   const [controllerName, setControllerName] = useState<string>('');
-  const [forConsole, setForConsole] = useState<string>('');
+  const [forConsole] = useState<string>('');
   const [manufacturer, setManufacturer] = useState<string>('');
   const [reshell, setReshell] = useState<string>('2');
   const [isConsoleSelectOpen, setIsConsoleSelectOpen] =
