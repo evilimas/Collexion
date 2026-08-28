@@ -1,4 +1,4 @@
-import { View, Text, ImageSourcePropType } from 'react-native';
+import { View, Text, StyleSheet, ImageSourcePropType } from 'react-native';
 import React from 'react';
 
 type Props = {
@@ -26,14 +26,28 @@ const ConsoleDetails = ({
         <Image source={picture} resizeMode="contain" />
       ) : null} */}
       <View>
-        <Text>{name}</Text>
-        {model ? <Text>Model: {model}</Text> : null}
-        {edition ? <Text>Edition: {edition}</Text> : null}
-        <Text>Color: {color}</Text>
-        <Text>Condition: {condition}</Text>
+        <Text style={styles.name}>{name}</Text>
+        {model ? <Text style={styles.meta}>Model: {model}</Text> : null}
+        {edition ? <Text style={styles.meta}>Edition: {edition}</Text> : null}
+        <Text style={styles.meta}>Color: {color}</Text>
+        <Text style={styles.meta}>Condition: {condition}</Text>
       </View>
     </View>
   );
 };
 
 export default ConsoleDetails;
+
+const styles = StyleSheet.create({
+  name: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 2,
+  },
+  meta: {
+    color: 'rgba(255, 255, 255, 0.85)',
+    fontSize: 14,
+    marginTop: 1,
+  },
+});
