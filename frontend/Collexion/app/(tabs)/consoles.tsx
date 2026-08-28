@@ -5,6 +5,7 @@ import {
   ImageBackground,
   TextInput,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import { collection } from '@/data/newData';
 import React, { useState } from 'react';
@@ -79,17 +80,20 @@ const Consoles = () => {
                         description: item.description,
                       },
                     }}
+                    asChild
                   >
-                    <Console
-                      name={item.name}
-                      model={item.model}
-                      edition={item.edition}
-                      color={item.color}
-                      condition={item.condition}
-                      picture={item.picture}
-                      manufacturer={item.manufacturer}
-                      description={item.description}
-                    />
+                    <Pressable style={{ width: '100%' }}>
+                      <Console
+                        name={item.name}
+                        model={item.model}
+                        edition={item.edition}
+                        color={item.color}
+                        condition={item.condition}
+                        picture={item.picture}
+                        manufacturer={item.manufacturer}
+                        description={item.description}
+                      />
+                    </Pressable>
                   </Link>
                 ))
               : groups.map(([name, items]) => (

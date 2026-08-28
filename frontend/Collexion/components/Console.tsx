@@ -23,20 +23,40 @@ const Console = ({
   picture,
   onPress,
 }: Props) => {
+  const content = (
+    <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
+      {picture ? (
+        <Image source={picture} style={styles.image} resizeMode="contain" />
+      ) : null}
+      <View style={styles.content}>
+        <Text style={styles.name}>{name}</Text>
+        {model ? (
+          <Text
+            style={{
+              color: 'rgba(255, 255, 255, 0.85)',
+              fontSize: 13,
+              marginTop: 1,
+            }}
+          >
+            Model: {model}
+          </Text>
+        ) : null}
+        {edition ? <Text style={styles.meta}>Edition: {edition}</Text> : null}
+        <Text style={styles.meta}>Color: {color}</Text>
+        <Text style={styles.meta}>Condition: {condition}</Text>
+      </View>
+    </View>
+  );
+
+  // When wrapped by a Link/Pressable (asChild), don't nest another touchable
+  // on top of it: nested touchables can swallow single taps on Android.
+  if (!onPress) {
+    return <View style={styles.card}>{content}</View>;
+  }
+
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        {picture ? (
-          <Image source={picture} style={styles.image} resizeMode="contain" />
-        ) : null}
-        <View style={styles.content}>
-          <Text style={styles.name}>{name}</Text>
-          {model ? <Text style={styles.meta}>Model: {model}</Text> : null}
-          {edition ? <Text style={styles.meta}>Edition: {edition}</Text> : null}
-          <Text style={styles.meta}>Color: {color}</Text>
-          <Text style={styles.meta}>Condition: {condition}</Text>
-        </View>
-      </View>
+      {content}
     </TouchableOpacity>
   );
 };
@@ -45,6 +65,7 @@ export default Console;
 
 const styles = StyleSheet.create({
   card: {
+    width: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.55)',
     borderRadius: 12,
     borderWidth: 1,
@@ -73,5 +94,9 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.85)',
     fontSize: 13,
     marginTop: 1,
+  },
+  text: {
+    color: 'white',
+    fontSize: 24,
   },
 });
