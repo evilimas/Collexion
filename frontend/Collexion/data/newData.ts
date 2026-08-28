@@ -13,6 +13,7 @@ export type CollectionItem = {
   picture?: ImageSourcePropType;
   description?: string;
   reshell?: boolean;
+  url?: string; // Optional URL for more information
 };
 
 export const collection: CollectionItem[] = [
@@ -26,7 +27,7 @@ export const collection: CollectionItem[] = [
     condition: 'Good',
     manufacturer: 'Sony',
     description: 'PS3 slim 2500model with Hen CFW',
-    picture: require('@/assets/images/ps3.svg'),
+    picture: require('@/assets/images/ps3w.png'),
   },
   {
     id: '2',
@@ -270,7 +271,7 @@ export const collection: CollectionItem[] = [
     manufacturer: 'Microsoft',
     reshell: true,
     condition: 'Like New',
-    picture: require('@/assets/images/ps3.png'),
+    picture: require('@/assets/images/xbox.png'),
   },
   {
     id: '24',
@@ -292,6 +293,6 @@ export const collection: CollectionItem[] = [
     manufacturer: 'Sony',
     reshell: false,
     condition: 'Like New',
-    picture: require('@/assets/images/ps3.svg'),
+    picture: require('@/assets/images/ps3w.png'),
   },
 ];

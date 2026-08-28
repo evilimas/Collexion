@@ -86,7 +86,7 @@ const ConsoleCollections: CollectionSquare[] = [
   {
     id: '1',
     name: 'PS3',
-    image: require('@/assets/images/ps3.svg'),
+    image: require('@/assets/images/ps3w.png'),
     tab: '/(tabs)/home',
   },
   {
