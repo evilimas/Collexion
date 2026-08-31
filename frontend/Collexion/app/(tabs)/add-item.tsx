@@ -40,7 +40,7 @@ const AddItem = () => {
   const controllerOptions: string[] = [
     'DualSense(PS5)',
     'DualShock 4(PS4)',
-    'DualShock 3(PS3)',
+    'Sixaxis/DualShock 3(PS3)',
     'DualShock 2(PS2)',
     'Xbox Series S|X Controller',
     'Xbox One Controller',

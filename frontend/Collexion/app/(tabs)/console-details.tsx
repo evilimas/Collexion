@@ -60,7 +60,6 @@ export default ConsoleDetail;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 40,
   },
   image: {
     width: '100%',
@@ -82,6 +81,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.5)',
     marginBottom: 20,
+    marginTop: 30,
   },
   backText: {
     color: 'white',
