@@ -3,7 +3,7 @@ import { tokenCache } from '@clerk/expo/token-cache';
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 import 'react-native-reanimated';
 
 function RootLayoutNav() {
@@ -11,8 +11,13 @@ function RootLayoutNav() {
 
   if (!isLoaded) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" />
+      <View style={styles.loadingScreen}>
+        <Image
+          source={require('@/assets/images/logo3.png')}
+          style={styles.loadingLogo}
+          resizeMode="contain"
+        />
+        <ActivityIndicator size="large" color="#ffffff" />
       </View>
     );
   }
@@ -52,3 +57,17 @@ export default function RootLayout() {
     </ClerkProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingScreen: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#101010',
+  },
+  loadingLogo: {
+    width: 220,
+    height: 100,
+    marginBottom: 24,
+  },
+});
