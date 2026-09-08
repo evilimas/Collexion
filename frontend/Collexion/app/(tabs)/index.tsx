@@ -72,7 +72,7 @@ const Collections: CollectionSquare[] = [
   {
     id: '2',
     name: '    Xbox    ',
-    image: require('@/assets/images/xbox.png'),
+    image: require('@/assets/images/xboxone.png'),
     tab: '/(tabs)/home',
   },
   {
@@ -86,7 +86,7 @@ const ConsoleCollections: CollectionSquare[] = [
   {
     id: '1',
     name: 'PS3',
-    image: require('@/assets/images/ps3w.png'),
+    image: require('@/assets/images/ps3.png'),
     tab: '/(tabs)/home',
   },
   {
