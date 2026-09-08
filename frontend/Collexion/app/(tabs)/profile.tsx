@@ -7,14 +7,14 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-import { useClerk, useUser } from '@clerk/expo';
+import React from 'react';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 const Logout = () => {
-  const { signOut } = useClerk();
-
   const handleLogout = async () => {
     try {
-      await signOut();
+      await signOut(auth);
     } catch (error) {
       console.error('Logout failed:', error);
     }
@@ -28,10 +28,9 @@ const Logout = () => {
 };
 
 const Profile = () => {
-  const { user } = useUser();
-  const userName = user?.firstName || 'UserName';
-  const userEmail =
-    user?.primaryEmailAddress?.emailAddress || 'user@example.com';
+  const user = auth.currentUser;
+  const userName = user?.displayName || 'UserName';
+  const userEmail = user?.email || 'user@example.com';
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -45,11 +44,7 @@ const Profile = () => {
             <View style={styles.heading}>
               <View style={styles.headingLeft}>
                 <Image
-                  source={
-                    user?.imageUrl
-                      ? { uri: user.imageUrl }
-                      : require('@/assets/images/user.png')
-                  }
+                  source={require('@/assets/images/user.png')}
                   style={{ width: 100, height: 100, borderRadius: 50 }}
                 />
               </View>
@@ -62,7 +57,7 @@ const Profile = () => {
                     { marginBottom: 10, fontSize: 14 },
                   ]}
                 >
-                  Member since: {user?.createdAt?.toDateString()}
+                  Member since: {user?.metadata.creationTime ?? 'Unknown'}
                 </Text>
                 <Text style={styles.textHeaderemail}>
                   0 Items in collection

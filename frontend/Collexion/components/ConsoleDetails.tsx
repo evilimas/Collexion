@@ -5,11 +5,14 @@ type Props = {
   name: string;
   model?: string;
   edition?: string;
+  reshell?: boolean;
   color: string;
-  condition: 'Mint' | 'Like New' | 'Good' | 'Fair';
+  condition: 'Unopened' | 'Mint' | 'Like New' | 'Good' | 'Fair' | 'Poor';
   picture?: ImageSourcePropType;
+  withBox?: boolean;
   description?: string;
   manufacturer?: string;
+  url?: string;
 };
 
 const ConsoleDetails = ({
@@ -19,6 +22,11 @@ const ConsoleDetails = ({
   color,
   condition,
   picture,
+  withBox,
+  description,
+  manufacturer,
+  url,
+  reshell,
 }: Props) => {
   return (
     <View>
@@ -30,7 +38,21 @@ const ConsoleDetails = ({
         {model ? <Text style={styles.meta}>Model: {model}</Text> : null}
         {edition ? <Text style={styles.meta}>Edition: {edition}</Text> : null}
         <Text style={styles.meta}>Color: {color}</Text>
+        {manufacturer ? (
+          <Text style={styles.meta}>Manufacturer: {manufacturer}</Text>
+        ) : null}
         <Text style={styles.meta}>Condition: {condition}</Text>
+        {withBox !== undefined ? (
+          <Text style={styles.meta}>With Box: {withBox ? 'Yes' : 'No'}</Text>
+        ) : null}
+        {reshell !== undefined ? (
+          <Text style={styles.meta}>Reshell: {reshell ? 'Yes' : 'No'}</Text>
+        ) : null}
+
+        {description ? (
+          <Text style={styles.meta}>Description: {description}</Text>
+        ) : null}
+        {url ? <img src={url} alt="Console" /> : null}
       </View>
     </View>
   );

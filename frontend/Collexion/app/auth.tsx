@@ -1,6 +1,10 @@
-import { useSignIn, useSignUp } from '@clerk/expo/legacy';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth';
 import {
   ActivityIndicator,
   Pressable,
@@ -14,108 +18,49 @@ import {
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { auth } from '@/lib/firebase';
 
 type Mode = 'sign-in' | 'sign-up';
 
 export default function AuthScreen() {
   const router = useRouter();
-  const {
-    signIn,
-    setActive: setActiveSignIn,
-    isLoaded: signInLoaded,
-  } = useSignIn();
-  const {
-    signUp,
-    setActive: setActiveSignUp,
-    isLoaded: signUpLoaded,
-  } = useSignUp();
 
   const [mode, setMode] = useState<Mode>('sign-in');
   const [firstName, setFirstName] = useState('');
   //   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [code, setCode] = useState('');
-  const [pendingVerification, setPendingVerification] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSignIn = async () => {
-    if (!signInLoaded) return;
     try {
-      console.log('Signing in with:', email);
-      const attempt = await signIn.create({ identifier: email, password });
-      console.log('Sign in attempt:', attempt.status);
-      if (attempt.status === 'complete') {
-        console.log('Sign in complete, redirecting...');
-        await setActiveSignIn({ session: attempt.createdSessionId });
-        router.replace('/(tabs)');
-      } else {
-        setError('Additional verification required.');
-      }
-    } catch (e: any) {
-      console.error('Sign in error:', e);
-      if (e?.errors?.[0]?.code === 'session_exists') {
-        // A session is already active on this device; just proceed into the app.
-        router.replace('/(tabs)');
-        return;
-      }
-      setError(e?.errors?.[0]?.message ?? e.message ?? 'Sign in failed.');
+      await signInWithEmailAndPassword(auth, email.trim(), password);
+      router.replace('/(tabs)');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Sign in failed.');
     }
   };
 
   const handleSignUp = async () => {
-    if (!signUpLoaded) return;
     try {
-      console.log('Signing up with:', email);
-      const attempt = await signUp.create({
-        emailAddress: email,
+      const credential = await createUserWithEmailAndPassword(
+        auth,
+        email.trim(),
         password,
-        firstName,
-      });
-      console.log('Sign up attempt:', attempt.status);
-      if (attempt.status === 'complete') {
-        // Account created and no verification needed: activate the session now,
-        // otherwise it lingers unset and later sign-in attempts fail with
-        // "session already exists".
-        await setActiveSignUp({ session: attempt.createdSessionId });
-        router.replace('/(tabs)');
-      } else {
-        console.log('Sending verification email...');
-        await signUp.prepareEmailAddressVerification({
-          strategy: 'email_code',
-        });
-        setPendingVerification(true);
-      }
-    } catch (e: any) {
-      console.error('Sign up error:', e);
-      setError(e?.errors?.[0]?.message ?? e.message ?? 'Sign up failed.');
-    }
-  };
-
-  const handleVerify = async () => {
-    if (!signUpLoaded) return;
-    try {
-      const attempt = await signUp.attemptEmailAddressVerification({ code });
-      if (attempt.status === 'complete') {
-        await setActiveSignUp({ session: attempt.createdSessionId });
-        router.replace('/(tabs)');
-      } else {
-        setError('Verification incomplete.');
-      }
-    } catch (e: any) {
-      setError(e?.errors?.[0]?.message ?? 'Verification failed.');
+      );
+      await updateProfile(credential.user, { displayName: firstName.trim() });
+      router.replace('/(tabs)');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Sign up failed.');
     }
   };
 
   const handleSubmit = async () => {
-    console.log('Submit pressed, mode:', mode, 'loading:', loading);
     setError(null);
     setLoading(true);
     try {
-      if (pendingVerification) {
-        await handleVerify();
-      } else if (mode === 'sign-in') {
+      if (mode === 'sign-in') {
         await handleSignIn();
       } else {
         await handleSignUp();
@@ -146,111 +91,76 @@ export default function AuthScreen() {
             <Text>Back</Text>
           </Pressable>
           <ThemedText type="title" style={styles.titleText}>
-            {pendingVerification
-              ? 'Verify Email'
-              : mode === 'sign-in'
-                ? 'Sign In'
-                : 'Sign Up'}
+            {mode === 'sign-in' ? 'Sign In' : 'Sign Up'}
           </ThemedText>
-          {!signInLoaded || !signUpLoaded ? (
-            <ThemedText style={[styles.error, { marginTop: 8 }]}>
-              Authentication is loading. Please try again in a moment.
-            </ThemedText>
-          ) : null}
-
-          {pendingVerification ? (
-            <TextInput
-              style={styles.input}
-              placeholder="Verification code"
-              keyboardType="number-pad"
-              value={code}
-              onChangeText={setCode}
-              placeholderTextColor="#aaa"
-            />
-          ) : (
-            <>
-              {mode === 'sign-up' && (
-                <>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Name"
-                    autoCapitalize="words"
-                    value={firstName}
-                    onChangeText={setFirstName}
-                    placeholderTextColor="#aaa"
-                  />
-                  {/* <TextInput
+          <>
+            {mode === 'sign-up' && (
+              <>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Name"
+                  autoCapitalize="words"
+                  value={firstName}
+                  onChangeText={setFirstName}
+                  placeholderTextColor="#aaa"
+                />
+                {/* <TextInput
                 style={styles.input}
                 placeholder="Last name"
                 autoCapitalize="words"
                 value={lastName}
                 onChangeText={setLastName}
               /> */}
-                </>
-              )}
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                autoCapitalize="none"
-                keyboardType="email-address"
-                value={email}
-                onChangeText={setEmail}
-                placeholderTextColor="#aaa"
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                secureTextEntry
-                value={password}
-                onChangeText={setPassword}
-                placeholderTextColor="#aaa"
-              />
-            </>
-          )}
+              </>
+            )}
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+              placeholderTextColor="#aaa"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+              placeholderTextColor="#aaa"
+            />
+          </>
 
           {error && <ThemedText style={styles.error}>❌ {error}</ThemedText>}
 
           <Pressable
             style={[
               styles.button,
-              (loading ||
-                (!pendingVerification &&
-                  (!email || !password || signUpMissingName))) &&
+              (loading || !email || !password || signUpMissingName) &&
                 styles.buttonDisabled,
             ]}
             onPress={handleSubmit}
-            disabled={
-              loading ||
-              (!pendingVerification &&
-                (!email || !password || signUpMissingName))
-            }
+            disabled={loading || !email || !password || signUpMissingName}
           >
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
               <ThemedText style={styles.buttonText}>
-                {pendingVerification
-                  ? 'Verify'
-                  : mode === 'sign-in'
-                    ? 'Sign In'
-                    : 'Create Account'}
+                {mode === 'sign-in' ? 'Sign In' : 'Create Account'}
               </ThemedText>
             )}
           </Pressable>
 
-          {!pendingVerification && (
-            <Pressable
-              onPress={() =>
-                setMode(mode === 'sign-in' ? 'sign-up' : 'sign-in')
-              }
-            >
-              <ThemedText type="link">
-                {mode === 'sign-in'
-                  ? "Don't have an account? Sign up"
-                  : 'Already have an account? Sign in'}
-              </ThemedText>
-            </Pressable>
-          )}
+          <Pressable
+            onPress={() => setMode(mode === 'sign-in' ? 'sign-up' : 'sign-in')}
+          >
+            <ThemedText type="link">
+              {mode === 'sign-in'
+                ? "Don't have an account? Sign up"
+                : 'Already have an account? Sign in'}
+            </ThemedText>
+          </Pressable>
         </View>
       </ImageBackground>
     </ThemedView>

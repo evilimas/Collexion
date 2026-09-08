@@ -1,15 +1,19 @@
-import { ClerkProvider, useAuth } from '@clerk/expo';
-import { tokenCache } from '@clerk/expo/token-cache';
-import { DarkTheme, ThemeProvider } from '@react-navigation/native';
+import React from 'react';
+import { DarkTheme, ThemeProvider } from 'expo-router/react-navigation';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, View } from 'react-native';
+import { onAuthStateChanged, type User } from 'firebase/auth';
+import { useEffect, useState } from 'react';
+import { auth } from '@/lib/firebase';
 import 'react-native-reanimated';
 
 function RootLayoutNav() {
-  const { isLoaded, isSignedIn } = useAuth();
+  const [user, setUser] = useState<User | null | undefined>(undefined);
 
-  if (!isLoaded) {
+  useEffect(() => onAuthStateChanged(auth, setUser), []);
+
+  if (user === undefined) {
     return (
       <View style={styles.loadingScreen}>
         <Image
@@ -25,7 +29,7 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={DarkTheme}>
       <Stack screenOptions={{ headerShown: false }}>
-        {isSignedIn ? (
+        {user ? (
           <Stack.Screen name="(tabs)" />
         ) : (
           <Stack.Screen name="auth" options={{ headerShown: false }} />
@@ -41,21 +45,7 @@ function RootLayoutNav() {
 }
 
 export default function RootLayout() {
-  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
-
-  if (!publishableKey) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Missing EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY</Text>
-      </View>
-    );
-  }
-
-  return (
-    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <RootLayoutNav />
-    </ClerkProvider>
-  );
+  return <RootLayoutNav />;
 }
 
 const styles = StyleSheet.create({

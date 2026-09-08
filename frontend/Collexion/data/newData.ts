@@ -6,7 +6,8 @@ export type CollectionItem = {
   name: string;
   model?: string;
   color: string;
-  condition: 'Mint' | 'Like New' | 'Good' | 'Fair';
+  condition: 'Unopened' | 'Mint' | 'Like New' | 'Good' | 'Fair' | 'Poor';
+  withBox?: boolean;
   edition?: string;
   forConsole?: string; // Only for controllers
   manufacturer?: string;
@@ -27,7 +28,7 @@ export const collection: CollectionItem[] = [
     condition: 'Good',
     manufacturer: 'Sony',
     description: 'PS3 slim 2500model with Hen CFW',
-    picture: require('@/assets/images/ps3w.png'),
+    picture: require('@/assets/images/ps3.png'),
   },
   {
     id: '2',
@@ -134,7 +135,7 @@ export const collection: CollectionItem[] = [
     color: 'White',
     condition: 'Good',
     manufacturer: 'Microsoft',
-    picture: require('@/assets/images/xbox.png'),
+    picture: require('@/assets/images/xbox3601.png'),
   },
   {
     id: '12',
@@ -168,7 +169,7 @@ export const collection: CollectionItem[] = [
     edition: 'Black Ops edition',
     manufacturer: 'Sony',
     condition: 'Good',
-    // picture: require('@/assets/images/psvita.png'),
+    picture: require('@/assets/images/psvita.png'),
   },
   {
     id: '15',
@@ -179,7 +180,7 @@ export const collection: CollectionItem[] = [
     edition: 'Standard Edition',
     manufacturer: 'Sony',
     condition: 'Good',
-    picture: require('@/assets/images/ps3.png'),
+    picture: require('@/assets/images/psp.png'),
   },
   {
     id: '16',
@@ -190,7 +191,7 @@ export const collection: CollectionItem[] = [
     edition: 'Standard Edition',
     manufacturer: 'Sony',
     condition: 'Good',
-    picture: require('@/assets/images/ps3.png'),
+    picture: require('@/assets/images/psp.png'),
   },
   {
     id: '17',
@@ -201,7 +202,7 @@ export const collection: CollectionItem[] = [
     edition: 'Standard Edition',
     manufacturer: 'Sony',
     condition: 'Good',
-    picture: require('@/assets/images/ps3.png'),
+    picture: require('@/assets/images/psp.png'),
   },
   {
     id: '18',
@@ -213,7 +214,7 @@ export const collection: CollectionItem[] = [
     reshell: true,
     manufacturer: 'Sony',
     condition: 'Good',
-    picture: require('@/assets/images/ps3.png'),
+    picture: require('@/assets/images/psp.png'),
   },
   {
     id: '19',
@@ -225,7 +226,7 @@ export const collection: CollectionItem[] = [
     reshell: true,
     manufacturer: 'Sony',
     condition: 'Good',
-    picture: require('@/assets/images/ps3.png'),
+    picture: require('@/assets/images/psp.png'),
   },
   {
     id: '20',
@@ -236,7 +237,7 @@ export const collection: CollectionItem[] = [
     edition: '20th Anniversary Edition',
     manufacturer: 'Sony',
     condition: 'Good',
-    picture: require('@/assets/images/ps3.png'),
+    picture: require('@/assets/images/dualshock4.png'),
   },
   {
     id: '21',
@@ -247,7 +248,7 @@ export const collection: CollectionItem[] = [
     manufacturer: 'Microsoft',
     condition: 'Like New',
     reshell: false,
-    picture: require('@/assets/images/ps3.png'),
+    picture: require('@/assets/images/xboxonecontroller.png'),
   },
   {
     id: '22',
@@ -259,7 +260,7 @@ export const collection: CollectionItem[] = [
     manufacturer: 'Microsoft',
     condition: 'Like New',
     reshell: true,
-    picture: require('@/assets/images/ps3.png'),
+    picture: require('@/assets/images/xboxseries.png'),
   },
   {
     id: '23',
@@ -271,7 +272,7 @@ export const collection: CollectionItem[] = [
     manufacturer: 'Microsoft',
     reshell: true,
     condition: 'Like New',
-    picture: require('@/assets/images/xbox.png'),
+    picture: require('@/assets/images/xboxseries.png'),
   },
   {
     id: '24',
@@ -282,7 +283,7 @@ export const collection: CollectionItem[] = [
     manufacturer: 'Microsoft',
     reshell: false,
     condition: 'Like New',
-    picture: require('@/assets/images/xbox.png'),
+    picture: require('@/assets/images/xboxone.png'),
   },
   {
     id: '25',
@@ -293,6 +294,6 @@ export const collection: CollectionItem[] = [
     manufacturer: 'Sony',
     reshell: false,
     condition: 'Like New',
-    picture: require('@/assets/images/ps3w.png'),
+    picture: require('@/assets/images/ps3.png'),
   },
 ];

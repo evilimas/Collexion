@@ -7,7 +7,8 @@ type Props = {
   model?: string;
   edition?: string;
   color: string;
-  condition: 'Mint' | 'Like New' | 'Good' | 'Fair';
+  condition: 'Unopened' | 'Mint' | 'Like New' | 'Good' | 'Fair' | 'Poor';
+  withBox?: boolean;
   description?: string;
   manufacturer?: string;
   picture?: ImageSourcePropType;
@@ -22,6 +23,8 @@ const Console = ({
   condition,
   picture,
   onPress,
+  withBox,
+  description,
 }: Props) => {
   const content = (
     <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
@@ -44,6 +47,9 @@ const Console = ({
         {edition ? <Text style={styles.meta}>Edition: {edition}</Text> : null}
         <Text style={styles.meta}>Color: {color}</Text>
         <Text style={styles.meta}>Condition: {condition}</Text>
+        {withBox !== undefined ? (
+          <Text style={styles.meta}>With Box: {withBox ? 'Yes' : 'No'}</Text>
+        ) : null}
       </View>
     </View>
   );
