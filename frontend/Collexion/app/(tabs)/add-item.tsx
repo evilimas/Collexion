@@ -7,11 +7,55 @@ import {
   Modal,
   Pressable,
   ScrollView,
+  Alert,
 } from 'react-native';
-import type { CollectionItem } from '@/data/newData';
 import React, { useMemo, useState } from 'react';
+import type { ImageSourcePropType } from 'react-native';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
-import { collection } from '@/data/newData';
+import { auth, db } from '@/lib/firebase';
+import {
+  addDoc,
+  collection as firestoreCollection,
+  serverTimestamp,
+} from 'firebase/firestore';
+
+function getItemPicture(
+  itemType: 'Console' | 'Handheld' | 'Controller',
+  name: string,
+): ImageSourcePropType | undefined {
+  const pictures: Record<string, ImageSourcePropType> = {
+    'PlayStation 5': require('@/assets/images/ps5.png'),
+    'PlayStation 4': require('@/assets/images/ps4.png'),
+    'PlayStation 3': require('@/assets/images/ps3.png'),
+    'PlayStation 2': require('@/assets/images/ps2.png'),
+    'Xbox Series S|X': require('@/assets/images/xboxseries.png'),
+    'Xbox One': require('@/assets/images/xboxone.png'),
+    'Xbox 360': require('@/assets/images/xbox360.png'),
+    'Xbox Original(OG)': require('@/assets/images/ogxbox.png'),
+    'Nintendo Switch': require('@/assets/images/nswitch.png'),
+    'PlayStation Vita(PSV)': require('@/assets/images/psvita.png'),
+    'PlayStation Portable(PSP)': require('@/assets/images/psp.png'),
+    'Nintendo 3DS': require('@/assets/images/3ds.png'),
+    'Nintendo DS': require('@/assets/images/nds.png'),
+    'Game Boy Advance(GBA)': require('@/assets/images/gba.png'),
+    'Game Boy': require('@/assets/images/gameboy.png'),
+    'Game Boy Color': require('@/assets/images/gameboycolor.png'),
+    'Game Gear': require('@/assets/images/gamegear.png'),
+    'Neo Geo Pocket': require('@/assets/images/neogeop.png'),
+    'Neo Geo Pocket Color': require('@/assets/images/neogeopcolor.png'),
+    'DualSense(PS5)': require('@/assets/images/dualsense.png'),
+    'DualShock 4(PS4)': require('@/assets/images/dualshock4.png'),
+    'Sixaxis/DualShock 3(PS3)': require('@/assets/images/dualshock3.png'),
+    'DualShock 2(PS2)': require('@/assets/images/dualshock2.png'),
+    'Xbox Series S|X Controller': require('@/assets/images/xboxseries.png'),
+    'Xbox One Controller': require('@/assets/images/xboxonecontroller.png'),
+    'Xbox 360 Controller': require('@/assets/images/xbox360controller.png'),
+    'Xbox Original(OG) Controller': require('@/assets/images/ogxbox.png'),
+    'Nintendo Switch Controller': require('@/assets/images/nswitch.png'),
+  };
+
+  return pictures[name];
+}
 
 const AddItem = () => {
   const consoleOptions: string[] = [
@@ -46,7 +90,7 @@ const AddItem = () => {
     'Xbox One Controller',
     'Xbox 360 Controller',
     'Xbox Original(OG) Controller',
-    'Nintendo Switch Pro Controller',
+    'Nintendo Switch Controller',
   ];
 
   const manufacturerOptions: string[] = [
@@ -80,29 +124,60 @@ const AddItem = () => {
   const radioButtonsCondition: RadioButtonProps[] = useMemo(
     () => [
       {
+        id: '0',
+        label: 'Unopened',
+        value: 'unopened',
+        containerStyle: { width: 120 },
+      },
+      {
         id: '1', // acts as primary key, should be unique and non-empty string
         label: 'Mint',
         value: 'mint',
+        containerStyle: { width: 80 },
       },
       {
         id: '2',
         label: 'Like New',
         value: 'like_new',
+        containerStyle: { width: 110 },
       },
       {
         id: '3',
         label: 'Good',
         value: 'good',
+        containerStyle: { width: 119 },
       },
       {
         id: '4',
         label: 'Fair',
         value: 'fair',
+        containerStyle: { width: 80 },
+      },
+      {
+        id: '5',
+        label: 'Poor',
+        value: 'poor',
+        containerStyle: { width: 100 },
       },
     ],
     [],
   );
   const radioButtonsReshell: RadioButtonProps[] = useMemo(
+    () => [
+      {
+        id: '1', // acts as primary key, should be unique and non-empty string
+        label: 'Yes',
+        value: 'true',
+      },
+      {
+        id: '2',
+        label: 'No',
+        value: 'false',
+      },
+    ],
+    [],
+  );
+  const radioButtonsWithBox: RadioButtonProps[] = useMemo(
     () => [
       {
         id: '1', // acts as primary key, should be unique and non-empty string
@@ -131,319 +206,395 @@ const AddItem = () => {
   const [forConsole] = useState<string>('');
   const [manufacturer, setManufacturer] = useState<string>('');
   const [reshell, setReshell] = useState<string>('2');
+  const [url, setUrl] = useState<string>('');
+  const [withBox, setWithBox] = useState<string>('2');
   const [isConsoleSelectOpen, setIsConsoleSelectOpen] =
     useState<boolean>(false);
   const [isManufacturerSelectOpen, setIsManufacturerSelectOpen] =
     useState<boolean>(false);
 
-  const handleAddItem = () => {
-    const newItem: CollectionItem = {
-      id: collection.length + 1 + '',
-      type: type === '1' ? 'Console' : type === '2' ? 'Handheld' : 'Controller',
-      condition:
-        condition === '1'
-          ? 'Mint'
-          : condition === '2'
-            ? 'Like New'
-            : condition === '3'
-              ? 'Good'
-              : 'Fair',
-      name: consoleName || handheldName || controllerName,
-      description,
-      model,
-      color,
-      edition,
-      forConsole,
-      manufacturer,
-      reshell: reshell === '1' ? true : false,
-      picture: picture,
-    };
+  const handleAddItem = async () => {
+    const name = consoleName || handheldName || controllerName;
+    const user = auth.currentUser;
 
-    collection.push(newItem);
+    if (!user) return Alert.alert('Sign in required', 'Please sign in first.');
+    if (!name || !color.trim()) {
+      return Alert.alert(
+        'Missing information',
+        'Select an item and enter its color.',
+      );
+    }
+
+    const itemType =
+      type === '1' ? 'Console' : type === '2' ? 'Handheld' : 'Controller';
+    const itemCondition =
+      condition === '1'
+        ? 'Mint'
+        : condition === '2'
+          ? 'Like New'
+          : condition === '3'
+            ? 'Good'
+            : 'Fair';
+
+    try {
+      await addDoc(firestoreCollection(db, 'collection_items'), {
+        userId: user.uid,
+        type: itemType,
+        name,
+        model: model.trim(),
+        color: color.trim(),
+        condition: itemCondition,
+        edition: edition.trim(),
+        forConsole: forConsole.trim(),
+        manufacturer: manufacturer.trim(),
+        description: description.trim(),
+        reshell: reshell === '1',
+        picture: picture ?? null,
+        url: url.trim(),
+        withBox: withBox === '1',
+        createdAt: serverTimestamp(),
+      });
+      Alert.alert('Saved', `${name} was added to your collection.`);
+    } catch (error) {
+      Alert.alert(
+        'Unable to save item',
+        error instanceof Error ? error.message : 'Please try again.',
+      );
+    }
   };
 
-  const picture = useMemo(() => {
-    if (type === '1') {
-      const consoleItem = collection.find((item) => item.name === consoleName);
-      return consoleItem?.picture;
-    } else if (type === '2') {
-      const handheldItem = collection.find(
-        (item) => item.name === handheldName,
-      );
-      return handheldItem?.picture;
-    } else if (type === '3') {
-      const controllerItem = collection.find(
-        (item) => item.name === controllerName,
-      );
-      return controllerItem?.picture;
-    }
-  }, [type, consoleName, handheldName, controllerName]);
+  const picture = getItemPicture(
+    type === '1' ? 'Console' : type === '2' ? 'Handheld' : 'Controller',
+    consoleName || handheldName || controllerName,
+  );
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require('@/assets/images/background3.jpg')}
-        resizeMode="cover"
-        style={styles.image}
-      >
-        <View style={styles.overlay}>
-          <Text style={styles.text}>Add item to collection</Text>
-          <View style={{ padding: 10 }}>
-            <View>
-              <RadioGroup
-                layout="row"
-                labelStyle={{
-                  color: 'white',
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                }}
-                radioButtons={radioButtons}
-                onPress={setType}
-                selectedId={type}
-              />
-            </View>
-            {type === '1' && (
-              <Pressable
-                style={styles.dropdownButtonStyle}
-                onPress={() => setIsConsoleSelectOpen(true)}
-              >
-                <Text style={styles.dropdownButtonTxtStyle}>
-                  {consoleName || 'Select console'}
-                </Text>
-              </Pressable>
-            )}
-            {type === '2' && (
-              <Pressable
-                style={styles.dropdownButtonStyle}
-                onPress={() => setIsConsoleSelectOpen(true)}
-              >
-                <Text style={styles.dropdownButtonTxtStyle}>
-                  {handheldName || 'Select handheld'}
-                </Text>
-              </Pressable>
-            )}
-            {type === '3' && (
-              <Pressable
-                style={styles.dropdownButtonStyle}
-                onPress={() => setIsConsoleSelectOpen(true)}
-              >
-                <Text style={styles.dropdownButtonTxtStyle}>
-                  {controllerName || 'Select controller'}
-                </Text>
-              </Pressable>
-            )}
-            <Modal
-              visible={isConsoleSelectOpen}
-              transparent
-              animationType="fade"
-              onRequestClose={() => setIsConsoleSelectOpen(false)}
-            >
-              <Pressable
-                style={styles.modalBackdrop}
-                onPress={() => setIsConsoleSelectOpen(false)}
-              >
-                <Pressable style={styles.dropdownMenuStyle}>
-                  {type === '1' && (
-                    <ScrollView>
-                      {consoleOptions.map((item) => (
-                        <Pressable
-                          key={item}
-                          style={styles.dropdownItemStyle}
-                          onPress={() => {
-                            setConsoleName(item);
-                            setIsConsoleSelectOpen(false);
-                          }}
-                        >
-                          <Text style={styles.dropdownItemTxtStyle}>
-                            {item}
-                          </Text>
-                        </Pressable>
-                      ))}
-                    </ScrollView>
-                  )}
-                  {type === '3' && (
-                    <ScrollView>
-                      {controllerOptions.map((item) => (
-                        <Pressable
-                          key={item}
-                          style={styles.dropdownItemStyle}
-                          onPress={() => {
-                            setControllerName(item);
-                            setIsConsoleSelectOpen(false);
-                          }}
-                        >
-                          <Text style={styles.dropdownItemTxtStyle}>
-                            {item}
-                          </Text>
-                        </Pressable>
-                      ))}
-                    </ScrollView>
-                  )}
-                  {type === '2' && (
-                    <ScrollView>
-                      {handheldOptions.map((item) => (
-                        <Pressable
-                          key={item}
-                          style={styles.dropdownItemStyle}
-                          onPress={() => {
-                            setHandheldName(item);
-                            setIsConsoleSelectOpen(false);
-                          }}
-                        >
-                          <Text style={styles.dropdownItemTxtStyle}>
-                            {item}
-                          </Text>
-                        </Pressable>
-                      ))}
-                    </ScrollView>
-                  )}
+      <ScrollView>
+        <ImageBackground
+          source={require('@/assets/images/background3.jpg')}
+          resizeMode="cover"
+          style={styles.image}
+        >
+          <View style={styles.overlay}>
+            <Text style={styles.text}>Add item to collection</Text>
+            <View style={{ padding: 10 }}>
+              <View>
+                <RadioGroup
+                  layout="row"
+                  labelStyle={{
+                    color: 'white',
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                  }}
+                  radioButtons={radioButtons}
+                  onPress={setType}
+                  selectedId={type}
+                />
+              </View>
+              {type === '1' && (
+                <Pressable
+                  style={styles.dropdownButtonStyle}
+                  onPress={() => setIsConsoleSelectOpen(true)}
+                >
+                  <Text style={styles.dropdownButtonTxtStyle}>
+                    {consoleName || 'Select console'}
+                  </Text>
                 </Pressable>
-              </Pressable>
-            </Modal>
-            {/* <TextInput
+              )}
+              {type === '2' && (
+                <Pressable
+                  style={styles.dropdownButtonStyle}
+                  onPress={() => setIsConsoleSelectOpen(true)}
+                >
+                  <Text style={styles.dropdownButtonTxtStyle}>
+                    {handheldName || 'Select handheld'}
+                  </Text>
+                </Pressable>
+              )}
+              {type === '3' && (
+                <Pressable
+                  style={styles.dropdownButtonStyle}
+                  onPress={() => setIsConsoleSelectOpen(true)}
+                >
+                  <Text style={styles.dropdownButtonTxtStyle}>
+                    {controllerName || 'Select controller'}
+                  </Text>
+                </Pressable>
+              )}
+              <Modal
+                visible={isConsoleSelectOpen}
+                transparent
+                animationType="fade"
+                onRequestClose={() => setIsConsoleSelectOpen(false)}
+              >
+                <Pressable
+                  style={styles.modalBackdrop}
+                  onPress={() => setIsConsoleSelectOpen(false)}
+                >
+                  <Pressable style={styles.dropdownMenuStyle}>
+                    {type === '1' && (
+                      <ScrollView>
+                        {consoleOptions.map((item) => (
+                          <Pressable
+                            key={item}
+                            style={styles.dropdownItemStyle}
+                            onPress={() => {
+                              setConsoleName(item);
+                              setIsConsoleSelectOpen(false);
+                            }}
+                          >
+                            <Text style={styles.dropdownItemTxtStyle}>
+                              {item}
+                            </Text>
+                          </Pressable>
+                        ))}
+                      </ScrollView>
+                    )}
+                    {type === '3' && (
+                      <ScrollView>
+                        {controllerOptions.map((item) => (
+                          <Pressable
+                            key={item}
+                            style={styles.dropdownItemStyle}
+                            onPress={() => {
+                              setControllerName(item);
+                              setIsConsoleSelectOpen(false);
+                            }}
+                          >
+                            <Text style={styles.dropdownItemTxtStyle}>
+                              {item}
+                            </Text>
+                          </Pressable>
+                        ))}
+                      </ScrollView>
+                    )}
+                    {type === '2' && (
+                      <ScrollView>
+                        {handheldOptions.map((item) => (
+                          <Pressable
+                            key={item}
+                            style={styles.dropdownItemStyle}
+                            onPress={() => {
+                              setHandheldName(item);
+                              setIsConsoleSelectOpen(false);
+                            }}
+                          >
+                            <Text style={styles.dropdownItemTxtStyle}>
+                              {item}
+                            </Text>
+                          </Pressable>
+                        ))}
+                      </ScrollView>
+                    )}
+                  </Pressable>
+                </Pressable>
+              </Modal>
+              {/* <TextInput
               placeholder="* Name"
               placeholderTextColor="rgba(255, 255, 255, 0.7)"
               style={styles.inputStyle}
               value={name}
               onChangeText={setName}
             /> */}
-            <TextInput
-              placeholder="Model (e.g. Slim, Pro, OLED)"
-              placeholderTextColor="rgba(255, 255, 255, 0.7)"
-              style={styles.inputStyle}
-              value={model}
-              onChangeText={setModel}
-            />
-            <TextInput
-              placeholder="* Color"
-              placeholderTextColor="rgba(255, 255, 255, 0.7)"
-              style={styles.inputStyle}
-              value={color}
-              onChangeText={setColor}
-            />
-            <View
-              style={{
-                borderColor: 'rgba(255, 255, 255, 0.5)',
-                borderWidth: 1,
-                borderRadius: 8,
-                marginBottom: 10,
-              }}
-            >
-              <RadioGroup
-                layout="row"
-                radioButtons={radioButtonsCondition}
-                onPress={setCondition}
-                selectedId={condition}
-                labelStyle={{
-                  color: 'white',
-                  fontSize: 13,
-                  fontWeight: 'bold',
-                  marginLeft: 5,
-                }}
-              />
-            </View>
-            <TextInput
-              placeholder="* Edition (e.g. Standard, Limited, Special)"
-              placeholderTextColor="rgba(255, 255, 255, 0.7)"
-              style={styles.inputStyle}
-              value={edition}
-              onChangeText={setEdition}
-            />
-            {type === '3' && (
               <TextInput
-                placeholder="For What Console "
+                placeholder="Model (e.g. Slim, Pro, OLED)"
                 placeholderTextColor="rgba(255, 255, 255, 0.7)"
                 style={styles.inputStyle}
-                value={consoleName}
-                onChangeText={setConsoleName}
+                value={model}
+                onChangeText={setModel}
               />
-            )}
-            <Pressable
-              style={styles.dropdownButtonStyle}
-              onPress={() => setIsManufacturerSelectOpen(true)}
-            >
-              <Text style={styles.dropdownButtonTxtStyle}>
-                {manufacturer || 'Select manufacturer'}
-              </Text>
-            </Pressable>
-            <Modal
-              visible={isManufacturerSelectOpen}
-              transparent
-              animationType="fade"
-              onRequestClose={() => setIsManufacturerSelectOpen(false)}
-            >
-              <Pressable
-                style={styles.modalBackdrop}
-                onPress={() => setIsManufacturerSelectOpen(false)}
-              >
-                <Pressable style={styles.dropdownMenuStyle}>
-                  <ScrollView>
-                    {manufacturerOptions.map((item) => (
-                      <Pressable
-                        key={item}
-                        style={styles.dropdownItemStyle}
-                        onPress={() => {
-                          setManufacturer(item);
-                          setIsManufacturerSelectOpen(false);
-                        }}
-                      >
-                        <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-                      </Pressable>
-                    ))}
-                  </ScrollView>
-                </Pressable>
-              </Pressable>
-            </Modal>
-
-            <TextInput
-              placeholder="Description"
-              placeholderTextColor="rgba(255, 255, 255, 0.7)"
-              style={styles.descriptionInputStyle}
-              multiline={true}
-              numberOfLines={4}
-              value={description}
-              onChangeText={setDescription}
-            />
-            <View
-              style={{
-                borderColor: 'rgba(255, 255, 255, 0.5)',
-                borderWidth: 1,
-                borderRadius: 8,
-                marginBottom: 10,
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <Text
+              <TextInput
+                placeholder="* Color"
+                placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                style={styles.inputStyle}
+                value={color}
+                onChangeText={setColor}
+              />
+              <View
                 style={{
-                  color: 'white',
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                  marginBottom: 6,
-                  marginLeft: 10,
+                  borderColor: 'rgba(255, 255, 255, 0.5)',
+                  borderWidth: 1,
+                  borderRadius: 8,
+                  marginBottom: 10,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingVertical: 3,
                 }}
               >
-                Reshelled?
-              </Text>
-              <RadioGroup
-                layout="row"
-                radioButtons={radioButtonsReshell}
-                onPress={setReshell}
-                selectedId={reshell}
-                labelStyle={{
-                  color: 'white',
-                  fontSize: 14,
-                  fontWeight: 'bold',
-                }}
+                <RadioGroup
+                  layout="row"
+                  containerStyle={{ marginBottom: 1, width: '90%' }}
+                  radioButtons={radioButtonsCondition.slice(0, 3)}
+                  onPress={setCondition}
+                  selectedId={condition}
+                  labelStyle={{
+                    color: 'white',
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    marginLeft: 7,
+                  }}
+                />
+                <RadioGroup
+                  layout="row"
+                  containerStyle={{ width: '90%' }}
+                  radioButtons={radioButtonsCondition.slice(3)}
+                  onPress={setCondition}
+                  selectedId={condition}
+                  labelStyle={{
+                    color: 'white',
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    marginLeft: 7,
+                  }}
+                />
+              </View>
+              <TextInput
+                placeholder="* Edition (e.g. Standard, Limited, Special)"
+                placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                style={styles.inputStyle}
+                value={edition}
+                onChangeText={setEdition}
               />
+              {type === '3' && (
+                <TextInput
+                  placeholder="For What Console "
+                  placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                  style={styles.inputStyle}
+                  value={consoleName}
+                  onChangeText={setConsoleName}
+                />
+              )}
+              <Pressable
+                style={styles.dropdownButtonStyle}
+                onPress={() => setIsManufacturerSelectOpen(true)}
+              >
+                <Text style={styles.dropdownButtonTxtStyle}>
+                  {manufacturer || 'Select manufacturer'}
+                </Text>
+              </Pressable>
+              <Modal
+                visible={isManufacturerSelectOpen}
+                transparent
+                animationType="fade"
+                onRequestClose={() => setIsManufacturerSelectOpen(false)}
+              >
+                <Pressable
+                  style={styles.modalBackdrop}
+                  onPress={() => setIsManufacturerSelectOpen(false)}
+                >
+                  <Pressable style={styles.dropdownMenuStyle}>
+                    <ScrollView>
+                      {manufacturerOptions.map((item) => (
+                        <Pressable
+                          key={item}
+                          style={styles.dropdownItemStyle}
+                          onPress={() => {
+                            setManufacturer(item);
+                            setIsManufacturerSelectOpen(false);
+                          }}
+                        >
+                          <Text style={styles.dropdownItemTxtStyle}>
+                            {item}
+                          </Text>
+                        </Pressable>
+                      ))}
+                    </ScrollView>
+                  </Pressable>
+                </Pressable>
+              </Modal>
+
+              <TextInput
+                placeholder="Description"
+                placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                style={styles.descriptionInputStyle}
+                multiline={true}
+                numberOfLines={4}
+                value={description}
+                onChangeText={setDescription}
+              />
+              <TextInput
+                placeholder="Image URL"
+                placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                style={styles.inputStyle}
+                value={url}
+                onChangeText={setUrl}
+              />
+              <View
+                style={{
+                  borderColor: 'rgba(255, 255, 255, 0.5)',
+                  borderWidth: 1,
+                  borderRadius: 8,
+                  marginBottom: 10,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                    marginBottom: 6,
+                    marginLeft: 10,
+                  }}
+                >
+                  Reshelled?
+                </Text>
+                <RadioGroup
+                  layout="row"
+                  radioButtons={radioButtonsReshell}
+                  onPress={setReshell}
+                  selectedId={reshell}
+                  labelStyle={{
+                    color: 'white',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                />
+              </View>
+              <View
+                style={{
+                  borderColor: 'rgba(255, 255, 255, 0.5)',
+                  borderWidth: 1,
+                  borderRadius: 8,
+                  marginBottom: 10,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                    marginBottom: 6,
+                    marginLeft: 10,
+                  }}
+                >
+                  With box?
+                </Text>
+                <RadioGroup
+                  layout="row"
+                  radioButtons={radioButtonsWithBox}
+                  onPress={setWithBox}
+                  selectedId={withBox}
+                  labelStyle={{
+                    color: 'white',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                  }}
+                />
+              </View>
             </View>
           </View>
-        </View>
-        <Pressable onPress={handleAddItem} style={styles.button}>
-          <Text style={styles.buttonText}>Add Item</Text>
-        </Pressable>
-      </ImageBackground>
+          <Pressable onPress={handleAddItem} style={styles.button}>
+            <Text style={styles.buttonText}>Add Item</Text>
+          </Pressable>
+        </ImageBackground>
+      </ScrollView>
     </View>
   );
 };
