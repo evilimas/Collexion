@@ -9,53 +9,15 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import React, { useMemo, useState } from 'react';
-import type { ImageSourcePropType } from 'react-native';
+import { useMemo, useState } from 'react';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { auth, db } from '@/lib/firebase';
+import { getItemPicture } from '@/lib/item-picture';
 import {
   addDoc,
   collection as firestoreCollection,
   serverTimestamp,
 } from 'firebase/firestore';
-
-function getItemPicture(
-  itemType: 'Console' | 'Handheld' | 'Controller',
-  name: string,
-): ImageSourcePropType | undefined {
-  const pictures: Record<string, ImageSourcePropType> = {
-    'PlayStation 5': require('@/assets/images/ps5.png'),
-    'PlayStation 4': require('@/assets/images/ps4.png'),
-    'PlayStation 3': require('@/assets/images/ps3.png'),
-    'PlayStation 2': require('@/assets/images/ps2.png'),
-    'Xbox Series S|X': require('@/assets/images/xboxseries.png'),
-    'Xbox One': require('@/assets/images/xboxone.png'),
-    'Xbox 360': require('@/assets/images/xbox360.png'),
-    'Xbox Original(OG)': require('@/assets/images/ogxbox.png'),
-    'Nintendo Switch': require('@/assets/images/nswitch.png'),
-    'PlayStation Vita(PSV)': require('@/assets/images/psvita.png'),
-    'PlayStation Portable(PSP)': require('@/assets/images/psp.png'),
-    'Nintendo 3DS': require('@/assets/images/3ds.png'),
-    'Nintendo DS': require('@/assets/images/nds.png'),
-    'Game Boy Advance(GBA)': require('@/assets/images/gba.png'),
-    'Game Boy': require('@/assets/images/gameboy.png'),
-    'Game Boy Color': require('@/assets/images/gameboycolor.png'),
-    'Game Gear': require('@/assets/images/gamegear.png'),
-    'Neo Geo Pocket': require('@/assets/images/neogeop.png'),
-    'Neo Geo Pocket Color': require('@/assets/images/neogeopcolor.png'),
-    'DualSense(PS5)': require('@/assets/images/dualsense.png'),
-    'DualShock 4(PS4)': require('@/assets/images/dualshock4.png'),
-    'Sixaxis/DualShock 3(PS3)': require('@/assets/images/dualshock3.png'),
-    'DualShock 2(PS2)': require('@/assets/images/dualshock2.png'),
-    'Xbox Series S|X Controller': require('@/assets/images/xboxseries.png'),
-    'Xbox One Controller': require('@/assets/images/xboxonecontroller.png'),
-    'Xbox 360 Controller': require('@/assets/images/xbox360controller.png'),
-    'Xbox Original(OG) Controller': require('@/assets/images/ogxbox.png'),
-    'Nintendo Switch Controller': require('@/assets/images/nswitch.png'),
-  };
-
-  return pictures[name];
-}
 
 const AddItem = () => {
   const consoleOptions: string[] = [
@@ -203,7 +165,7 @@ const AddItem = () => {
   const [consoleName, setConsoleName] = useState<string>('');
   const [handheldName, setHandheldName] = useState<string>('');
   const [controllerName, setControllerName] = useState<string>('');
-  const [forConsole] = useState<string>('');
+  const [forConsole, setForConsole] = useState<string>('');
   const [manufacturer, setManufacturer] = useState<string>('');
   const [reshell, setReshell] = useState<string>('2');
   const [url, setUrl] = useState<string>('');
@@ -214,7 +176,8 @@ const AddItem = () => {
     useState<boolean>(false);
 
   const handleAddItem = async () => {
-    const name = consoleName || handheldName || controllerName;
+    const name =
+      type === '1' ? consoleName : type === '2' ? handheldName : controllerName;
     const user = auth.currentUser;
 
     if (!user) return Alert.alert('Sign in required', 'Please sign in first.');
@@ -265,7 +228,7 @@ const AddItem = () => {
 
   const picture = getItemPicture(
     type === '1' ? 'Console' : type === '2' ? 'Handheld' : 'Controller',
-    consoleName || handheldName || controllerName,
+    type === '1' ? consoleName : type === '2' ? handheldName : controllerName,
   );
 
   return (
@@ -461,8 +424,8 @@ const AddItem = () => {
                   placeholder="For What Console "
                   placeholderTextColor="rgba(255, 255, 255, 0.7)"
                   style={styles.inputStyle}
-                  value={consoleName}
-                  onChangeText={setConsoleName}
+                  value={forConsole}
+                  onChangeText={setForConsole}
                 />
               )}
               <Pressable

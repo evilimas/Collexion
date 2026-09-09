@@ -7,17 +7,18 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-import { collection } from '@/data/newData';
 import React, { useState } from 'react';
 import ConsoleGroup from '@/components/Consoles';
 import Console from '@/components/Console';
 import { Link } from 'expo-router';
+import { useCollectionItems } from '@/hooks/use-collection-items';
 
 const Consoles = () => {
   const [search, setSearch] = useState('');
   const [selectedName, setSelectedName] = useState<string | null>(null);
+  const { items, error } = useCollectionItems();
 
-  const allConsoles = collection.filter((item) => item.type === 'Console');
+  const allConsoles = items.filter((item) => item.type === 'Console');
 
   // Group consoles by name and count how many of each model there are
   const grouped = allConsoles.reduce(
@@ -44,6 +45,7 @@ const Consoles = () => {
       >
         <View style={styles.overlay}>
           <Text style={styles.title}>Consoles</Text>
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
           <TextInput
             placeholder={
               selectedName
@@ -78,6 +80,9 @@ const Consoles = () => {
                         condition: item.condition,
                         manufacturer: item.manufacturer,
                         description: item.description,
+                        url: item.url,
+                        reshell: String(item.reshell),
+                        withBox: String(item.withBox),
                       },
                     }}
                     asChild
@@ -175,5 +180,11 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 8,
     alignSelf: 'flex-start',
+  },
+  errorText: {
+    color: '#ffb3b3',
+    fontSize: 13,
+    textAlign: 'center',
+    marginBottom: 8,
   },
 });

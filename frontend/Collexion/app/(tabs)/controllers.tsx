@@ -3,16 +3,38 @@ import {
   Text,
   StyleSheet,
   ImageBackground,
-  Image,
   TextInput,
   ScrollView,
+  Pressable,
 } from 'react-native';
-import React from 'react';
+import { useState } from 'react';
 import { Link } from 'expo-router';
-import { collection } from '@/data/newData';
+import { useCollectionItems } from '@/hooks/use-collection-items';
+import ConsoleGroup from '@/components/Consoles';
+import Console from '@/components/Console';
 
 const Controllers = () => {
-  const controllers = collection.filter((item) => item.type === 'Controller');
+  const [search, setSearch] = useState('');
+  const [selectedName, setSelectedName] = useState<string | null>(null);
+  const { items, error } = useCollectionItems();
+
+  const allControllers = items.filter((item) => item.type === 'Controller');
+
+  const grouped = allControllers.reduce(
+    (acc, item) => {
+      if (!acc[item.name]) acc[item.name] = [];
+      acc[item.name].push(item);
+      return acc;
+    },
+    {} as Record<string, typeof allControllers>,
+  );
+
+  const groups = Object.entries(grouped).filter(([name]) =>
+    name.toLowerCase().includes(search.toLowerCase()),
+  );
+
+  const selectedItems = selectedName ? (grouped[selectedName] ?? []) : [];
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -21,13 +43,72 @@ const Controllers = () => {
         style={styles.image}
       >
         <View style={styles.overlay}>
-          <ScrollView>
-            <Text style={styles.text}>Controllers</Text>
-            <TextInput
-              placeholder="Search Controllers"
-              placeholderTextColor="rgba(255, 255, 255, 0.7)"
-              style={styles.searchInput}
-            />
+          <Text style={styles.text}>Controllers</Text>
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+          <TextInput
+            placeholder={
+              selectedName
+                ? 'Filter groups (tap Back to change)'
+                : 'Search Controllers'
+            }
+            placeholderTextColor="rgba(255, 255, 255, 0.7)"
+            style={styles.searchInput}
+            value={search}
+            onChangeText={setSearch}
+          />
+          {selectedName ? (
+            <Text style={styles.backText} onPress={() => setSelectedName(null)}>
+              Back to Controllers
+            </Text>
+          ) : null}
+          <ScrollView
+            contentContainerStyle={selectedName ? styles.list : styles.grid}
+            showsVerticalScrollIndicator={false}
+          >
+            {selectedName
+              ? selectedItems.map((item) => (
+                  <Link
+                    key={item.id}
+                    href={{
+                      pathname: '/console-details',
+                      params: {
+                        name: item.name,
+                        model: item.forConsole,
+                        edition: item.edition,
+                        color: item.color,
+                        condition: item.condition,
+                        manufacturer: item.manufacturer,
+                        description: item.description,
+                        url: item.url,
+                        reshell: String(item.reshell),
+                        withBox: String(item.withBox),
+                      },
+                    }}
+                    asChild
+                  >
+                    <Pressable style={{ width: '100%' }}>
+                      <Console
+                        name={item.name}
+                        model={item.forConsole}
+                        edition={item.edition}
+                        color={item.color}
+                        condition={item.condition}
+                        picture={item.picture}
+                        manufacturer={item.manufacturer}
+                        description={item.description}
+                      />
+                    </Pressable>
+                  </Link>
+                ))
+              : groups.map(([name, groupItems]) => (
+                  <ConsoleGroup
+                    key={name}
+                    name={name}
+                    count={groupItems.length}
+                    picture={groupItems[0].picture}
+                    onPress={() => setSelectedName(name)}
+                  />
+                ))}
           </ScrollView>
         </View>
       </ImageBackground>
@@ -97,5 +178,35 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 15,
     marginBottom: 10,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 5,
+    paddingBottom: 20,
+  },
+  list: {
+    paddingHorizontal: 5,
+    paddingBottom: 20,
+  },
+  backText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
+    marginLeft: 8,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    alignSelf: 'flex-start',
+  },
+  errorText: {
+    color: '#ffb3b3',
+    fontSize: 13,
+    textAlign: 'center',
+    marginBottom: 8,
   },
 });
