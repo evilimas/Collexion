@@ -5,12 +5,15 @@ import {
   StyleSheet,
   ImageBackground,
   Pressable,
+  Alert,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { deleteItem } from '@/hooks/use-collection-items';
 
 const ConsoleDetail = () => {
   const router = useRouter();
   const params = useLocalSearchParams();
+  const itemId = params.id as string;
 
   // Get console data from params
   const name = params.name as string;
@@ -23,6 +26,7 @@ const ConsoleDetail = () => {
   const url = params.url as string;
   const reshell = params.reshell === 'true'; // Convert string to boolean
   const withBox = params.withBox === 'true'; // Convert string to boolean
+  const from = (params.from as string) || '/consoles';
 
   return (
     <View style={styles.container}>
@@ -32,7 +36,10 @@ const ConsoleDetail = () => {
         style={styles.image}
       >
         <View style={styles.overlay}>
-          <Pressable onPress={() => router.back()} style={styles.backButton}>
+          <Pressable
+            onPress={() => router.push(from as any)}
+            style={styles.backButton}
+          >
             <Text style={styles.backText}>← Back</Text>
           </Pressable>
 
@@ -59,6 +66,29 @@ const ConsoleDetail = () => {
             <Text style={styles.detailInfo}>
               With Box: {withBox ? 'Yes' : 'No'}
             </Text>
+            <View style={styles.editButtons}>
+              <Pressable style={styles.editBtn}>
+                <Text style={styles.editText}>Edit Item</Text>
+              </Pressable>
+              <Pressable
+                style={styles.editBtn}
+                onPress={async () => {
+                  try {
+                    await deleteItem(itemId);
+                    router.replace(from as any);
+                  } catch (error) {
+                    Alert.alert(
+                      'Unable to delete item',
+                      error instanceof Error
+                        ? error.message
+                        : 'Please try again.',
+                    );
+                  }
+                }}
+              >
+                <Text style={styles.editText}>Delete Item</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
       </ImageBackground>
@@ -94,10 +124,34 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 30,
   },
+
+  editButtons: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    marginTop: 20,
+    color: 'white',
+  },
+
   backText: {
     color: 'white',
     fontSize: 16,
     fontWeight: '600',
+  },
+  editText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  editBtn: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    marginBottom: 10,
   },
   detailCard: {
     backgroundColor: 'rgba(0, 0, 0, 0.55)',
