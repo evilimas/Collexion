@@ -72,6 +72,7 @@ const Handhelds = () => {
                     href={{
                       pathname: '/console-details',
                       params: {
+                        id: item.id,
                         name: item.name,
                         model: item.model,
                         edition: item.edition,
@@ -82,6 +83,7 @@ const Handhelds = () => {
                         url: item.url,
                         reshell: String(item.reshell),
                         withBox: String(item.withBox),
+                        from: '/handhelds',
                       },
                     }}
                     asChild
