@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
+  deleteDoc,
+  doc,
   collection as firestoreCollection,
   onSnapshot,
   query,
@@ -9,6 +11,14 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '@/lib/firebase';
 import type { CollectionItem } from '@/data/newData';
 import { getItemPicture } from '@/lib/item-picture';
+
+export async function deleteItem(itemId: string) {
+  if (!auth.currentUser) {
+    throw new Error('You must be signed in to delete an item.');
+  }
+
+  await deleteDoc(doc(db, 'collection_items', itemId));
+}
 
 // Live Firestore items added by the signed-in user via the "Add item" screen.
 export function useCollectionItems() {
