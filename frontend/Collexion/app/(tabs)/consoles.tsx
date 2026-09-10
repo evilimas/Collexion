@@ -73,6 +73,7 @@ const Consoles = () => {
                     href={{
                       pathname: '/console-details',
                       params: {
+                        id: item.id,
                         name: item.name,
                         model: item.model,
                         edition: item.edition,
@@ -83,6 +84,7 @@ const Consoles = () => {
                         url: item.url,
                         reshell: String(item.reshell),
                         withBox: String(item.withBox),
+                        from: '/consoles',
                       },
                     }}
                     asChild
