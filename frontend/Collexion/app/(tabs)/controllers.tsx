@@ -72,6 +72,7 @@ const Controllers = () => {
                     href={{
                       pathname: '/console-details',
                       params: {
+                        id: item.id,
                         name: item.name,
                         model: item.forConsole,
                         edition: item.edition,
@@ -82,6 +83,7 @@ const Controllers = () => {
                         url: item.url,
                         reshell: String(item.reshell),
                         withBox: String(item.withBox),
+                        from: '/controllers',
                       },
                     }}
                     asChild
