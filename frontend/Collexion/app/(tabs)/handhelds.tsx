@@ -98,6 +98,9 @@ const Handhelds = () => {
                         picture={item.picture}
                         manufacturer={item.manufacturer}
                         description={item.description}
+                        url={item.url}
+                        reshell={item.reshell}
+                        withBox={item.withBox}
                       />
                     </Pressable>
                   </Link>
@@ -112,6 +115,16 @@ const Handhelds = () => {
                   />
                 ))}
           </ScrollView>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 16,
+              textAlign: 'center',
+              marginVertical: 10,
+            }}
+          >
+            {`Total Handhelds: ${allHandhelds.length}`}
+          </Text>
         </View>
       </ImageBackground>
     </View>
@@ -127,14 +140,12 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
-
     paddingHorizontal: 10,
   },
 
   image: {
     width: '100%',
     height: '100%',
-
     resizeMode: 'cover',
   },
   text: {

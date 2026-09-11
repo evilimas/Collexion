@@ -112,6 +112,16 @@ const Controllers = () => {
                   />
                 ))}
           </ScrollView>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 16,
+              textAlign: 'center',
+              marginVertical: 10,
+            }}
+          >
+            {`Total Controllers: ${allControllers.length}`}
+          </Text>
         </View>
       </ImageBackground>
     </View>
