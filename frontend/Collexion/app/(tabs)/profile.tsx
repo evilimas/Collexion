@@ -7,14 +7,17 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-import React from 'react';
+import { useCollectionItems } from '@/hooks/use-collection-items';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { useRouter } from 'expo-router';
 
 const Logout = () => {
+  const router = useRouter();
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      router.push('/auth');
     } catch (error) {
       console.error('Logout failed:', error);
     }
@@ -29,6 +32,7 @@ const Logout = () => {
 
 const Profile = () => {
   const user = auth.currentUser;
+  const { items } = useCollectionItems();
   const userName = user?.displayName || 'UserName';
   const userEmail = user?.email || 'user@example.com';
   return (
@@ -51,16 +55,17 @@ const Profile = () => {
               <View style={styles.headingRight}>
                 <Text style={styles.textHeader}>{userName}</Text>
                 <Text style={styles.textHeaderemail}>{userEmail}</Text>
+                <Text style={[styles.textHeaderemail]}>Member since:</Text>
                 <Text
                   style={[
                     styles.textHeaderemail,
-                    { marginBottom: 10, fontSize: 14 },
+                    { fontSize: 12, color: 'white' },
                   ]}
                 >
-                  Member since: {user?.metadata.creationTime ?? 'Unknown'}
+                  {user?.metadata.creationTime ?? 'Unknown'}
                 </Text>
                 <Text style={styles.textHeaderemail}>
-                  0 Items in collection
+                  {items.length} Items in collection
                 </Text>
               </View>
             </View>
