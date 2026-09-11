@@ -25,6 +25,7 @@ const AddItem = () => {
     'PlayStation 4',
     'PlayStation 3',
     'PlayStation 2',
+    'PlayStation 1',
     'Xbox Series S|X',
     'Xbox One',
     'Xbox 360',
@@ -233,12 +234,12 @@ const AddItem = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <ImageBackground
-          source={require('@/assets/images/background3.jpg')}
-          resizeMode="cover"
-          style={styles.image}
-        >
+      <ImageBackground
+        source={require('@/assets/images/background3.jpg')}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.overlay}>
             <Text style={styles.text}>Add item to collection</Text>
             <View style={{ padding: 10 }}>
@@ -556,8 +557,8 @@ const AddItem = () => {
           <Pressable onPress={handleAddItem} style={styles.button}>
             <Text style={styles.buttonText}>Add Item</Text>
           </Pressable>
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };
@@ -567,22 +568,22 @@ export default AddItem;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // height: '100%',
   },
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
-    width: '100%',
-    height: '100%',
+    // width: '100%',
+    // height: '100%',
     paddingHorizontal: 10,
   },
 
   image: {
-    width: '100%',
-    height: '100%',
-    textShadowColor: 'black',
-    textShadowOffset: { width: 1, height: 4 },
-    textShadowRadius: 6,
-    resizeMode: 'cover',
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    // paddingBottom: 14,
   },
   text: {
     color: 'white',
