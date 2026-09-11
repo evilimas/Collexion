@@ -12,6 +12,7 @@ type Props = {
   description?: string;
   manufacturer?: string;
   picture?: ImageSourcePropType;
+  url?: string;
   onPress?: () => void;
 };
 
@@ -25,11 +26,12 @@ const Console = ({
   onPress,
   withBox,
   description,
+  url,
 }: Props) => {
   const content = (
     <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
       {picture ? (
-        <Image source={picture} style={styles.image} resizeMode="contain" />
+        <Image source={url ? { uri: url } : picture} style={styles.image} resizeMode="contains" />
       ) : null}
       <View style={styles.content}>
         <Text style={styles.name}>{name}</Text>
@@ -47,9 +49,7 @@ const Console = ({
         {edition ? <Text style={styles.meta}>Edition: {edition}</Text> : null}
         <Text style={styles.meta}>Color: {color}</Text>
         <Text style={styles.meta}>Condition: {condition}</Text>
-        {withBox !== undefined ? (
-          <Text style={styles.meta}>With Box: {withBox ? 'Yes' : 'No'}</Text>
-        ) : null}
+
       </View>
     </View>
   );
@@ -83,9 +83,9 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
   },
   image: {
-    width: 72,
-    height: 72,
-    marginRight: 12,
+    width: 100,
+    height: 92,
+    marginRight: 22,
   },
   content: {
     flex: 1,

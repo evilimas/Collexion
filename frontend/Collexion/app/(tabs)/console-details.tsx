@@ -28,6 +28,7 @@ const ConsoleDetail = () => {
   const withBox = params.withBox === 'true'; // Convert string to boolean
   const from = (params.from as string) || '/consoles';
 
+
   return (
     <View style={styles.container}>
       <ImageBackground

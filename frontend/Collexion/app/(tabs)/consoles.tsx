@@ -44,7 +44,7 @@ const Consoles = () => {
         style={styles.image}
       >
         <View style={styles.overlay}>
-          <Text style={styles.title}>Consoles</Text>
+          <Text style={styles.text}>Consoles</Text>
           {error ? <Text style={styles.errorText}>{error}</Text> : null}
           <TextInput
             placeholder={
@@ -99,6 +99,9 @@ const Consoles = () => {
                         picture={item.picture}
                         manufacturer={item.manufacturer}
                         description={item.description}
+                        url={item.url}
+                        reshell={item.reshell}
+                        withBox={item.withBox}
                       />
                     </Pressable>
                   </Link>
@@ -113,6 +116,23 @@ const Consoles = () => {
                   />
                 ))}
           </ScrollView>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 16,
+              textAlign: 'center',
+              marginVertical: 10,
+              textShadowColor: 'black',
+              textShadowOffset: { width: 1, height: 4 },
+              textShadowRadius: 6,
+              borderWidth: 1,
+              borderColor: 'rgba(255, 255, 255, 0.5)',
+              padding: 10,
+              borderRadius: 8,
+            }}
+          >
+            {`Total Consoles: ${allConsoles.length}`}
+          </Text>
         </View>
       </ImageBackground>
     </View>
@@ -135,16 +155,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
     paddingHorizontal: 10,
   },
-  title: {
+  // title: {
+  //   color: 'white',
+  //   fontSize: 24,
+  //   fontWeight: 'bold',
+  //   textAlign: 'center',
+  //   marginTop: 20,
+  //   marginBottom: 12,
+  //   textShadowColor: 'black',
+  //   textShadowOffset: { width: 1, height: 4 },
+  //   textShadowRadius: 6,
+  // },
+  text: {
     color: 'white',
     fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 20,
     textAlign: 'center',
     marginTop: 20,
-    marginBottom: 12,
-    textShadowColor: 'black',
-    textShadowOffset: { width: 1, height: 4 },
-    textShadowRadius: 6,
   },
   searchInput: {
     color: 'white',
