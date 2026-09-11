@@ -6,6 +6,7 @@ import {
   onSnapshot,
   query,
   where,
+  getDocs,
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '@/lib/firebase';
@@ -18,6 +19,62 @@ export async function deleteItem(itemId: string) {
   }
 
   await deleteDoc(doc(db, 'collection_items', itemId));
+}
+
+export async function itemsCount() {
+  if (!auth.currentUser) {
+    throw new Error('You must be signed in to get items count.');
+  }
+
+  const q = query(
+    firestoreCollection(db, 'collection_items'),
+    where('userId', '==', auth.currentUser.uid),
+  );
+
+  const snapshot = await getDocs(q);
+  return snapshot.size;
+}
+export async function consoleCount() {
+  if (!auth.currentUser) {
+    throw new Error('You must be signed in to get items count.');
+  }
+
+  const q = query(
+    firestoreCollection(db, 'collection_items'),
+    where('userId', '==', auth.currentUser.uid),
+    where('type', '==', 'console'),
+  );
+
+  const snapshot = await getDocs(q);
+  return snapshot.size;
+}
+export async function controllersCount() {
+  if (!auth.currentUser) {
+    throw new Error('You must be signed in to get items count.');
+  }
+
+  const q = query(
+    firestoreCollection(db, 'collection_items'),
+    where('userId', '==', auth.currentUser.uid),
+    where('type', '==', 'controller'),
+  );
+
+  const snapshot = await getDocs(q);
+  return snapshot.size;
+}
+export async function handheldsCount() {
+  if (!auth.currentUser) {
+    throw new Error('You must be signed in to get items count.');
+  }
+
+  const q = query(
+    firestoreCollection(db, 'collection_items'),
+    where('userId', '==', auth.currentUser.uid),
+    where('type', '==', 'handheld'),
+  );
+
+  const snapshot = await getDocs(q);
+  return snapshot.size;
 }
 
 // Live Firestore items added by the signed-in user via the "Add item" screen.
