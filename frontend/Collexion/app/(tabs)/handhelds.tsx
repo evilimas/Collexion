@@ -99,7 +99,6 @@ const Handhelds = () => {
                         manufacturer={item.manufacturer}
                         description={item.description}
                         url={item.url}
-                        reshell={item.reshell}
                         withBox={item.withBox}
                       />
                     </Pressable>

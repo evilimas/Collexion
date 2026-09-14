@@ -91,13 +91,15 @@ const Controllers = () => {
                     <Pressable style={{ width: '100%' }}>
                       <Console
                         name={item.name}
-                        model={item.forConsole}
+                        model={item.model}
                         edition={item.edition}
                         color={item.color}
                         condition={item.condition}
                         picture={item.picture}
                         manufacturer={item.manufacturer}
                         description={item.description}
+                        url={item.url}
+                        withBox={item.withBox}
                       />
                     </Pressable>
                   </Link>
