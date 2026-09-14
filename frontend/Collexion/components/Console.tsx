@@ -31,7 +31,12 @@ const Console = ({
   const content = (
     <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
       {picture ? (
-        <Image source={url ? { uri: url } : picture} style={styles.image} resizeMode="contains" />
+        <Image
+          source={url ? { uri: url } : picture}
+          style={styles.image}
+          resizeMode="cover"
+          //           borderRadiusTopLeft={8}
+        />
       ) : null}
       <View style={styles.content}>
         <Text style={styles.name}>{name}</Text>
@@ -46,10 +51,9 @@ const Console = ({
             Model: {model}
           </Text>
         ) : null}
-        {edition ? <Text style={styles.meta}>Edition: {edition}</Text> : null}
+        {edition ? <Text style={styles.meta}>{edition}</Text> : null}
         <Text style={styles.meta}>Color: {color}</Text>
         <Text style={styles.meta}>Condition: {condition}</Text>
-
       </View>
     </View>
   );
@@ -76,19 +80,22 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.15)',
-    padding: 12,
+    //     padding: 12,
     display: 'flex',
     marginBottom: 12,
     flexDirection: 'row',
     // alignItems: 'center',
   },
   image: {
-    width: 100,
-    height: 92,
+    width: 115,
+    height: 115,
     marginRight: 22,
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
   },
   content: {
     flex: 1,
+    padding: 8,
   },
   name: {
     color: 'white',
