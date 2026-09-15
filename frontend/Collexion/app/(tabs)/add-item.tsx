@@ -26,6 +26,8 @@ const AddItem = () => {
     'PlayStation 3',
     'PlayStation 2',
     'PlayStation 1',
+    'Nintendo Wii',
+    'Nintendo WiiU',
     'Xbox Series S|X',
     'Xbox One',
     'Xbox 360',
@@ -53,6 +55,8 @@ const AddItem = () => {
     'Xbox One Controller',
     'Xbox 360 Controller',
     'Xbox Original(OG) Controller',
+    'Nintendo Wii Controller',
+    'Nintendo WiiU Controller',
     'Nintendo Switch Controller',
   ];
 
@@ -70,16 +74,25 @@ const AddItem = () => {
         id: '1', // acts as primary key, should be unique and non-empty string
         label: 'Console',
         value: 'console',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
       },
       {
         id: '2',
         label: 'Handheld',
         value: 'handheld',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
       },
       {
         id: '3',
         label: 'Controller',
         value: 'controller',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
       },
     ],
     [],
@@ -90,36 +103,53 @@ const AddItem = () => {
         id: '0',
         label: 'Unopened',
         value: 'unopened',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
         containerStyle: { width: 120 },
       },
       {
         id: '1', // acts as primary key, should be unique and non-empty string
         label: 'Mint',
         value: 'mint',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
         containerStyle: { width: 80 },
       },
       {
         id: '2',
         label: 'Like New',
-        value: 'like_new',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
         containerStyle: { width: 110 },
       },
       {
         id: '3',
         label: 'Good',
         value: 'good',
-        containerStyle: { width: 119 },
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
+        containerStyle: { width: 120 },
       },
       {
         id: '4',
         label: 'Fair',
         value: 'fair',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
         containerStyle: { width: 80 },
       },
       {
         id: '5',
         label: 'Poor',
         value: 'poor',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
         containerStyle: { width: 100 },
       },
     ],
@@ -131,11 +161,17 @@ const AddItem = () => {
         id: '1', // acts as primary key, should be unique and non-empty string
         label: 'Yes',
         value: 'true',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
       },
       {
         id: '2',
         label: 'No',
         value: 'false',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
       },
     ],
     [],
@@ -146,11 +182,17 @@ const AddItem = () => {
         id: '1', // acts as primary key, should be unique and non-empty string
         label: 'Yes',
         value: 'true',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
       },
       {
         id: '2',
         label: 'No',
         value: 'false',
+        color: '#42d3d3', // selected inner circle
+        borderColor: '#b0b3b2', // outer border
+        borderSize: 2,
       },
     ],
     [],
@@ -171,6 +213,7 @@ const AddItem = () => {
   const [reshell, setReshell] = useState<string>('2');
   const [url, setUrl] = useState<string>('');
   const [withBox, setWithBox] = useState<string>('2');
+  const [storage, setStorage] = useState<string>('');
   const [isConsoleSelectOpen, setIsConsoleSelectOpen] =
     useState<boolean>(false);
   const [isManufacturerSelectOpen, setIsManufacturerSelectOpen] =
@@ -210,6 +253,7 @@ const AddItem = () => {
         condition: itemCondition,
         edition: edition.trim(),
         forConsole: forConsole.trim(),
+        storage: storage.trim(),
         manufacturer: manufacturer.trim(),
         description: description.trim(),
         reshell: reshell === '1',
@@ -248,8 +292,9 @@ const AddItem = () => {
                   layout="row"
                   labelStyle={{
                     color: 'white',
-                    fontSize: 16,
+                    fontSize: 17,
                     fontWeight: 'bold',
+                    marginBottom: 1,
                   }}
                   radioButtons={radioButtons}
                   onPress={setType}
@@ -369,7 +414,7 @@ const AddItem = () => {
                 onChangeText={setModel}
               />
               <TextInput
-                placeholder="* Color"
+                placeholder="* Color (e.g. Red, Blue, Black)"
                 placeholderTextColor="rgba(255, 255, 255, 0.7)"
                 style={styles.inputStyle}
                 value={color}
@@ -384,17 +429,18 @@ const AddItem = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   paddingVertical: 3,
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 }}
               >
                 <RadioGroup
                   layout="row"
-                  containerStyle={{ marginBottom: 1, width: '90%' }}
+                  containerStyle={{ marginBottom: 0.5, width: '90%' }}
                   radioButtons={radioButtonsCondition.slice(0, 3)}
                   onPress={setCondition}
                   selectedId={condition}
                   labelStyle={{
                     color: 'white',
-                    fontSize: 18,
+                    fontSize: 17,
                     fontWeight: 'bold',
                     marginLeft: 7,
                   }}
@@ -407,7 +453,7 @@ const AddItem = () => {
                   selectedId={condition}
                   labelStyle={{
                     color: 'white',
-                    fontSize: 18,
+                    fontSize: 17,
                     fontWeight: 'bold',
                     marginLeft: 7,
                   }}
@@ -427,6 +473,15 @@ const AddItem = () => {
                   style={styles.inputStyle}
                   value={forConsole}
                   onChangeText={setForConsole}
+                />
+              )}
+              {(type === '2' || type === '1') && (
+                <TextInput
+                  placeholder="Storage Size (e.g. 500GB, 1TB)"
+                  placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                  style={styles.inputStyle}
+                  value={storage}
+                  onChangeText={setStorage}
                 />
               )}
               <Pressable
@@ -493,14 +548,15 @@ const AddItem = () => {
                   display: 'flex',
                   flexDirection: 'row',
                   alignItems: 'center',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 }}
               >
                 <Text
                   style={{
                     color: 'white',
-                    fontSize: 15,
+                    fontSize: 16,
                     fontWeight: 'bold',
-                    marginBottom: 6,
+                    marginBottom: 4,
                     marginLeft: 10,
                   }}
                 >
@@ -513,7 +569,7 @@ const AddItem = () => {
                   selectedId={reshell}
                   labelStyle={{
                     color: 'white',
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: 'bold',
                   }}
                 />
@@ -527,14 +583,15 @@ const AddItem = () => {
                   display: 'flex',
                   flexDirection: 'row',
                   alignItems: 'center',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 }}
               >
                 <Text
                   style={{
                     color: 'white',
-                    fontSize: 15,
+                    fontSize: 16,
                     fontWeight: 'bold',
-                    marginBottom: 6,
+                    marginBottom: 4,
                     marginLeft: 10,
                   }}
                 >
@@ -547,7 +604,7 @@ const AddItem = () => {
                   selectedId={withBox}
                   labelStyle={{
                     color: 'white',
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: 'bold',
                   }}
                 />
@@ -596,21 +653,21 @@ const styles = StyleSheet.create({
   inputStyle: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     color: 'white',
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: 'bold',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   descriptionInputStyle: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     color: 'white',
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
-    paddingHorizontal: 20,
+    paddingHorizontal: 18,
     paddingVertical: 10,
     borderRadius: 8,
     borderColor: 'rgba(255, 255, 255, 0.5)',
@@ -649,11 +706,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   dropdownButtonTxtStyle: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
     color: 'white',
   },
@@ -675,7 +732,7 @@ const styles = StyleSheet.create({
   },
   dropdownItemTxtStyle: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '500',
     color: 'white',
   },

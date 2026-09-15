@@ -10,6 +10,7 @@ export type CollectionItem = {
   withBox?: boolean;
   edition?: string;
   forConsole?: string; // Only for controllers
+  storage?: string; // Only for consoles and handhelds
   manufacturer?: string;
   picture?: ImageSourcePropType;
   description?: string;
