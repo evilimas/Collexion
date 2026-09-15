@@ -23,6 +23,7 @@ const ConsoleDetail = () => {
   const color = params.color as string;
   const condition = params.condition as string;
   const manufacturer = params.manufacturer as string;
+  const storage = params.storage as string;
   const description = params.description as string;
   const url = params.url as string;
   const reshell = params.reshell === 'true'; // Convert string to boolean
@@ -41,7 +42,13 @@ const ConsoleDetail = () => {
             onPress={() => router.push(from as any)}
             style={styles.backButton}
           >
-            <Text style={styles.backText}>← Back</Text>
+            <MaterialIcons
+              name="arrow-back"
+              size={20}
+              color="white"
+              style={{ marginRight: 8 }}
+            />
+            <Text style={styles.backText}>Back</Text>
           </Pressable>
           <View style={styles.pictureContainer}>
             {url ? (
@@ -56,56 +63,82 @@ const ConsoleDetail = () => {
           <Text style={styles.detailName}>{name}</Text>
           {edition && <Text style={styles.detailEdition}> {edition}</Text>}
           <View style={styles.detailCard}>
-            <View style={styles.detailRow}>
-              {model && (
-                <>
+            {model && (
+              <View style={styles.detailRow}>
+                <View style={styles.detailLabel}>
+                  <MaterialIcons name="memory" size={20} color="white" />
                   <Text style={styles.detailInfo}>Model:</Text>
-                  <Text style={styles.detailInfo}>{model}</Text>
-                </>
-              )}
-            </View>
-            <View style={styles.detailRow}>
-              {color && (
-                <>
+                </View>
+                <Text style={styles.detailValue}>{model}</Text>
+              </View>
+            )}
+            {color && (
+              <View style={styles.detailRow}>
+                <View style={styles.detailLabel}>
+                  <MaterialIcons name="color-lens" size={20} color="white" />
                   <Text style={styles.detailInfo}>Color:</Text>
-                  <Text style={styles.detailInfo}>{color}</Text>
-                </>
-              )}
-            </View>
-
-            <View style={styles.detailRow}>
-              {condition && (
-                <>
+                </View>
+                <Text style={styles.detailValue}>{color}</Text>
+              </View>
+            )}
+            {condition && (
+              <View style={styles.detailRow}>
+                <View style={styles.detailLabel}>
+                  <MaterialIcons name="grade" size={20} color="white" />
                   <Text style={styles.detailInfo}>Condition:</Text>
-                  <Text style={styles.detailInfo}>{condition}</Text>
-                </>
-              )}
-            </View>
-            <View style={styles.detailRow}>
-              {manufacturer && (
-                <>
+                </View>
+                <Text style={styles.detailValue}>{condition}</Text>
+              </View>
+            )}
+            {manufacturer && (
+              <View style={styles.detailRow}>
+                <View style={styles.detailLabel}>
+                  <MaterialIcons
+                    name="account-balance"
+                    size={20}
+                    color="white"
+                  />
                   <Text style={styles.detailInfo}>Manufacturer:</Text>
-                  <Text style={styles.detailInfo}>{manufacturer}</Text>
-                </>
-              )}
-            </View>
-
+                </View>
+                <Text style={styles.detailValue}>{manufacturer}</Text>
+              </View>
+            )}
+            {storage && (
+              <View style={styles.detailRow}>
+                <View style={styles.detailLabel}>
+                  <MaterialIcons name="storage" size={20} color="white" />
+                  <Text style={styles.detailInfo}>Storage:</Text>
+                </View>
+                <Text style={styles.detailValue}>{storage}</Text>
+              </View>
+            )}
             <View style={styles.detailRow}>
-              <Text style={styles.detailInfo}>Reshelled:</Text>
-              <Text style={styles.detailInfo}>{reshell ? 'Yes' : 'No'}</Text>
+              <View style={styles.detailLabel}>
+                <MaterialIcons name="build" size={20} color="white" />
+                <Text style={styles.detailInfo}>Reshelled:</Text>
+              </View>
+              <Text style={styles.detailValue}>{reshell ? 'Yes' : 'No'}</Text>
             </View>
             <View style={styles.detailLastRow}>
-              <Text style={styles.detailInfo}>With Box:</Text>
-              <Text style={styles.detailInfo}>{withBox ? 'Yes' : 'No'}</Text>
+              <View style={styles.detailLabel}>
+                <MaterialIcons name="border-all" size={20} color="white" />
+                <Text style={styles.detailInfo}>With Box:</Text>
+              </View>
+              <Text style={styles.detailValue}>{withBox ? 'Yes' : 'No'}</Text>
             </View>
           </View>
           <View style={styles.detailCard}>
             <View style={styles.descriptionContainer}>
               {description && (
-                <>
-                  <Text style={styles.detailInfo}>Description:</Text>
-                  <Text style={styles.detailInfo}>{description}</Text>
-                </>
+                <View style={styles.descriptionRow}>
+                  <View style={styles.descriptionLabel}>
+                    <MaterialIcons name="description" size={20} color="white" />
+                  </View>
+                  <View style={styles.descriptionTextContainer}>
+                    <Text style={styles.detailInfo}>Description:</Text>
+                    <Text style={styles.descriptionValue}>{description}</Text>
+                  </View>
+                </View>
               )}
             </View>
           </View>
@@ -163,14 +196,15 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignSelf: 'flex-start',
+    flexDirection: 'row',
     paddingHorizontal: 12,
     paddingVertical: 6,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 8,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.5)',
-    marginBottom: 20,
-    marginTop: 30,
+    marginBottom: 10,
+    marginTop: 14,
   },
 
   editButtons: {
@@ -186,7 +220,9 @@ const styles = StyleSheet.create({
   actionContent: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 6,
+    paddingVertical: 6,
   },
 
   backText: {
@@ -204,7 +240,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 12,
     paddingVertical: 6,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(94, 94, 94, 0.23)',
     borderRadius: 8,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.5)',
@@ -226,18 +262,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   detailCard: {
-    backgroundColor: 'rgba(0, 0, 0, 0.55)',
+    backgroundColor: 'rgba(0, 0, 0, 0.34)',
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.3)',
     padding: 12,
     marginBottom: 10,
   },
   detailImage: {
     width: '100%',
-    height: 250,
+    height: 280,
     resizeMode: 'cover',
-    marginBottom: 16,
+    marginBottom: 8,
     borderRadius: 8,
   },
   pictureContainer: {
@@ -250,11 +286,37 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginLeft: 4,
   },
+  detailRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 5,
+    marginBottom: 5,
+    borderBottomColor: 'rgba(255, 255, 255, 0.15)',
+    borderBottomWidth: 1.4,
+  },
+
+  detailLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 11,
+    flexShrink: 1,
+    // color: 'white',
+  },
+
   detailInfo: {
-    color: 'rgb(255, 255, 255)',
+    color: 'white',
     fontSize: 16,
     fontWeight: '600',
-    marginTop: 0,
+  },
+
+  detailValue: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'right',
+    marginLeft: 12,
+    flexShrink: 1,
   },
   detailEdition: {
     color: 'rgba(255, 255, 255, 0.69)',
@@ -263,21 +325,34 @@ const styles = StyleSheet.create({
     padding: 0,
     marginBottom: 16,
   },
-  detailRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 4,
-    marginBottom: 6,
-    borderBottomColor: 'rgba(255, 255, 255, 0.15)',
-    borderBottomWidth: 2,
-  },
   detailLastRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
 
-    paddingVertical: 2,
+    paddingVertical: 1,
+  },
+  descriptionTextContainer: {
+    flexShrink: 1,
   },
   descriptionContainer: {},
+  descriptionRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    // justifyContent: 'space-between',
+    gap: 10,
+    paddingVertical: 4,
+  },
+  descriptionLabel: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    // gap: 10,
+    // flexShrink: 1,
+    // color: 'white',
+  },
+  descriptionValue: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });

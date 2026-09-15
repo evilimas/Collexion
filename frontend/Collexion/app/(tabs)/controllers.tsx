@@ -74,7 +74,7 @@ const Controllers = () => {
                       params: {
                         id: item.id,
                         name: item.name,
-                        model: item.forConsole,
+                        model: item.model,
                         edition: item.edition,
                         color: item.color,
                         condition: item.condition,
@@ -83,6 +83,7 @@ const Controllers = () => {
                         url: item.url,
                         reshell: String(item.reshell),
                         withBox: String(item.withBox),
+                        storage: item.storage,
                         from: '/controllers',
                       },
                     }}
@@ -100,6 +101,7 @@ const Controllers = () => {
                         description={item.description}
                         url={item.url}
                         withBox={item.withBox}
+                        storage={item.storage}
                       />
                     </Pressable>
                   </Link>

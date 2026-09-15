@@ -12,6 +12,8 @@ import ConsoleGroup from '@/components/Consoles';
 import Console from '@/components/Console';
 import { Link } from 'expo-router';
 import { useCollectionItems } from '@/hooks/use-collection-items';
+import { IconSymbol } from '@/components/ui/icon-symbol';
+import MaterialIcons from '@expo/vector-icons/build/MaterialIcons';
 
 const Consoles = () => {
   const [search, setSearch] = useState('');
@@ -58,9 +60,18 @@ const Consoles = () => {
             onChangeText={setSearch}
           />
           {selectedName ? (
-            <Text style={styles.backText} onPress={() => setSelectedName(null)}>
-              Back to Consoles
-            </Text>
+            <Pressable
+              style={styles.backText}
+              onPress={() => setSelectedName(null)}
+            >
+              <MaterialIcons
+                name="arrow-back"
+                size={20}
+                color="white"
+                style={{ marginRight: 8 }}
+              />
+              <Text style={{ color: 'white' }}>Back to Consoles</Text>
+            </Pressable>
           ) : null}
           <ScrollView
             contentContainerStyle={selectedName ? styles.list : styles.grid}
@@ -118,15 +129,16 @@ const Consoles = () => {
           <Text
             style={{
               color: 'white',
-              fontSize: 16,
+              fontSize: 17,
               textAlign: 'center',
-              marginVertical: 10,
+              // marginVertical: 6,
+              marginBottom: 4,
               textShadowColor: 'black',
               textShadowOffset: { width: 1, height: 4 },
               textShadowRadius: 6,
               borderWidth: 1,
               borderColor: 'rgba(255, 255, 255, 0.5)',
-              padding: 10,
+              padding: 9,
               borderRadius: 8,
             }}
           >
@@ -197,10 +209,11 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   backText: {
+    flexDirection: 'row',
     color: 'white',
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: '600',
-    marginLeft: 8,
+    marginLeft: 4,
     marginBottom: 10,
     // textDecorationLine: 'underline',
     borderWidth: 1,

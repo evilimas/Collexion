@@ -9,6 +9,7 @@ type Props = {
   color: string;
   condition: 'Unopened' | 'Mint' | 'Like New' | 'Good' | 'Fair' | 'Poor';
   withBox?: boolean;
+  storage?: string;
   description?: string;
   manufacturer?: string;
   picture?: ImageSourcePropType;
@@ -26,7 +27,9 @@ const Console = ({
   onPress,
   withBox,
   description,
+
   url,
+  manufacturer,
 }: Props) => {
   const content = (
     <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>

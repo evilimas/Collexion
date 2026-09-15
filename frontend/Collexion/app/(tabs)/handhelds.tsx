@@ -83,6 +83,7 @@ const Handhelds = () => {
                         url: item.url,
                         reshell: String(item.reshell),
                         withBox: String(item.withBox),
+                        storage: item.storage,
                         from: '/handhelds',
                       },
                     }}
@@ -100,6 +101,7 @@ const Handhelds = () => {
                         description={item.description}
                         url={item.url}
                         withBox={item.withBox}
+                        storage={item.storage}
                       />
                     </Pressable>
                   </Link>

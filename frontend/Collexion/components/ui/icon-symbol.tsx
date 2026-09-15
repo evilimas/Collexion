@@ -18,7 +18,16 @@ type IconSymbolName =
   | 'person.fill'
   | 'trash.fill'
   | 'trash'
-  | 'edit';
+  | 'edit'
+  | 'color'
+  | 'wrench'
+  | 'model'
+  | 'star'
+  | 'architecture'
+  | 'arrowBack'
+  | 'box'
+  | 'description'
+  | 'storage';
 
 type IconConfig = {
   name: string;
@@ -49,8 +58,17 @@ const MAPPING: IconMapping = {
   'plus.circle.fill': { name: 'add-circle', library: 'MaterialIcons' },
   'person.fill': { name: 'person', library: 'MaterialIcons' },
   'trash.fill': { name: 'delete', library: 'MaterialIcons' },
-  'trash': { name: 'delete-outline', library: 'MaterialIcons' },
-  'edit': { name: 'edit', library: 'MaterialIcons' },
+  trash: { name: 'delete-outline', library: 'MaterialIcons' },
+  edit: { name: 'edit', library: 'MaterialIcons' },
+  color: { name: 'color-lens', library: 'MaterialIcons' },
+  model: { name: 'memory', library: 'MaterialIcons' },
+  wrench: { name: 'build', library: 'MaterialIcons' },
+  star: { name: 'grade', library: 'MaterialIcons' },
+  architecture: { name: 'account-balance', library: 'MaterialIcons' },
+  arrowBack: { name: 'arrow-back', library: 'MaterialIcons' },
+  box: { name: 'border-all', library: 'MaterialIcons' },
+  description: { name: 'description', library: 'MaterialIcons' },
+  storage: { name: 'storage-rounded', library: 'MaterialIcons' },
 };
 
 /**
