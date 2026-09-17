@@ -5,6 +5,7 @@ import {
   collection as firestoreCollection,
   onSnapshot,
   query,
+  updateDoc,
   where,
   getDocs,
 } from 'firebase/firestore';
@@ -19,6 +20,17 @@ export async function deleteItem(itemId: string) {
   }
 
   await deleteDoc(doc(db, 'collection_items', itemId));
+}
+
+export async function updateItem(
+  itemId: string,
+  data: Partial<Record<string, unknown>>,
+) {
+  if (!auth.currentUser) {
+    throw new Error('You must be signed in to update an item.');
+  }
+
+  await updateDoc(doc(db, 'collection_items', itemId), data);
 }
 
 export async function itemsCount() {
@@ -117,6 +129,7 @@ export function useCollectionItems() {
               withBox: data.withBox,
               edition: data.edition || undefined,
               forConsole: data.forConsole || undefined,
+              storage: data.storage || undefined,
               manufacturer: data.manufacturer || undefined,
               description: data.description || undefined,
               reshell: data.reshell,

@@ -17,6 +17,7 @@ const ConsoleDetail = () => {
   const itemId = params.id as string;
 
   // Get console data from params
+  const type = params.type as string;
   const name = params.name as string;
   const model = params.model as string;
   const edition = params.edition as string;
@@ -24,6 +25,7 @@ const ConsoleDetail = () => {
   const condition = params.condition as string;
   const manufacturer = params.manufacturer as string;
   const storage = params.storage as string;
+  const forConsole = params.forConsole as string;
   const description = params.description as string;
   const url = params.url as string;
   const reshell = params.reshell === 'true'; // Convert string to boolean
@@ -143,7 +145,31 @@ const ConsoleDetail = () => {
             </View>
           </View>
           <View style={styles.editButtons}>
-            <Pressable style={styles.editBtn}>
+            <Pressable
+              style={styles.editBtn}
+              onPress={() =>
+                router.push({
+                  pathname: '/edit-item',
+                  params: {
+                    id: itemId,
+                    type,
+                    name,
+                    model,
+                    edition,
+                    color,
+                    condition,
+                    manufacturer,
+                    storage,
+                    forConsole,
+                    description,
+                    url,
+                    reshell: String(reshell),
+                    withBox: String(withBox),
+                    from,
+                  },
+                })
+              }
+            >
               <View style={styles.actionContent}>
                 <MaterialIcons name="edit" size={22} color="white" />
                 <Text style={styles.editText}>Edit Item</Text>
@@ -267,7 +293,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
     padding: 12,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   detailImage: {
     width: '100%',

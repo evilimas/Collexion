@@ -73,6 +73,7 @@ const Controllers = () => {
                       pathname: '/console-details',
                       params: {
                         id: item.id,
+                        type: item.type,
                         name: item.name,
                         model: item.model,
                         edition: item.edition,
@@ -84,6 +85,7 @@ const Controllers = () => {
                         reshell: String(item.reshell),
                         withBox: String(item.withBox),
                         storage: item.storage,
+                        forConsole: item.forConsole,
                         from: '/controllers',
                       },
                     }}

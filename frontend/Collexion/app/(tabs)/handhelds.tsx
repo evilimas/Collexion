@@ -73,6 +73,7 @@ const Handhelds = () => {
                       pathname: '/console-details',
                       params: {
                         id: item.id,
+                        type: item.type,
                         name: item.name,
                         model: item.model,
                         edition: item.edition,
