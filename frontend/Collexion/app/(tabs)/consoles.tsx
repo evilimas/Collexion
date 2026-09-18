@@ -133,7 +133,6 @@ const Consoles = () => {
               color: 'white',
               fontSize: 17,
               textAlign: 'center',
-              // marginVertical: 6,
               marginBottom: 4,
               textShadowColor: 'black',
               textShadowOffset: { width: 1, height: 4 },
