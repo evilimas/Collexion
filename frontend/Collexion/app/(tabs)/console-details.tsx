@@ -327,7 +327,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 11,
     flexShrink: 1,
-    // color: 'white',
   },
 
   detailInfo: {
