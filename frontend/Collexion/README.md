@@ -1,8 +1,52 @@
-# Welcome to your Expo app 👋
+# Collexion
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<div align="center">
+  <img src="assets/images/logo1.png" alt="Collexion logo" width="180" />
+  <h3>Track your retro gaming collection in one place.</h3>
+</div>
 
-## Get started
+[![Expo](https://img.shields.io/badge/Expo-React%20Native-000020?logo=expo)](https://expo.dev)
+[![Firebase](https://img.shields.io/badge/Firebase-Firestore-FFCA28?logo=firebase)](https://firebase.google.com)
+[![React Native](https://img.shields.io/badge/React-Native-61DAFB?logo=react)](https://reactnative.dev)
+
+Collexion is a simple retro gaming collection app built with Expo and React Native. It helps you track consoles, handhelds, and controllers with details like condition, color, storage, and notes.
+
+## How it works
+
+1. Add your items with category, name, condition, color, and optional notes.
+2. Browse your consoles, handhelds, and controllers in organized views.
+3. Open any item to review the full details, image, and metadata.
+4. Edit or delete entries anytime, and your changes sync with Firebase.
+
+## Features
+
+- Add new items to your collection
+- Browse by category
+- View item details and photo
+- Edit and delete items
+- Store data in Firebase
+
+## Screenshots
+
+![Login](assets/screenshots/loginSide.png)
+
+![Home](assets/screenshots/homeSide.png)
+
+![Consoles](assets/screenshots/consoles.png)
+
+![Console List](assets/screenshots/consoleList.png)
+
+![Console Details](assets/screenshots/consoleDetails.png)
+
+## Tech Stack
+
+- Expo
+- React Native
+- Firebase Firestore
+- Expo Router
+- TypeScript
+
+## Getting Started
 
 1. Install dependencies
 
@@ -16,35 +60,23 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+3. Open it in Expo Go or a simulator.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Project Structure
 
 ```bash
-npm run reset-project
+frontend/Collexion/
+├── app/
+├── assets/
+├── components/
+├── hooks/
+├── lib/
+├── data/
+├── package.json
+├── README.md
+└── firestore.rules
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Notes
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This project is designed for gamers who want a clean and easy way to organize their retro collection.
