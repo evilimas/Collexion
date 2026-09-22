@@ -28,15 +28,17 @@ Collexion is a simple retro gaming collection app built with Expo and React Nati
 
 ## Screenshots
 
-![Login](assets/screenshots/loginSide.png)
-
-![Home](assets/screenshots/homeSide.png)
-
-![Consoles](assets/screenshots/consoles.png)
-
-![Console List](assets/screenshots/consoleList.png)
-
-![Console Details](assets/screenshots/consoleDetails.png)
+<table>
+  <tr>
+    <td><img src="frontend/Collexion/assets/screenshots/loginSide.png" alt="Login screen" width="300" /></td>
+    <td><img src="frontend/Collexion/assets/screenshots/homeSide.png" alt="Home screen" width="300" /></td>
+  </tr>
+  <tr>
+    <td><img src="frontend/Collexion/assets/screenshots/consoles.png" alt="Consoles screen" width="300" /></td>
+    <td><img src="frontend/Collexion/assets/screenshots/consoleList.png" alt="Console list" width="300" /></td>
+    <td><img src="frontend/Collexion/assets/screenshots/consoleDetails.png" alt="Console details" width="300" /></td>
+  </tr>
+</table>
 
 ## Tech Stack
 
