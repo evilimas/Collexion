@@ -1,7 +1,7 @@
 # Collexion
 
 <div align="center">
-  <img src="frontend/Collexion/assets/images/logo3.png" alt="Collexion logo" width="220" />
+  <img src="frontend/Collexion/assets/images/logo3.png" alt="Collexion logo" width="320" />
   <h3>Track your retro gaming collection in one place.</h3>
 </div>
 
@@ -9,7 +9,7 @@
 [![Firebase](https://img.shields.io/badge/Firebase-Firestore-FFCA28?logo=firebase)](https://firebase.google.com)
 [![React Native](https://img.shields.io/badge/React-Native-61DAFB?logo=react)](https://reactnative.dev)
 
-Collexion is a simple retro gaming collection app built with Expo and React Native. It helps you track consoles, handhelds, and controllers with details like condition, color, storage, and notes.
+Collexion is a simple retro and current gaming collection app built with Expo and React Native. It helps you track consoles, handhelds, and controllers with details like edition, condition, color, storage size, and notes.
 
 ## How it works
 
