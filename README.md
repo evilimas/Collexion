@@ -1,7 +1,7 @@
 # Collexion
 
 <div align="center">
-  <img src="assets/images/logo1.png" alt="Collexion logo" width="180" />
+  <img src="frontend/Collexion/assets/images/logo3.png" alt="Collexion logo" width="220" />
   <h3>Track your retro gaming collection in one place.</h3>
 </div>
 
