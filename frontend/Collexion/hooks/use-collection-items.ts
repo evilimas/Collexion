@@ -22,6 +22,81 @@ export async function deleteItem(itemId: string) {
   await deleteDoc(doc(db, 'collection_items', itemId));
 }
 
+export async function recentlyAddedItems() {
+  if (!auth.currentUser) {
+    throw new Error('You must be signed in to get recently added items.');
+  }
+
+  const q = query(
+    firestoreCollection(db, 'collection_items'),
+    where('userId', '==', auth.currentUser.uid),
+    // Assuming you have a 'createdAt' field to sort by
+  );
+
+  const snapshot = await getDocs(q);
+  const items = snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      type: data.type,
+      name: data.name,
+      model: data.model || undefined,
+      color: data.color,
+      condition: data.condition,
+      withBox: data.withBox,
+      edition: data.edition || undefined,
+      forConsole: data.forConsole || undefined,
+      storage: data.storage || undefined,
+      manufacturer: data.manufacturer || undefined,
+      description: data.description || undefined,
+      reshell: data.reshell,
+      url: data.url || undefined,
+      picture: getItemPicture(data.type, data.name),
+      createdAt: data.createdAt?.toMillis?.() ?? 0,
+    };
+  });
+  items.sort((a, b) => b.createdAt - a.createdAt);
+  return items;
+}
+
+export async function collectionsByConsole(consoleName: string) {
+  if (!auth.currentUser) {
+    throw new Error('You must be signed in to get collections by console.');
+  }
+
+  const q = query(
+    firestoreCollection(db, 'collection_items'),
+    where('userId', '==', auth.currentUser.uid),
+    where('name', '==', 'forConsole'),
+    where('forConsole', '==', consoleName),
+  );
+
+  const snapshot = await getDocs(q);
+  const items = snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      type: data.type,
+      name: data.name,
+      model: data.model || undefined,
+      color: data.color,
+      condition: data.condition,
+      withBox: data.withBox,
+      edition: data.edition || undefined,
+      forConsole: data.forConsole || undefined,
+      storage: data.storage || undefined,
+      manufacturer: data.manufacturer || undefined,
+      description: data.description || undefined,
+      reshell: data.reshell,
+      url: data.url || undefined,
+      picture: getItemPicture(data.type, data.name),
+      createdAt: data.createdAt?.toMillis?.() ?? 0,
+    };
+  });
+  items.sort((a, b) => b.createdAt - a.createdAt);
+  return items;
+}
+
 export async function updateItem(
   itemId: string,
   data: Partial<Record<string, unknown>>,
