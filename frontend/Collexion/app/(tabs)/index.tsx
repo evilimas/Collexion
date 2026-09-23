@@ -8,8 +8,10 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'expo-router';
+// import { useCollectionItems } from '@/hooks/use-collection-items';
+import { recentlyAddedItems } from '@/hooks/use-collection-items';
 
 // import backgroundImage from '@/assets/images/background1.png';
 
@@ -41,26 +43,26 @@ const homeCollections: CollectionSquare[] = [
   },
 ];
 
-const recentlyAdded: CollectionSquare[] = [
-  {
-    id: '1',
-    name: 'Nintendo Switch OLED',
-    image: '',
-    tab: '/(tabs)/home',
-  },
-  {
-    id: '2',
-    name: 'Xbox Elite Controller Series 2',
-    image: '',
-    tab: '/(tabs)/home',
-  },
-  {
-    id: '3',
-    name: 'Playstation 5 Slim',
-    image: '',
-    tab: '/(tabs)/home',
-  },
-];
+// const recentlyAdded: CollectionSquare[] = [
+//   {
+//     id: '1',
+//     name: 'Nintendo Switch OLED',
+//     image: '',
+//     tab: '/(tabs)/home',
+//   },
+//   {
+//     id: '2',
+//     name: 'Xbox Elite Controller Series 2',
+//     image: '',
+//     tab: '/(tabs)/home',
+//   },
+//   {
+//     id: '3',
+//     name: 'Playstation 5 Slim',
+//     image: '',
+//     tab: '/(tabs)/home',
+//   },
+// ];
 
 const Collections: CollectionSquare[] = [
   {
@@ -121,7 +123,23 @@ const ConsoleCollections: CollectionSquare[] = [
   },
 ];
 
-const app = () => {
+const App = () => {
+  const [recentlyAdded, setRecentlyAdded] = useState<CollectionSquare[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const items = await recentlyAddedItems();
+      setRecentlyAdded(
+        items.map((item) => ({
+          id: item.id,
+          name: item.name,
+          image: item.picture,
+          tab: '/(tabs)/home',
+        })),
+      );
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -156,21 +174,21 @@ const app = () => {
             </View>
             <Text style={styles.text}>Recently Added</Text>
             <View style={styles.recentlyContainer}>
-              {recentlyAdded.map((item) => (
-                <Link key={item.id} href={item.tab as any} asChild>
+              {recentlyAdded.slice(0, 4).map((item) => (
+                <View key={item.id}>
                   <Pressable style={styles.recentLink}>
                     <Text style={{ color: 'white', textAlign: 'center' }}>
                       {item.name}
                     </Text>
                   </Pressable>
-                </Link>
+                </View>
               ))}
             </View>
             <Text style={styles.text}>Collections</Text>
             <View style={styles.collectionContainer}>
               {Collections.map((collection) => (
                 <Link key={collection.id} href={collection.tab as any} asChild>
-                  <Pressable style={styles.link}>
+                  <Pressable style={styles.linkCollections}>
                     <Image source={collection.image} style={styles.colImg} />
                     <Text style={{ textAlign: 'center', color: 'white' }}>
                       {collection.name}
@@ -202,7 +220,7 @@ const app = () => {
   );
 };
 
-export default app;
+export default App;
 
 const styles = StyleSheet.create({
   container: {
@@ -263,6 +281,20 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
   },
+  linkCollections: {
+    display: 'flex',
+    flexDirection: 'column',
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingHorizontal: 34,
+    paddingVertical: 19,
+    alignItems: 'center',
+    borderRadius: 8,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 1,
+  },
   linkConsole: {
     display: 'flex',
     flexDirection: 'column',
@@ -315,7 +347,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderBottomColor: 'rgba(24, 24, 24, 0.5)',
     borderBottomWidth: 2,
-    paddingBottom: 10,
+    paddingBottom: 20,
+    // paddingVertical: 10,
   },
   collectionContainerConsole: {
     flexDirection: 'row',
