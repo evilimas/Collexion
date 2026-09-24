@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
   descriptionRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    // justifyContent: 'space-between',
+
     gap: 10,
     paddingVertical: 4,
   },
