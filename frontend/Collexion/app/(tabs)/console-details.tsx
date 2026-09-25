@@ -373,7 +373,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // gap: 10,
     // flexShrink: 1,
-    // color: 'white',
   },
   descriptionValue: {
     color: 'white',
