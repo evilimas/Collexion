@@ -372,7 +372,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     // gap: 10,
-    // flexShrink: 1,
   },
   descriptionValue: {
     color: 'white',
