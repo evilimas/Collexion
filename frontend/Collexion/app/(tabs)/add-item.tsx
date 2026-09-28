@@ -68,35 +68,42 @@ const AddItem = () => {
     'SNK',
   ];
 
-  const radioButtons: RadioButtonProps[] = useMemo(
-    () => [
-      {
-        id: '1', // acts as primary key, should be unique and non-empty string
-        label: 'Console',
-        value: 'console',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-      },
-      {
-        id: '2',
-        label: 'Handheld',
-        value: 'handheld',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-      },
-      {
-        id: '3',
-        label: 'Controller',
-        value: 'controller',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-      },
-    ],
-    [],
-  );
+  // const radioButtons: RadioButtonProps[] = useMemo(
+  //   () => [
+  //     {
+  //       id: '1', // acts as primary key, should be unique and non-empty string
+  //       label: 'Console',
+  //       value: 'console',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+
+  //       borderSize: 2,
+  //     },
+  //     {
+  //       id: '2',
+  //       label: 'Handheld',
+  //       value: 'handheld',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //     },
+  //     {
+  //       id: '3',
+  //       label: 'Controller',
+  //       value: 'controller',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //     },
+  //   ],
+  //   [],
+  // );
+  const typeOptions: { id: string; label: string }[] = [
+    { id: '1', label: 'Console' },
+    { id: '2', label: 'Handheld' },
+    { id: '3', label: 'Controller' },
+  ];
+
   const radioButtonsCondition: RadioButtonProps[] = useMemo(
     () => [
       {
@@ -155,52 +162,65 @@ const AddItem = () => {
     ],
     [],
   );
-  const radioButtonsReshell: RadioButtonProps[] = useMemo(
-    () => [
-      {
-        id: '1', // acts as primary key, should be unique and non-empty string
-        label: 'Yes',
-        value: 'true',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-      },
-      {
-        id: '2',
-        label: 'No',
-        value: 'false',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-      },
-    ],
-    [],
-  );
-  const radioButtonsWithBox: RadioButtonProps[] = useMemo(
-    () => [
-      {
-        id: '1', // acts as primary key, should be unique and non-empty string
-        label: 'Yes',
-        value: 'true',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-      },
-      {
-        id: '2',
-        label: 'No',
-        value: 'false',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-      },
-    ],
-    [],
-  );
+
+  const radioButtonsReshell: { id: string; label: string }[] = [
+    { id: '1', label: 'Yes' },
+    { id: '2', label: 'No' },
+  ];
+
+  const radioButtonsWithBox: { id: string; label: string }[] = [
+    { id: '1', label: 'Yes' },
+    { id: '2', label: 'No' },
+  ];
+  // const radioButtonsReshell: RadioButtonProps[] = useMemo(
+  //   () => [
+  //     {
+  //       id: '1', // acts as primary key, should be unique and non-empty string
+  //       label: 'Yes',
+  //       value: 'true',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //       selectedBorderColor: '#42d3d3', // selected outer border
+  //     },
+  //     {
+  //       id: '2',
+  //       label: 'No',
+  //       value: 'false',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //       selectedBorderColor: '#42d3d3', // selected outer border
+  //     },
+  //   ],
+  //   [],
+  // );
+  // const radioButtonsWithBox: RadioButtonProps[] = useMemo(
+  //   () => [
+  //     {
+  //       id: '1', // acts as primary key, should be unique and non-empty string
+  //       label: 'Yes',
+  //       value: 'true',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //       selectedBorderColor: '#42d3d3', // selected outer border
+  //     },
+  //     {
+  //       id: '2',
+  //       label: 'No',
+  //       value: 'false',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //       selectedBorderColor: '#42d3d3', // selected outer border
+  //     },
+  //   ],
+  //   [],
+  // );
 
   const [type, setType] = useState<string>('1');
   const [condition, setCondition] = useState<string>('1');
-  // const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [model, setModel] = useState<string>('');
   const [color, setColor] = useState<string>('');
@@ -287,7 +307,30 @@ const AddItem = () => {
           <View style={styles.overlay}>
             <Text style={styles.text}>Add item to collection</Text>
             <View style={{ padding: 10 }}>
-              <View>
+              <View style={styles.typeOptions}>
+                {typeOptions.map((option) => (
+                  <Pressable
+                    key={option.id}
+                    onPress={() => setType(option.id)}
+                    accessibilityRole="radio"
+                    accessibilityState={{ selected: type === option.id }}
+                    style={[
+                      styles.typeOption,
+                      type === option.id && styles.typeOptionSelected,
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.typeOptionText,
+                        type === option.id && styles.typeOptionTextSelected,
+                      ]}
+                    >
+                      {option.label}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
+              {/* <View>
                 <RadioGroup
                   layout="row"
                   labelStyle={{
@@ -300,7 +343,8 @@ const AddItem = () => {
                   onPress={setType}
                   selectedId={type}
                 />
-              </View>
+              </View> */}
+
               {type === '1' && (
                 <Pressable
                   style={styles.dropdownButtonStyle}
@@ -544,10 +588,11 @@ const AddItem = () => {
                   borderColor: 'rgba(255, 255, 255, 0.5)',
                   borderWidth: 1,
                   borderRadius: 8,
-                  marginBottom: 10,
+                  // marginBottom: 10,
                   display: 'flex',
                   flexDirection: 'row',
                   alignItems: 'center',
+                  justifyContent: 'space-between',
                   backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 }}
               >
@@ -556,13 +601,37 @@ const AddItem = () => {
                     color: 'white',
                     fontSize: 16,
                     fontWeight: 'bold',
-                    marginBottom: 4,
+                    // marginBottom: 4,
                     marginLeft: 10,
                   }}
                 >
                   Reshelled?
                 </Text>
-                <RadioGroup
+                <View style={styles.typeOptions}>
+                  {radioButtonsReshell.map((option) => (
+                    <Pressable
+                      key={option.id}
+                      onPress={() => setReshell(option.id)}
+                      accessibilityRole="radio"
+                      accessibilityState={{ selected: reshell === option.id }}
+                      style={[
+                        styles.radioTypeOption,
+                        reshell === option.id && styles.radioTypeOptionSelected,
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.radioTypeOptionText,
+                          reshell === option.id &&
+                            styles.radioTypeOptionTextSelected,
+                        ]}
+                      >
+                        {option.label}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+                {/* <RadioGroup
                   layout="row"
                   radioButtons={radioButtonsReshell}
                   onPress={setReshell}
@@ -572,7 +641,7 @@ const AddItem = () => {
                     fontSize: 15,
                     fontWeight: 'bold',
                   }}
-                />
+                /> */}
               </View>
               <View
                 style={{
@@ -742,5 +811,73 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
+  },
+
+  // type option styles
+  typeOptions: {
+    flexDirection: 'row',
+    // justifyContent: 'space-around',
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderRadius: 8,
+  },
+  typeOption: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 8,
+    // borderWidth: 1,
+    // borderColor: 'rgba(255, 255, 255, 0.5)',
+    // marginHorizontal: 5,
+    alignItems: 'center',
+    // width: '100%',
+  },
+  typeOptionSelected: {
+    backgroundColor: '#42d3d3',
+    // backgroundColor: 'rgba(7, 0, 105, 0.8)',
+    borderColor: '#48ffff',
+    borderWidth: 1,
+  },
+  typeOptionText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  typeOptionTextSelected: {
+    color: 'black',
+  },
+
+  // reshell and with box option styles
+
+  radioTypeOptions: {
+    flexDirection: 'row',
+    // justifyContent: 'space-around',
+    marginBottom: 0,
+    // borderWidth: 1,
+    // borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderRadius: 8,
+  },
+  radioTypeOption: {
+    padding: 10,
+    borderRadius: 8,
+    // borderWidth: 1,
+    // borderColor: 'rgba(255, 255, 255, 0.5)',
+    // marginHorizontal: 5,
+    alignItems: 'center',
+    // width: '100%',
+  },
+  radioTypeOptionSelected: {
+    backgroundColor: '#42d3d3',
+    // backgroundColor: 'rgba(7, 0, 105, 0.8)',
+    borderColor: '#48ffff',
+    borderWidth: 1,
+  },
+  radioTypeOptionText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  radioTypeOptionTextSelected: {
+    color: 'black',
   },
 });
