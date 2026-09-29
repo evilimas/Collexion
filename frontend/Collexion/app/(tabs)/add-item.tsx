@@ -588,7 +588,7 @@ const AddItem = () => {
                   borderColor: 'rgba(255, 255, 255, 0.5)',
                   borderWidth: 1,
                   borderRadius: 8,
-                  // marginBottom: 10,
+                  marginBottom: 10,
                   display: 'flex',
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -601,13 +601,12 @@ const AddItem = () => {
                     color: 'white',
                     fontSize: 16,
                     fontWeight: 'bold',
-                    // marginBottom: 4,
                     marginLeft: 10,
                   }}
                 >
                   Reshelled?
                 </Text>
-                <View style={styles.typeOptions}>
+                <View style={styles.radioTypeOptions}>
                   {radioButtonsReshell.map((option) => (
                     <Pressable
                       key={option.id}
@@ -746,7 +745,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   button: {
-    backgroundColor: 'rgb(7, 0, 105)',
+    backgroundColor: '#0DDCFD',
     marginBottom: 10,
     padding: 14,
     borderRadius: 8,
@@ -757,7 +756,7 @@ const styles = StyleSheet.create({
     // marginTop: 10,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -820,12 +819,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.5)',
-    borderRadius: 8,
+    borderRadius: 17,
+    // height: 100,
   },
   typeOption: {
     flex: 1,
     padding: 10,
-    borderRadius: 8,
+    borderRadius: 15,
     // borderWidth: 1,
     // borderColor: 'rgba(255, 255, 255, 0.5)',
     // marginHorizontal: 5,
@@ -833,7 +833,7 @@ const styles = StyleSheet.create({
     // width: '100%',
   },
   typeOptionSelected: {
-    backgroundColor: '#42d3d3',
+    backgroundColor: '#0DDCFD',
     // backgroundColor: 'rgba(7, 0, 105, 0.8)',
     borderColor: '#48ffff',
     borderWidth: 1,
@@ -851,14 +851,12 @@ const styles = StyleSheet.create({
 
   radioTypeOptions: {
     flexDirection: 'row',
-    // justifyContent: 'space-around',
     marginBottom: 0,
-    // borderWidth: 1,
-    // borderColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 8,
   },
   radioTypeOption: {
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 8,
     // borderWidth: 1,
     // borderColor: 'rgba(255, 255, 255, 0.5)',
@@ -867,7 +865,7 @@ const styles = StyleSheet.create({
     // width: '100%',
   },
   radioTypeOptionSelected: {
-    backgroundColor: '#42d3d3',
+    backgroundColor: '#0DDCFD',
     // backgroundColor: 'rgba(7, 0, 105, 0.8)',
     borderColor: '#48ffff',
     borderWidth: 1,
