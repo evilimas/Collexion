@@ -104,64 +104,72 @@ const AddItem = () => {
     { id: '3', label: 'Controller' },
   ];
 
-  const radioButtonsCondition: RadioButtonProps[] = useMemo(
-    () => [
-      {
-        id: '0',
-        label: 'Unopened',
-        value: 'unopened',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-        containerStyle: { width: 120 },
-      },
-      {
-        id: '1', // acts as primary key, should be unique and non-empty string
-        label: 'Mint',
-        value: 'mint',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-        containerStyle: { width: 80 },
-      },
-      {
-        id: '2',
-        label: 'Like New',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-        containerStyle: { width: 110 },
-      },
-      {
-        id: '3',
-        label: 'Good',
-        value: 'good',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-        containerStyle: { width: 120 },
-      },
-      {
-        id: '4',
-        label: 'Fair',
-        value: 'fair',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-        containerStyle: { width: 80 },
-      },
-      {
-        id: '5',
-        label: 'Poor',
-        value: 'poor',
-        color: '#42d3d3', // selected inner circle
-        borderColor: '#b0b3b2', // outer border
-        borderSize: 2,
-        containerStyle: { width: 100 },
-      },
-    ],
-    [],
-  );
+  const conditionOptions: { id: string; label: string }[] = [
+    { id: '0', label: 'Unopened' },
+    { id: '1', label: 'Mint' },
+    { id: '2', label: 'Like New' },
+    { id: '3', label: 'Good' },
+    { id: '4', label: 'Fair' },
+    { id: '5', label: 'Poor' },
+  ];
+  // const radioButtonsCondition: RadioButtonProps[] = useMemo(
+  //   () => [
+  //     {
+  //       id: '0',
+  //       label: 'Unopened',
+  //       value: 'unopened',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //       containerStyle: { width: 120 },
+  //     },
+  //     {
+  //       id: '1', // acts as primary key, should be unique and non-empty string
+  //       label: 'Mint',
+  //       value: 'mint',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //       containerStyle: { width: 80 },
+  //     },
+  //     {
+  //       id: '2',
+  //       label: 'Like New',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //       containerStyle: { width: 110 },
+  //     },
+  //     {
+  //       id: '3',
+  //       label: 'Good',
+  //       value: 'good',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //       containerStyle: { width: 120 },
+  //     },
+  //     {
+  //       id: '4',
+  //       label: 'Fair',
+  //       value: 'fair',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //       containerStyle: { width: 80 },
+  //     },
+  //     {
+  //       id: '5',
+  //       label: 'Poor',
+  //       value: 'poor',
+  //       color: '#42d3d3', // selected inner circle
+  //       borderColor: '#b0b3b2', // outer border
+  //       borderSize: 2,
+  //       containerStyle: { width: 100 },
+  //     },
+  //   ],
+  //   [],
+  // );
 
   const radioButtonsReshell: { id: string; label: string }[] = [
     { id: '1', label: 'Yes' },
@@ -472,11 +480,35 @@ const AddItem = () => {
                   marginBottom: 10,
                   display: 'flex',
                   flexDirection: 'column',
-                  paddingVertical: 3,
                   backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 }}
               >
-                <RadioGroup
+                <View style={styles.conditionTypeOptions}>
+                  {conditionOptions.map((option) => (
+                    <Pressable
+                      key={option.id}
+                      onPress={() => setCondition(option.id)}
+                      accessibilityRole="radio"
+                      accessibilityState={{ selected: condition === option.id }}
+                      style={[
+                        styles.conditionTypeOption,
+                        condition === option.id &&
+                          styles.conditionTypeOptionSelected,
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.conditionTypeOptionText,
+                          condition === option.id &&
+                            styles.conditionTypeOptionTextSelected,
+                        ]}
+                      >
+                        {option.label}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+                {/* <RadioGroup
                   layout="row"
                   containerStyle={{ marginBottom: 0.5, width: '90%' }}
                   radioButtons={radioButtonsCondition.slice(0, 3)}
@@ -501,7 +533,7 @@ const AddItem = () => {
                     fontWeight: 'bold',
                     marginLeft: 7,
                   }}
-                />
+                /> */}
               </View>
               <TextInput
                 placeholder="* Edition (e.g. Standard, Limited, Special)"
@@ -650,6 +682,7 @@ const AddItem = () => {
                   marginBottom: 10,
                   display: 'flex',
                   flexDirection: 'row',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
                   backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 }}
@@ -665,7 +698,31 @@ const AddItem = () => {
                 >
                   With box?
                 </Text>
-                <RadioGroup
+                <View style={styles.radioTypeOptions}>
+                  {radioButtonsWithBox.map((option) => (
+                    <Pressable
+                      key={option.id}
+                      onPress={() => setWithBox(option.id)}
+                      accessibilityRole="radio"
+                      accessibilityState={{ selected: withBox === option.id }}
+                      style={[
+                        styles.radioTypeOption,
+                        withBox === option.id && styles.radioTypeOptionSelected,
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.radioTypeOptionText,
+                          withBox === option.id &&
+                            styles.radioTypeOptionTextSelected,
+                        ]}
+                      >
+                        {option.label}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+                {/* <RadioGroup
                   layout="row"
                   radioButtons={radioButtonsWithBox}
                   onPress={setWithBox}
@@ -675,7 +732,7 @@ const AddItem = () => {
                     fontSize: 15,
                     fontWeight: 'bold',
                   }}
-                />
+                /> */}
               </View>
             </View>
           </View>
@@ -713,7 +770,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'SpaceGrotesk_600SemiBold',
     marginBottom: 20,
     textAlign: 'center',
     marginTop: 20,
@@ -722,7 +779,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     color: 'white',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'DMSans_700Bold',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
@@ -734,7 +791,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     color: 'white',
     fontSize: 17,
-    fontWeight: 'bold',
+    fontFamily: 'DMSans_700Bold',
     paddingHorizontal: 18,
     paddingVertical: 10,
     borderRadius: 8,
@@ -758,7 +815,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'black',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'DMSans_700Bold',
     textAlign: 'center',
   },
 
@@ -779,7 +836,7 @@ const styles = StyleSheet.create({
   dropdownButtonTxtStyle: {
     flex: 1,
     fontSize: 17,
-    fontWeight: 'bold',
+    fontFamily: 'DMSans_700Bold',
     color: 'white',
   },
   dropdownMenuStyle: {
@@ -801,7 +858,7 @@ const styles = StyleSheet.create({
   dropdownItemTxtStyle: {
     flex: 1,
     fontSize: 17,
-    fontWeight: '500',
+    fontFamily: 'DMSans_500Medium',
     color: 'white',
   },
   modalBackdrop: {
@@ -840,7 +897,7 @@ const styles = StyleSheet.create({
   },
   typeOptionText: {
     color: 'white',
-    fontWeight: 'bold',
+    fontFamily: 'DMSans_700Bold',
     fontSize: 16,
   },
   typeOptionTextSelected: {
@@ -855,7 +912,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   radioTypeOption: {
-    paddingVertical: 10,
+    paddingVertical: 7,
     paddingHorizontal: 20,
     borderRadius: 8,
     // borderWidth: 1,
@@ -872,10 +929,44 @@ const styles = StyleSheet.create({
   },
   radioTypeOptionText: {
     color: 'white',
-    fontWeight: 'bold',
+    fontFamily: 'DMSans_700Bold',
     fontSize: 16,
   },
   radioTypeOptionTextSelected: {
+    color: 'black',
+  },
+
+  // condition option styles
+  conditionTypeOptions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    // flexDirection: '',
+    justifyContent: 'space-between',
+    marginBottom: 0,
+    borderRadius: 8,
+  },
+  conditionTypeOption: {
+    paddingVertical: 9,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+    width: '33%',
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  conditionTypeOptionSelected: {
+    backgroundColor: '#0DDCFD',
+    borderColor: '#48ffff',
+    borderWidth: 1,
+    // borderVerticalWidth: 1,
+    // borderHorizontalWidth: 1,
+  },
+  conditionTypeOptionText: {
+    color: 'white',
+    fontFamily: 'DMSans_700Bold',
+    fontSize: 16,
+  },
+  conditionTypeOptionTextSelected: {
     color: 'black',
   },
 });

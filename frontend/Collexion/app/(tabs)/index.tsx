@@ -22,6 +22,14 @@ type CollectionSquare = {
   tab: string;
 };
 
+type FilteredCollectionSquare = {
+  id: string;
+  name: string;
+  image?: any;
+  filterKind: 'manufacturer' | 'name';
+  filterValue: string;
+};
+
 const homeCollections: CollectionSquare[] = [
   {
     id: '1',
@@ -64,62 +72,71 @@ const homeCollections: CollectionSquare[] = [
 //   },
 // ];
 
-const Collections: CollectionSquare[] = [
+const Collections: FilteredCollectionSquare[] = [
   {
     id: '1',
     name: 'Nintendo',
     image: require('@/assets/images/nintendo2.png'),
-    tab: '/(tabs)/home',
+    filterKind: 'manufacturer',
+    filterValue: 'Nintendo',
   },
   {
     id: '2',
     name: '    Xbox    ',
     image: require('@/assets/images/xboxone.png'),
-    tab: '/(tabs)/home',
+    filterKind: 'manufacturer',
+    filterValue: 'Microsoft',
   },
   {
     id: '3',
     name: 'Playstation',
     image: require('@/assets/images/playstation.png'),
-    tab: '/(tabs)/home',
+    filterKind: 'manufacturer',
+    filterValue: 'Sony',
   },
 ];
-const ConsoleCollections: CollectionSquare[] = [
+const ConsoleCollections: FilteredCollectionSquare[] = [
   {
     id: '1',
     name: 'PS3',
     image: require('@/assets/images/ps3.png'),
-    tab: '/(tabs)/home',
+    filterKind: 'name',
+    filterValue: 'PlayStation 3,PS3',
   },
   {
     id: '2',
     name: 'PS4',
     image: require('@/assets/images/ps4.png'),
-    tab: '/(tabs)/home',
+    filterKind: 'name',
+    filterValue: 'PlayStation 4,PS4',
   },
   {
     id: '3',
     name: 'PS5',
     image: require('@/assets/images/ps5.png'),
-    tab: '/(tabs)/home',
+    filterKind: 'name',
+    filterValue: 'PlayStation 5,PS5',
   },
   {
     id: '4',
     name: 'Nintendo Switch',
     image: require('@/assets/images/nswitch.png'),
-    tab: '/(tabs)/home',
+    filterKind: 'name',
+    filterValue: 'Nintendo Switch,Switch',
   },
   {
     id: '5',
     name: 'Xbox Series',
     image: require('@/assets/images/xboxseries.png'),
-    tab: '/(tabs)/home',
+    filterKind: 'name',
+    filterValue: 'Xbox Series S|X,Xbox Series',
   },
   {
     id: '6',
     name: 'Xbox 360',
     image: require('@/assets/images/xbox3601.png'),
-    tab: '/(tabs)/home',
+    filterKind: 'name',
+    filterValue: 'Xbox 360',
   },
 ];
 
@@ -187,7 +204,18 @@ const App = () => {
             <Text style={styles.text}>Collections</Text>
             <View style={styles.collectionContainer}>
               {Collections.map((collection) => (
-                <Link key={collection.id} href={collection.tab as any} asChild>
+                <Link
+                  key={collection.id}
+                  href={{
+                    pathname: '/collection-list' as any,
+                    params: {
+                      kind: collection.filterKind,
+                      value: collection.filterValue,
+                      title: collection.name.trim(),
+                    },
+                  }}
+                  asChild
+                >
                   <Pressable style={styles.linkCollections}>
                     <Image source={collection.image} style={styles.colImg} />
                     <Text style={{ textAlign: 'center', color: 'white' }}>
@@ -200,7 +228,18 @@ const App = () => {
             <Text style={styles.text}>Collections by console</Text>
             <View style={styles.collectionContainerConsole}>
               {ConsoleCollections.map((collection) => (
-                <Link key={collection.id} href={collection.tab as any} asChild>
+                <Link
+                  key={collection.id}
+                  href={{
+                    pathname: '/collection-list' as any,
+                    params: {
+                      kind: collection.filterKind,
+                      value: collection.filterValue,
+                      title: collection.name.trim(),
+                    },
+                  }}
+                  asChild
+                >
                   <Pressable style={styles.linkConsole}>
                     <Image
                       source={collection.image}
