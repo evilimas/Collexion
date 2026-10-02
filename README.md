@@ -81,4 +81,4 @@ frontend/Collexion/
 
 ## Notes
 
-This project is designed for gamers who want a clean and easy way to organize their retro collection.
+This project is designed for gamers who want a clean and easy way to organize their collection.
