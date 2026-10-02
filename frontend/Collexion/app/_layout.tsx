@@ -7,13 +7,26 @@ import { onAuthStateChanged, type User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { auth } from '@/lib/firebase';
 import 'react-native-reanimated';
+import { useFonts } from 'expo-font';
+import { SpaceGrotesk_600SemiBold } from '@expo-google-fonts/space-grotesk';
+import {
+  DMSans_400Regular,
+  DMSans_500Medium,
+  DMSans_700Bold,
+} from '@expo-google-fonts/dm-sans';
 
 function RootLayoutNav() {
   const [user, setUser] = useState<User | null | undefined>(undefined);
+  const [fontsLoaded] = useFonts({
+    SpaceGrotesk_600SemiBold,
+    DMSans_400Regular,
+    DMSans_500Medium,
+    DMSans_700Bold,
+  });
 
   useEffect(() => onAuthStateChanged(auth, setUser), []);
 
-  if (user === undefined) {
+  if (user === undefined || !fontsLoaded) {
     return (
       <View style={styles.loadingScreen}>
         <Image
