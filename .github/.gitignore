@@ -1,0 +1,5 @@
+# GitHub Copilot instructions
+# Ignore GitHub Copilot instructions
+.github/*
+
+/copilot-instructions.md
