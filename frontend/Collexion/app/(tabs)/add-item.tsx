@@ -750,13 +750,11 @@ export default AddItem;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // height: '100%',
   },
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
-    // width: '100%',
-    // height: '100%',
+
     paddingHorizontal: 10,
   },
 
