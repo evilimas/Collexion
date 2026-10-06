@@ -763,7 +763,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    // paddingBottom: 14,
   },
   text: {
     color: 'white',
