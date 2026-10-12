@@ -35,6 +35,11 @@ const CollectionList = () => {
     // substring match so e.g. "DualSense(PS5)" matches the "PS5" filter
     return values.some((v) => name.includes(v) || forConsole.includes(v));
   });
+  const consoleMatches = matches.filter((item) => item.type === 'Console');
+  const handheldMatches = matches.filter((item) => item.type === 'Handheld');
+  const controllerMatches = matches.filter(
+    (item) => item.type === 'Controller',
+  );
 
   return (
     <View style={styles.container}>
@@ -62,47 +67,137 @@ const CollectionList = () => {
             {matches.length === 0 ? (
               <Text style={styles.emptyText}>No items found for {title}.</Text>
             ) : (
-              matches.map((item) => (
-                <Link
-                  key={item.id}
-                  href={{
-                    pathname: '/console-details',
-                    params: {
-                      id: item.id,
-                      type: item.type,
-                      name: item.name,
-                      model: item.model,
-                      edition: item.edition,
-                      color: item.color,
-                      condition: item.condition,
-                      manufacturer: item.manufacturer,
-                      storage: item.storage,
-                      forConsole: item.forConsole,
-                      description: item.description,
-                      url: item.url,
-                      reshell: String(item.reshell),
-                      withBox: String(item.withBox),
-                      from: '/(tabs)',
-                    },
-                  }}
-                  asChild
-                >
-                  <Pressable style={{ width: '100%' }}>
-                    <Console
-                      name={item.name}
-                      model={item.model}
-                      edition={item.edition}
-                      color={item.color}
-                      condition={item.condition}
-                      picture={item.picture}
-                      manufacturer={item.manufacturer}
-                      description={item.description}
-                      url={item.url}
-                      withBox={item.withBox}
-                    />
-                  </Pressable>
-                </Link>
-              ))
+              <>
+                <>
+                  {consoleMatches.length > 0 && (
+                    <Text style={styles.textCenter}>Consoles</Text>
+                  )}
+                  {consoleMatches.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={{
+                        pathname: '/console-details',
+                        params: {
+                          id: item.id,
+                          type: item.type,
+                          name: item.name,
+                          model: item.model,
+                          edition: item.edition,
+                          color: item.color,
+                          condition: item.condition,
+                          manufacturer: item.manufacturer,
+                          storage: item.storage,
+                          forConsole: item.forConsole,
+                          description: item.description,
+                          url: item.url,
+                          reshell: String(item.reshell),
+                          withBox: String(item.withBox),
+                          from: '/(tabs)',
+                        },
+                      }}
+                      asChild
+                    >
+                      <Pressable style={{ width: '100%' }}>
+                        <Console
+                          name={item.name}
+                          model={item.model}
+                          edition={item.edition}
+                          color={item.color}
+                          condition={item.condition}
+                          picture={item.picture}
+                          url={item.url}
+                        />
+                      </Pressable>
+                    </Link>
+                  ))}
+                </>
+                <>
+                  {handheldMatches.length > 0 && (
+                    <Text style={styles.textCenter}>Handhelds</Text>
+                  )}
+                  {handheldMatches.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={{
+                        pathname: '/console-details',
+                        params: {
+                          id: item.id,
+                          type: item.type,
+                          name: item.name,
+                          model: item.model,
+                          edition: item.edition,
+                          color: item.color,
+                          condition: item.condition,
+                          manufacturer: item.manufacturer,
+                          storage: item.storage,
+                          forConsole: item.forConsole,
+                          description: item.description,
+                          url: item.url,
+                          reshell: String(item.reshell),
+                          withBox: String(item.withBox),
+                          from: '/(tabs)',
+                        },
+                      }}
+                      asChild
+                    >
+                      <Pressable style={{ width: '100%' }}>
+                        <Console
+                          name={item.name}
+                          model={item.model}
+                          edition={item.edition}
+                          color={item.color}
+                          condition={item.condition}
+                          picture={item.picture}
+                          url={item.url}
+                        />
+                      </Pressable>
+                    </Link>
+                  ))}
+                </>
+                <>
+                  {controllerMatches.length > 0 && (
+                    <Text style={styles.textCenter}>Controllers</Text>
+                  )}
+                  {controllerMatches.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={{
+                        pathname: '/console-details',
+                        params: {
+                          id: item.id,
+                          type: item.type,
+                          name: item.name,
+                          model: item.model,
+                          edition: item.edition,
+                          color: item.color,
+                          condition: item.condition,
+                          manufacturer: item.manufacturer,
+                          storage: item.storage,
+                          forConsole: item.forConsole,
+                          description: item.description,
+                          url: item.url,
+                          reshell: String(item.reshell),
+                          withBox: String(item.withBox),
+                          from: '/(tabs)',
+                        },
+                      }}
+                      asChild
+                    >
+                      <Pressable style={{ width: '100%' }}>
+                        <Console
+                          name={item.name}
+                          model={item.model}
+                          edition={item.edition}
+                          color={item.color}
+                          condition={item.condition}
+                          picture={item.picture}
+                          url={item.url}
+                        />
+                      </Pressable>
+                    </Link>
+                  ))}
+                </>
+              </>
             )}
           </ScrollView>
           <Text style={styles.totalText}>{`Total: ${matches.length}`}</Text>
@@ -133,6 +228,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+    marginTop: 28,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderRadius: 8,
+    padding: 8,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+    width: '25%',
   },
   backText: {
     color: 'white',
@@ -140,9 +247,16 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: '600',
     marginBottom: 10,
+  },
+  textCenter: {
+    color: 'white',
+    fontSize: 25,
+    fontWeight: '600',
+    marginBottom: 10,
+    textAlign: 'center',
   },
   errorText: {
     color: '#ff6b6b',
