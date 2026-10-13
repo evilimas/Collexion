@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Pressable,
   Alert,
+  ScrollView,
 } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -39,19 +40,21 @@ const ConsoleDetail = () => {
         resizeMode="cover"
         style={styles.image}
       >
-        <View style={styles.overlay}>
-          <Pressable
-            onPress={() => router.push(from as any)}
-            style={styles.backButton}
-          >
-            <MaterialIcons
-              name="arrow-back"
-              size={20}
-              color="white"
-              style={{ marginRight: 8 }}
-            />
-            <Text style={styles.backText}>Back</Text>
-          </Pressable>
+        <Text style={styles.headerText}>Details</Text>
+        <Pressable
+          onPress={() => router.push(from as any)}
+          style={styles.backButton}
+        >
+          <MaterialIcons
+            name="arrow-back"
+            size={20}
+            color="white"
+            style={{ marginRight: 8 }}
+          />
+          <Text style={styles.backText}>Back</Text>
+        </Pressable>
+
+        <ScrollView style={styles.overlay}>
           <View style={styles.pictureContainer}>
             {url ? (
               <Image
@@ -197,7 +200,7 @@ const ConsoleDetail = () => {
               </View>
             </Pressable>
           </View>
-        </View>
+        </ScrollView>
       </ImageBackground>
     </View>
   );
@@ -216,10 +219,21 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.49)',
+
     paddingHorizontal: 10,
     paddingTop: 20,
   },
+  headerText: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: '700',
+    marginTop: 10,
+    // textAlign: 'center',
+    marginHorizontal: 'auto',
+    // marginTop: 8,
+    justifyContent: 'center',
+  },
+
   backButton: {
     alignSelf: 'flex-start',
     flexDirection: 'row',
@@ -228,9 +242,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.5)',
-    marginBottom: 10,
-    marginTop: 14,
+    borderColor: 'rgba(255, 255, 255, 0.74)',
+    marginBottom: 8,
+    marginTop: -10,
+    marginHorizontal: 12,
   },
 
   editButtons: {
@@ -239,7 +254,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    marginTop: 'auto',
+    marginTop: 50,
+    marginBottom: 30,
     color: 'white',
   },
 
@@ -297,7 +313,7 @@ const styles = StyleSheet.create({
   },
   detailImage: {
     width: '100%',
-    height: 280,
+    height: 320,
     resizeMode: 'cover',
     marginBottom: 8,
     borderRadius: 8,
@@ -305,6 +321,7 @@ const styles = StyleSheet.create({
   pictureContainer: {
     alignItems: 'center',
     borderRadius: 22,
+    marginTop: -8,
   },
   detailName: {
     color: 'white',

@@ -35,6 +35,7 @@ const CollectionList = () => {
     // substring match so e.g. "DualSense(PS5)" matches the "PS5" filter
     return values.some((v) => name.includes(v) || forConsole.includes(v));
   });
+
   const consoleMatches = matches.filter((item) => item.type === 'Console');
   const handheldMatches = matches.filter((item) => item.type === 'Handheld');
   const controllerMatches = matches.filter(
@@ -58,7 +59,7 @@ const CollectionList = () => {
             />
             <Text style={styles.backText}>Back</Text>
           </Pressable>
-          <Text style={styles.text}>{title}</Text>
+          <Text style={styles.text}>{title} Collection</Text>
           {error ? <Text style={styles.errorText}>{error}</Text> : null}
           <ScrollView
             contentContainerStyle={styles.list}
@@ -273,11 +274,15 @@ const styles = StyleSheet.create({
   },
   totalText: {
     color: 'white',
-    fontSize: 15,
+    fontSize: 17,
     textAlign: 'center',
-    marginVertical: 8,
+    marginBottom: 4,
+    textShadowColor: 'black',
+    textShadowOffset: { width: 1, height: 4 },
+    textShadowRadius: 6,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
     padding: 9,
     borderRadius: 8,
   },
