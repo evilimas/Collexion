@@ -16,6 +16,7 @@ export type CollectionItem = {
   description?: string;
   reshell?: boolean;
   url?: string; // Optional URL for more information
+  createdAt?: number; // Timestamp for when the item was added
 };
 
 export const collection: CollectionItem[] = [
