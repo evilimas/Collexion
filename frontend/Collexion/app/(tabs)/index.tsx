@@ -10,8 +10,9 @@ import {
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'expo-router';
+import { useCollectionItems } from '@/hooks/use-collection-items';
 // import { useCollectionItems } from '@/hooks/use-collection-items';
-import { recentlyAddedItems } from '@/hooks/use-collection-items';
+// import { recentlyAddedItems } from '@/hooks/use-collection-items';
 
 // import backgroundImage from '@/assets/images/background1.png';
 
@@ -141,21 +142,26 @@ const ConsoleCollections: FilteredCollectionSquare[] = [
 ];
 
 const App = () => {
-  const [recentlyAdded, setRecentlyAdded] = useState<CollectionSquare[]>([]);
+  // const [recentlyAdded, setRecentlyAdded] = useState<CollectionSquare[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      const items = await recentlyAddedItems();
-      setRecentlyAdded(
-        items.map((item) => ({
-          id: item.id,
-          name: item.name,
-          image: item.picture,
-          tab: '/(tabs)/home',
-        })),
-      );
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const items = await recentlyAddedItems();
+  //     setRecentlyAdded(
+  //       items.map((item) => ({
+  //         id: item.id,
+  //         name: item.name,
+  //         image: item.picture,
+  //         tab: '/(tabs)/home',
+  //       })),
+  //     );
+  //   })();
+  // }, []);
+
+  const { items } = useCollectionItems();
+  const recentlyAdded = items.sort(
+    (a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0),
+  );
 
   return (
     <View style={styles.container}>
@@ -171,7 +177,7 @@ const App = () => {
               style={styles.logo}
             />
             <TextInput
-              placeholder="🔍 Search for games, consoles, and more..."
+              placeholder="🔍 Search for controllers, consoles, and more..."
               placeholderTextColor="gray"
               style={styles.search}
             />
@@ -195,7 +201,7 @@ const App = () => {
                 <View key={item.id}>
                   <Pressable style={styles.recentLink}>
                     <Text style={{ color: 'white', textAlign: 'center' }}>
-                      {item.name}
+                      {item.name}-{item.model}
                     </Text>
                   </Pressable>
                 </View>

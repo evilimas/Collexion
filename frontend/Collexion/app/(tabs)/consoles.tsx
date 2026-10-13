@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 15,
-    marginBottom: 14,
+    marginBottom: 10,
   },
   grid: {
     flexDirection: 'row',
