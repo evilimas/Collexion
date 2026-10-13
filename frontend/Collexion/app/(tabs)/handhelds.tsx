@@ -120,9 +120,16 @@ const Handhelds = () => {
           <Text
             style={{
               color: 'white',
-              fontSize: 16,
+              fontSize: 17,
               textAlign: 'center',
-              marginVertical: 10,
+              marginBottom: 4,
+              textShadowColor: 'black',
+              textShadowOffset: { width: 1, height: 4 },
+              textShadowRadius: 6,
+              borderWidth: 1,
+              borderColor: 'rgba(255, 255, 255, 0.5)',
+              padding: 9,
+              borderRadius: 8,
             }}
           >
             {`Total Handhelds: ${allHandhelds.length}`}
