@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
   updateProfile,
+  GoogleAuthProvider,
 } from 'firebase/auth';
 import {
   ActivityIndicator,
@@ -56,6 +58,18 @@ export default function AuthScreen() {
     }
   };
 
+  // const signInWithGoogle = async (): Promise<void> => {
+  //   try {
+  //     await signInWithPopup(auth, new GoogleAuthProvider());
+  //     router.replace('/(tabs)');
+  //   } catch (error) {
+  //     alert('Error signing in with Google');
+  //     setError(
+  //       error instanceof Error ? error.message : 'Error signing in with Google',
+  //     );
+  //   }
+  // };
+
   const handleSubmit = async () => {
     setError(null);
     setLoading(true);
@@ -87,9 +101,7 @@ export default function AuthScreen() {
             source={require('@/assets/images/logo3.png')}
             style={styles.logo}
           />
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
-            <Text>Back</Text>
-          </Pressable>
+
           <ThemedText type="title" style={styles.titleText}>
             {mode === 'sign-in' ? 'Sign In' : 'Sign Up'}
           </ThemedText>
@@ -113,6 +125,15 @@ export default function AuthScreen() {
               /> */}
               </>
             )}
+            {/* {mode === 'sign-in' && (
+            <Pressable style={styles.googleButton} onPress={signInWithGoogle}>
+              <Image
+                source={require('@/assets/images/google.png')}
+                style={styles.googleIcon}
+              />
+              <Text style={styles.googleButtonText}>Sign in with Google</Text>
+            </Pressable>
+            )} */}
             <TextInput
               style={styles.input}
               placeholder="Email"
@@ -186,6 +207,7 @@ const styles = StyleSheet.create({
 
     // alignItems: 'center',
   },
+
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
@@ -254,5 +276,25 @@ const styles = StyleSheet.create({
     textShadowColor: 'black',
     textShadowOffset: { width: 1, height: 4 },
     textShadowRadius: 6,
+  },
+
+  // google button styles
+  googleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 14,
+    marginTop: 8,
+    marginBottom: 18,
+  },
+  googleIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 8,
+  },
+  googleButtonText: {
+    color: '#000',
+    fontWeight: '600',
   },
 });

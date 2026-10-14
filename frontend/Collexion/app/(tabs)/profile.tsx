@@ -10,7 +10,7 @@ import {
 import { useCollectionItems } from '@/hooks/use-collection-items';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { useRouter } from 'expo-router';
+import { router, useRouter } from 'expo-router';
 
 const Logout = () => {
   const router = useRouter();
@@ -70,28 +70,38 @@ const Profile = () => {
               </View>
             </View>
             <View>
-              <Text style={styles.link}>
-                Edit Profile <Text>&gt;</Text>
-              </Text>
-              <Text style={styles.link}>
-                Change Password <Text>&gt;</Text>
-              </Text>
-              <Text style={styles.link}>
-                Privacy Settings <Text>&gt;</Text>
-              </Text>
-              <Text style={styles.link}>
-                Notification Settings <Text>&gt;</Text>
-              </Text>
-              <Text style={styles.link}>
-                Connected Accounts <Text>&gt;</Text>
-              </Text>
+              <Pressable
+                style={styles.link}
+                onPress={() => router.push('/edit-profile')}
+              >
+                <Text style={styles.linkText}>Edit Profile</Text>{' '}
+                <Text style={styles.linkText}>&gt;</Text>
+              </Pressable>
+              <Pressable style={styles.link}>
+                <Text style={styles.linkText}>Change Password</Text>{' '}
+                <Text style={styles.linkText}>&gt;</Text>
+              </Pressable>
+              <Pressable style={styles.link}>
+                <Text style={styles.linkText}>Privacy Settings</Text>{' '}
+                <Text style={styles.linkText}>&gt;</Text>
+              </Pressable>
+              <Pressable style={styles.link}>
+                <Text style={styles.linkText}>Notification Settings</Text>{' '}
+                <Text style={styles.linkText}>&gt;</Text>
+              </Pressable>
+              <Pressable style={styles.link}>
+                <Text style={styles.linkText}>Connected Accounts</Text>{' '}
+                <Text style={styles.linkText}>&gt;</Text>
+              </Pressable>
 
-              <Text style={styles.link}>
-                Wishlist <Text>&gt;</Text>
-              </Text>
-              <Text style={styles.link}>
-                Saved Items <Text>&gt;</Text>
-              </Text>
+              <Pressable style={styles.link}>
+                <Text style={styles.linkText}>Wishlist</Text>{' '}
+                <Text style={styles.linkText}>&gt;</Text>
+              </Pressable>
+              <Pressable style={styles.link}>
+                <Text style={styles.linkText}>Saved Items</Text>{' '}
+                <Text style={styles.linkText}>&gt;</Text>
+              </Pressable>
               <Logout />
             </View>
           </ScrollView>
@@ -146,15 +156,21 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
     alignItems: 'center',
     borderRadius: 8,
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
     marginBottom: 10,
     display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  linkText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   searchContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
