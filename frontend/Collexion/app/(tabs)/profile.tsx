@@ -48,7 +48,11 @@ const Profile = () => {
             <View style={styles.heading}>
               <View style={styles.headingLeft}>
                 <Image
-                  source={require('@/assets/images/user.png')}
+                  source={
+                    user?.photoURL
+                      ? { uri: user.photoURL }
+                      : require('@/assets/images/user.png')
+                  }
                   style={{ width: 100, height: 100, borderRadius: 50 }}
                 />
               </View>
@@ -166,6 +170,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
   },
   linkText: {
     color: 'white',
