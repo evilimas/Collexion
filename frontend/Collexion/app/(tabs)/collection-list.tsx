@@ -141,7 +141,7 @@ const CollectionList = () => {
                       }}
                       asChild
                     >
-                      <Pressable style={{ width: '100%' }}>
+                      <Pressable style={{ width: '100%', marginBottom: -10 }}>
                         <Console
                           name={item.name}
                           model={item.model}
@@ -184,7 +184,7 @@ const CollectionList = () => {
                       }}
                       asChild
                     >
-                      <Pressable style={{ width: '100%' }}>
+                      <Pressable style={{ width: '100%', marginBottom: -10 }}>
                         <Console
                           name={item.name}
                           model={item.model}
