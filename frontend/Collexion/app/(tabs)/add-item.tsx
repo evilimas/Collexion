@@ -13,6 +13,11 @@ import { useMemo, useState } from 'react';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { auth, db } from '@/lib/firebase';
 import { getItemPicture } from '@/lib/item-picture';
+import AutocompleteInput from '@/components/AutocompleteInput';
+import {
+  getModelSuggestions,
+  getEditionSuggestions,
+} from '@/lib/item-suggestions';
 import {
   addDoc,
   collection as firestoreCollection,
@@ -247,6 +252,9 @@ const AddItem = () => {
   const [isManufacturerSelectOpen, setIsManufacturerSelectOpen] =
     useState<boolean>(false);
 
+  const selectedName =
+    type === '1' ? consoleName : type === '2' ? handheldName : controllerName;
+
   const handleAddItem = async () => {
     const name =
       type === '1' ? consoleName : type === '2' ? handheldName : controllerName;
@@ -311,7 +319,10 @@ const AddItem = () => {
         resizeMode="cover"
         style={styles.image}
       >
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
           <View style={styles.overlay}>
             <Text style={styles.text}>Add item to collection</Text>
             <View style={{ padding: 10 }}>
@@ -458,12 +469,12 @@ const AddItem = () => {
               value={name}
               onChangeText={setName}
             /> */}
-              <TextInput
+              <AutocompleteInput
                 placeholder="Model (e.g. Slim, Pro, OLED)"
-                placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                style={styles.inputStyle}
+                inputStyle={styles.inputStyle}
                 value={model}
                 onChangeText={setModel}
+                suggestions={getModelSuggestions(selectedName)}
               />
               <TextInput
                 placeholder="* Color (e.g. Red, Blue, Black)"
@@ -535,12 +546,12 @@ const AddItem = () => {
                   }}
                 /> */}
               </View>
-              <TextInput
+              <AutocompleteInput
                 placeholder="* Edition (e.g. Standard, Limited, Special)"
-                placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                style={styles.inputStyle}
+                inputStyle={styles.inputStyle}
                 value={edition}
                 onChangeText={setEdition}
+                suggestions={getEditionSuggestions(selectedName, model)}
               />
               {type === '3' && (
                 <TextInput
