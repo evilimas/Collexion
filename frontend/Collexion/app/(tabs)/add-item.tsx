@@ -1,4 +1,4 @@
-import {
+﻿import {
   View,
   Text,
   StyleSheet,
@@ -37,6 +37,7 @@ const AddItem = () => {
     'Xbox One',
     'Xbox 360',
     'Xbox Original(OG)',
+    'Other Console (Specify)',
   ];
   const handheldOptions: string[] = [
     'Nintendo Switch',
@@ -50,12 +51,14 @@ const AddItem = () => {
     'Game Gear',
     'Neo Geo Pocket',
     'Neo Geo Pocket Color',
+    'Other Handheld (Specify)',
   ];
   const controllerOptions: string[] = [
     'DualSense(PS5)',
     'DualShock 4(PS4)',
     'Sixaxis/DualShock 3(PS3)',
     'DualShock 2(PS2)',
+    'PlayStation 1 Controller(PS1)',
     'Xbox Series S|X Controller',
     'Xbox One Controller',
     'Xbox 360 Controller',
@@ -63,6 +66,7 @@ const AddItem = () => {
     'Nintendo Wii Controller',
     'Nintendo WiiU Controller',
     'Nintendo Switch Controller',
+    'Other Controller (Specify)',
   ];
 
   const manufacturerOptions: string[] = [
@@ -71,6 +75,7 @@ const AddItem = () => {
     'Nintendo',
     'Sega',
     'SNK',
+    'Other',
   ];
 
   // const radioButtons: RadioButtonProps[] = useMemo(
@@ -232,6 +237,36 @@ const AddItem = () => {
   //   [],
   // );
 
+  const autofillMap: Record<
+    string,
+    { manufacturer: string; forConsole?: string }
+  > = {
+    'DualSense(PS5)': { manufacturer: 'Sony', forConsole: 'PS5' },
+    'DualShock 4(PS4)': { manufacturer: 'Sony', forConsole: 'PS4' },
+    'Sixaxis/DualShock 3(PS3)': { manufacturer: 'Sony', forConsole: 'PS3' },
+    'DualShock 2(PS2)': { manufacturer: 'Sony', forConsole: 'PS2' },
+    'Xbox Series S|X Controller': {
+      manufacturer: 'Microsoft',
+      forConsole: 'Xbox Series and Xbox One',
+    },
+    'Xbox One Controller': {
+      manufacturer: 'Microsoft',
+      forConsole: 'Xbox One and Xbox Series',
+    },
+    'Xbox 360 Controller': {
+      manufacturer: 'Microsoft',
+      forConsole: 'Xbox 360',
+    },
+    'Nintendo Switch Controller': {
+      manufacturer: 'Nintendo',
+      forConsole: 'Nintendo Switch',
+    },
+    'PlayStation 1 Controller(PS1)': {
+      manufacturer: 'Sony',
+      forConsole: 'PS1',
+    },
+  };
+
   const [type, setType] = useState<string>('1');
   const [condition, setCondition] = useState<string>('1');
   const [description, setDescription] = useState<string>('');
@@ -365,34 +400,43 @@ const AddItem = () => {
               </View> */}
 
               {type === '1' && (
-                <Pressable
-                  style={styles.dropdownButtonStyle}
-                  onPress={() => setIsConsoleSelectOpen(true)}
-                >
-                  <Text style={styles.dropdownButtonTxtStyle}>
-                    {consoleName || 'Select console'}
-                  </Text>
-                </Pressable>
+                <>
+                  <Text style={styles.label}>Select Console*</Text>
+                  <Pressable
+                    style={styles.dropdownButtonStyle}
+                    onPress={() => setIsConsoleSelectOpen(true)}
+                  >
+                    <Text style={styles.dropdownButtonTxtStyle}>
+                      {consoleName || 'Select console'}
+                    </Text>
+                  </Pressable>
+                </>
               )}
               {type === '2' && (
-                <Pressable
-                  style={styles.dropdownButtonStyle}
-                  onPress={() => setIsConsoleSelectOpen(true)}
-                >
-                  <Text style={styles.dropdownButtonTxtStyle}>
-                    {handheldName || 'Select handheld'}
-                  </Text>
-                </Pressable>
+                <>
+                  <Text style={styles.label}>Select Handheld*</Text>
+                  <Pressable
+                    style={styles.dropdownButtonStyle}
+                    onPress={() => setIsConsoleSelectOpen(true)}
+                  >
+                    <Text style={styles.dropdownButtonTxtStyle}>
+                      {handheldName || 'Select handheld'}
+                    </Text>
+                  </Pressable>
+                </>
               )}
               {type === '3' && (
-                <Pressable
-                  style={styles.dropdownButtonStyle}
-                  onPress={() => setIsConsoleSelectOpen(true)}
-                >
-                  <Text style={styles.dropdownButtonTxtStyle}>
-                    {controllerName || 'Select controller'}
-                  </Text>
-                </Pressable>
+                <>
+                  <Text style={styles.label}>Select Controller*</Text>
+                  <Pressable
+                    style={styles.dropdownButtonStyle}
+                    onPress={() => setIsConsoleSelectOpen(true)}
+                  >
+                    <Text style={styles.dropdownButtonTxtStyle}>
+                      {controllerName || 'Select controller'}
+                    </Text>
+                  </Pressable>
+                </>
               )}
               <Modal
                 visible={isConsoleSelectOpen}
@@ -431,6 +475,13 @@ const AddItem = () => {
                             style={styles.dropdownItemStyle}
                             onPress={() => {
                               setControllerName(item);
+                              const info = autofillMap[item];
+                              if (info) {
+                                setManufacturer(info.manufacturer);
+                                if (info.forConsole) {
+                                  setForConsole(info.forConsole);
+                                }
+                              }
                               setIsConsoleSelectOpen(false);
                             }}
                           >
@@ -469,6 +520,7 @@ const AddItem = () => {
               value={name}
               onChangeText={setName}
             /> */}
+              <Text style={styles.label}>Model*</Text>
               <AutocompleteInput
                 placeholder="Model (e.g. Slim, Pro, OLED)"
                 inputStyle={styles.inputStyle}
@@ -476,6 +528,7 @@ const AddItem = () => {
                 onChangeText={setModel}
                 suggestions={getModelSuggestions(selectedName)}
               />
+              <Text style={styles.label}>Color*</Text>
               <TextInput
                 placeholder="* Color (e.g. Red, Blue, Black)"
                 placeholderTextColor="rgba(255, 255, 255, 0.7)"
@@ -483,69 +536,8 @@ const AddItem = () => {
                 value={color}
                 onChangeText={setColor}
               />
-              <View
-                style={{
-                  borderColor: 'rgba(255, 255, 255, 0.5)',
-                  borderWidth: 1,
-                  borderRadius: 8,
-                  marginBottom: 10,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                }}
-              >
-                <View style={styles.conditionTypeOptions}>
-                  {conditionOptions.map((option) => (
-                    <Pressable
-                      key={option.id}
-                      onPress={() => setCondition(option.id)}
-                      accessibilityRole="radio"
-                      accessibilityState={{ selected: condition === option.id }}
-                      style={[
-                        styles.conditionTypeOption,
-                        condition === option.id &&
-                          styles.conditionTypeOptionSelected,
-                      ]}
-                    >
-                      <Text
-                        style={[
-                          styles.conditionTypeOptionText,
-                          condition === option.id &&
-                            styles.conditionTypeOptionTextSelected,
-                        ]}
-                      >
-                        {option.label}
-                      </Text>
-                    </Pressable>
-                  ))}
-                </View>
-                {/* <RadioGroup
-                  layout="row"
-                  containerStyle={{ marginBottom: 0.5, width: '90%' }}
-                  radioButtons={radioButtonsCondition.slice(0, 3)}
-                  onPress={setCondition}
-                  selectedId={condition}
-                  labelStyle={{
-                    color: 'white',
-                    fontSize: 17,
-                    fontWeight: 'bold',
-                    marginLeft: 7,
-                  }}
-                />
-                <RadioGroup
-                  layout="row"
-                  containerStyle={{ width: '90%' }}
-                  radioButtons={radioButtonsCondition.slice(3)}
-                  onPress={setCondition}
-                  selectedId={condition}
-                  labelStyle={{
-                    color: 'white',
-                    fontSize: 17,
-                    fontWeight: 'bold',
-                    marginLeft: 7,
-                  }}
-                /> */}
-              </View>
+
+              <Text style={styles.label}>Edition*</Text>
               <AutocompleteInput
                 placeholder="* Edition (e.g. Standard, Limited, Special)"
                 inputStyle={styles.inputStyle}
@@ -554,23 +546,30 @@ const AddItem = () => {
                 suggestions={getEditionSuggestions(selectedName, model)}
               />
               {type === '3' && (
-                <TextInput
-                  placeholder="For What Console "
-                  placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                  style={styles.inputStyle}
-                  value={forConsole}
-                  onChangeText={setForConsole}
-                />
+                <>
+                  <Text style={styles.label}>For What Console*</Text>
+                  <TextInput
+                    placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                    placeholder="* For What Console(PS5, Xbox One, etc.)"
+                    style={styles.inputStyle}
+                    value={forConsole}
+                    onChangeText={setForConsole}
+                  />
+                </>
               )}
               {(type === '2' || type === '1') && (
-                <TextInput
-                  placeholder="Storage Size (e.g. 500GB, 1TB)"
-                  placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                  style={styles.inputStyle}
-                  value={storage}
-                  onChangeText={setStorage}
-                />
+                <>
+                  <Text style={styles.label}>Storage Size</Text>
+                  <TextInput
+                    placeholder="Storage Size (e.g. 500GB, 1TB)"
+                    placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                    style={styles.inputStyle}
+                    value={storage}
+                    onChangeText={setStorage}
+                  />
+                </>
               )}
+              <Text style={styles.label}>Manufacturer*</Text>
               <Pressable
                 style={styles.dropdownButtonStyle}
                 onPress={() => setIsManufacturerSelectOpen(true)}
@@ -609,7 +608,7 @@ const AddItem = () => {
                   </Pressable>
                 </Pressable>
               </Modal>
-
+              <Text style={styles.label}>Description</Text>
               <TextInput
                 placeholder="Description"
                 placeholderTextColor="rgba(255, 255, 255, 0.7)"
@@ -619,6 +618,7 @@ const AddItem = () => {
                 value={description}
                 onChangeText={setDescription}
               />
+              <Text style={styles.label}>Image URL</Text>
               <TextInput
                 placeholder="Image URL"
                 placeholderTextColor="rgba(255, 255, 255, 0.7)"
@@ -626,6 +626,44 @@ const AddItem = () => {
                 value={url}
                 onChangeText={setUrl}
               />
+              <Text style={styles.label}>Condition*</Text>
+              <View
+                style={{
+                  borderColor: 'rgba(255, 255, 255, 0.5)',
+                  borderWidth: 1,
+                  borderRadius: 8,
+                  marginBottom: 10,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                }}
+              >
+                <View style={styles.conditionTypeOptions}>
+                  {conditionOptions.map((option) => (
+                    <Pressable
+                      key={option.id}
+                      onPress={() => setCondition(option.id)}
+                      accessibilityRole="radio"
+                      accessibilityState={{ selected: condition === option.id }}
+                      style={[
+                        styles.conditionTypeOption,
+                        condition === option.id &&
+                          styles.conditionTypeOptionSelected,
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.conditionTypeOptionText,
+                          condition === option.id &&
+                            styles.conditionTypeOptionTextSelected,
+                        ]}
+                      >
+                        {option.label}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+              </View>
               <View
                 style={{
                   borderColor: 'rgba(255, 255, 255, 0.5)',
@@ -747,6 +785,9 @@ const AddItem = () => {
               </View>
             </View>
           </View>
+          <Text style={styles.labelBottom}>
+            All marked fields with * are required
+          </Text>
           <Pressable onPress={handleAddItem} style={styles.button}>
             <Text style={styles.buttonText}>Add Item</Text>
           </Pressable>
@@ -794,6 +835,19 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
     marginBottom: 8,
+  },
+  label: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 12,
+    fontFamily: 'DMSans_700Bold',
+    marginBottom: 4,
+  },
+  labelBottom: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 12,
+    fontFamily: 'DMSans_700Bold',
+    marginBottom: 4,
+    textAlign: 'center',
   },
   descriptionInputStyle: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
