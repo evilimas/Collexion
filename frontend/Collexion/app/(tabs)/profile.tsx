@@ -78,11 +78,11 @@ const Profile = () => {
                 style={styles.link}
                 onPress={() => router.push('/edit-profile')}
               >
-                <Text style={styles.linkText}>Edit Profile</Text>{' '}
+                <Text style={styles.linkText}>Edit Profile</Text>
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
               <Pressable style={styles.link}>
-                <Text style={styles.linkText}>Change Password</Text>{' '}
+                <Text style={styles.linkText}>Change Password</Text>
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
               <Pressable style={styles.link}>
