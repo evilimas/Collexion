@@ -67,7 +67,7 @@ const Consoles = () => {
               <MaterialIcons
                 name="arrow-back"
                 size={20}
-                color="white"
+                color="#0DDCFD"
                 style={{ marginRight: 8 }}
               />
               <Text style={{ color: 'white' }}>Back to Consoles</Text>
@@ -219,6 +219,7 @@ const styles = StyleSheet.create({
     // textDecorationLine: 'underline',
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,

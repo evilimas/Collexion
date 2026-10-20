@@ -12,6 +12,7 @@ import { Link } from 'expo-router';
 import { useCollectionItems } from '@/hooks/use-collection-items';
 import ConsoleGroup from '@/components/Consoles';
 import Console from '@/components/Console';
+import MaterialIcons from '@expo/vector-icons/build/MaterialIcons';
 
 const Handhelds = () => {
   const [search, setSearch] = useState('');
@@ -57,9 +58,18 @@ const Handhelds = () => {
             onChangeText={setSearch}
           />
           {selectedName ? (
-            <Text style={styles.backText} onPress={() => setSelectedName(null)}>
-              Back to Handhelds
-            </Text>
+            <Pressable
+              style={styles.backText}
+              onPress={() => setSelectedName(null)}
+            >
+              <MaterialIcons
+                name="arrow-back"
+                size={20}
+                color="#0DDCFD"
+                style={{ marginRight: 8 }}
+              />
+              <Text style={{ color: 'white' }}>Back to Handhelds</Text>
+            </Pressable>
           ) : null}
           <ScrollView
             contentContainerStyle={selectedName ? styles.list : styles.grid}
@@ -210,11 +220,13 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   backText: {
+    flexDirection: 'row',
     color: 'white',
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: '600',
-    marginLeft: 8,
+    marginLeft: 4,
     marginBottom: 10,
+    // textDecorationLine: 'underline',
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.5)',
     paddingHorizontal: 12,
