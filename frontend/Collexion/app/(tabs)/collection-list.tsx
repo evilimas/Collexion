@@ -31,8 +31,8 @@ const CollectionList = () => {
     }
 
     const name = item.name.toLowerCase();
-    const forConsole = (item.forConsole ?? '').toLowerCase();
-    // substring match so e.g. "DualSense(PS5)" matches the "PS5" filter
+    const forConsole =
+      item.type === 'Controller' ? (item.forConsole ?? '').toLowerCase() : '';
     return values.some((v) => name.includes(v) || forConsole.includes(v));
   });
 
@@ -54,7 +54,7 @@ const CollectionList = () => {
             <MaterialIcons
               name="arrow-back"
               size={20}
-              color="white"
+              color="#0DDCFD"
               style={{ marginRight: 8 }}
             />
             <Text style={styles.backText}>Back</Text>
@@ -98,7 +98,7 @@ const CollectionList = () => {
                       }}
                       asChild
                     >
-                      <Pressable style={{ width: '100%' }}>
+                      <Pressable style={{ width: '100%', marginBottom: -8 }}>
                         <Console
                           name={item.name}
                           model={item.model}

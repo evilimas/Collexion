@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
+import { deleteField } from 'firebase/firestore';
 import { updateItem } from '@/hooks/use-collection-items';
 
 const EditItemForm = () => {
@@ -55,7 +56,8 @@ const EditItemForm = () => {
         edition: edition.trim(),
         manufacturer: manufacturer.trim(),
         storage: storage.trim(),
-        forConsole: forConsole.trim(),
+        forConsole:
+          params.type === 'Controller' ? forConsole.trim() : deleteField(),
         description: description.trim(),
         url: url.trim(),
         reshell,
@@ -73,7 +75,8 @@ const EditItemForm = () => {
           edition: edition.trim(),
           manufacturer: manufacturer.trim(),
           storage: storage.trim(),
-          forConsole: forConsole.trim(),
+          forConsole:
+            params.type === 'Controller' ? forConsole.trim() : '',
           description: description.trim(),
           url: url.trim(),
           reshell: String(reshell),
@@ -266,20 +269,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.45)',
   },
-  selectedOption: { backgroundColor: 'rgb(7, 0, 105)' },
+  selectedOption: { backgroundColor: '#0a7ea4' },
   optionText: { color: 'white', fontWeight: '600' },
 
   buttonContainer: {
     flex: 1,
   },
   saveButton: {
-    backgroundColor: 'rgb(7, 0, 105)',
+    backgroundColor: '#0a7ea4',
+    color: 'black',
     padding: 14,
     borderRadius: 8,
     marginTop: 18,
   },
   cancelButton: {
-    backgroundColor: 'rgba(90, 90, 90, 0.6)',
+    backgroundColor: 'rgba(192, 2, 2, 0.24)',
+    borderColor: 'rgba(255, 39, 39, 0.5)',
+    borderWidth: 1,
     padding: 14,
     borderRadius: 8,
     marginTop: 9,

@@ -33,6 +33,7 @@ const AddItem = () => {
     'PlayStation 1',
     'Nintendo Wii',
     'Nintendo WiiU',
+    'Nintendo GameCube',
     'Xbox Series S|X',
     'Xbox One',
     'Xbox 360',
@@ -47,7 +48,7 @@ const AddItem = () => {
     'Nintendo DS',
     'Game Boy Advance(GBA)',
     'Game Boy',
-    'Game Boy Color',
+    'Game Boy Color(GBC)',
     'Game Gear',
     'Neo Geo Pocket',
     'Neo Geo Pocket Color',
@@ -241,6 +242,7 @@ const AddItem = () => {
     string,
     { manufacturer: string; forConsole?: string }
   > = {
+    // Controllers
     'DualSense(PS5)': { manufacturer: 'Sony', forConsole: 'PS5' },
     'DualShock 4(PS4)': { manufacturer: 'Sony', forConsole: 'PS4' },
     'Sixaxis/DualShock 3(PS3)': { manufacturer: 'Sony', forConsole: 'PS3' },
@@ -257,6 +259,10 @@ const AddItem = () => {
       manufacturer: 'Microsoft',
       forConsole: 'Xbox 360',
     },
+    'Xbox Original(OG) Controller': {
+      manufacturer: 'Microsoft',
+      forConsole: 'Xbox Original',
+    },
     'Nintendo Switch Controller': {
       manufacturer: 'Nintendo',
       forConsole: 'Nintendo Switch',
@@ -264,6 +270,82 @@ const AddItem = () => {
     'PlayStation 1 Controller(PS1)': {
       manufacturer: 'Sony',
       forConsole: 'PS1',
+    },
+    'Nintendo Wii Controller': {
+      manufacturer: 'Nintendo',
+      forConsole: 'Nintendo Wii',
+    },
+    'Nintendo WiiU Controller': {
+      manufacturer: 'Nintendo',
+      forConsole: 'Nintendo Wii U',
+    },
+    // handhelds
+    'PlayStation Vita(PSV)': {
+      manufacturer: 'Sony',
+    },
+    'PlayStation Portable(PSP)': {
+      manufacturer: 'Sony',
+    },
+    'Nintendo DS': {
+      manufacturer: 'Nintendo',
+    },
+    'Nintendo 3DS': {
+      manufacturer: 'Nintendo',
+    },
+    'Nintendo Switch': {
+      manufacturer: 'Nintendo',
+    },
+    'Game Boy': {
+      manufacturer: 'Nintendo',
+    },
+    'Game Boy Advance(GBA)': {
+      manufacturer: 'Nintendo',
+    },
+    'Game Boy Color(GBC)': {
+      manufacturer: 'Nintendo',
+    },
+    'Game Gear': {
+      manufacturer: 'Sega',
+    },
+    'Neo Geo Pocket': {
+      manufacturer: 'SNK',
+    },
+    'Neo Geo Pocket Color': {
+      manufacturer: 'SNK',
+    },
+    // consoles
+    'PlayStation 5': {
+      manufacturer: 'Sony',
+    },
+    'PlayStation 4': {
+      manufacturer: 'Sony',
+    },
+    'PlayStation 3': {
+      manufacturer: 'Sony',
+    },
+    'PlayStation 2': {
+      manufacturer: 'Sony',
+    },
+    'PlayStation 1': {
+      manufacturer: 'Sony',
+    },
+    'Xbox Series S|X': {
+      manufacturer: 'Microsoft',
+    },
+    'Xbox One': {
+      manufacturer: 'Microsoft',
+    },
+    'Xbox 360': {
+      manufacturer: 'Microsoft',
+    },
+    'Xbox Original(OG)': {
+      manufacturer: 'Microsoft',
+    },
+    'Nintendo Wii': {
+      manufacturer: 'Nintendo',
+    },
+    'Nintendo WiiU': {
+      manufacturer: 'Nintendo',
     },
   };
 
@@ -323,7 +405,9 @@ const AddItem = () => {
         color: color.trim(),
         condition: itemCondition,
         edition: edition.trim(),
-        forConsole: forConsole.trim(),
+        ...(itemType === 'Controller'
+          ? { forConsole: forConsole.trim() }
+          : {}),
         storage: storage.trim(),
         manufacturer: manufacturer.trim(),
         description: description.trim(),
@@ -499,6 +583,10 @@ const AddItem = () => {
                             key={item}
                             style={styles.dropdownItemStyle}
                             onPress={() => {
+                              const info = autofillMap[item];
+                              if (info) {
+                                setManufacturer(info.manufacturer);
+                              }
                               setHandheldName(item);
                               setIsConsoleSelectOpen(false);
                             }}

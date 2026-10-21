@@ -48,7 +48,7 @@ const ConsoleDetail = () => {
           <MaterialIcons
             name="arrow-back"
             size={20}
-            color="white"
+            color="#0DDCFD"
             style={{ marginRight: 8 }}
           />
           <Text style={styles.backText}>Back</Text>

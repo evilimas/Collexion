@@ -520,6 +520,7 @@ export const itemSuggestions: Record<string, ModelMap> = {
   },
   'DualShock 4(PS4)': {
     'V1 (CUH-ZCT1)': [
+      '20th Anniversary Edition',
       'Batman: Arkham Knight Limited Edition',
       'Berry Blue',
       'Bloodborne Limited Edition',
@@ -826,7 +827,7 @@ export const itemSuggestions: Record<string, ModelMap> = {
 // Search by text, so "destiny" finds "Destiny: The Taken King Limited Edition".
 export const filterSuggestions = (list: string[], text: string): string[] => {
   const query = text.trim().toLowerCase();
-  if (!query) return [];
+  if (!query) return list.slice(0, 5);
   const results = list.filter((s) => s.toLowerCase().includes(query));
   // Hide the list when the user has already typed an exact match.
   if (results.length === 1 && results[0].toLowerCase() === query) return [];
