@@ -93,10 +93,6 @@ const Profile = () => {
                 <Text style={styles.linkText}>Notification Settings</Text>{' '}
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
-              <Pressable style={styles.link}>
-                <Text style={styles.linkText}>Connected Accounts</Text>{' '}
-                <Text style={styles.linkText}>&gt;</Text>
-              </Pressable>
 
               <Pressable style={styles.link}>
                 <Text style={styles.linkText}>Wishlist</Text>{' '}
