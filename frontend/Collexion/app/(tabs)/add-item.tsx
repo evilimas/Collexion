@@ -269,11 +269,11 @@ const AddItem = () => {
     },
     'PlayStation 1 Controller(PS1)': {
       manufacturer: 'Sony',
-      forConsole: 'PS1',
+      forConsole: 'PS1 and PS2',
     },
     'Nintendo Wii Controller': {
       manufacturer: 'Nintendo',
-      forConsole: 'Nintendo Wii',
+      forConsole: 'Nintendo Wii and Wii U',
     },
     'Nintendo WiiU Controller': {
       manufacturer: 'Nintendo',
@@ -368,20 +368,37 @@ const AddItem = () => {
     useState<boolean>(false);
   const [isManufacturerSelectOpen, setIsManufacturerSelectOpen] =
     useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const selectedName =
     type === '1' ? consoleName : type === '2' ? handheldName : controllerName;
 
   const handleAddItem = async () => {
+    setLoading(true);
+    setSaving(true);
     const name =
       type === '1' ? consoleName : type === '2' ? handheldName : controllerName;
     const user = auth.currentUser;
 
-    if (!user) return Alert.alert('Sign in required', 'Please sign in first.');
-    if (!name || !color.trim()) {
+    if (!user) {
+      Alert.alert('Sign in required', 'Please sign in first.');
+      setSaving(false);
+      return;
+    }
+    if (
+      !name ||
+      !model.trim() ||
+      !color.trim() ||
+      !edition.trim() ||
+      !manufacturer.trim() ||
+      !condition.trim()
+    ) {
+      setTimeout(() => setSaving(false), 2500);
       return Alert.alert(
         'Missing information',
-        'Select an item and enter its color.',
+        // 'Select an item and enter its information .',
+        'All fields with * are required.',
       );
     }
 
@@ -405,10 +422,11 @@ const AddItem = () => {
         color: color.trim(),
         condition: itemCondition,
         edition: edition.trim(),
-        ...(itemType === 'Controller'
-          ? { forConsole: forConsole.trim() }
+        ...(itemType === 'Controller' ? { forConsole: forConsole.trim() } : {}),
+        // storage: storage.trim(),
+        ...(itemType === 'Console' || itemType === 'Handheld'
+          ? { storage: storage.trim() }
           : {}),
-        storage: storage.trim(),
         manufacturer: manufacturer.trim(),
         description: description.trim(),
         reshell: reshell === '1',
@@ -423,7 +441,29 @@ const AddItem = () => {
         'Unable to save item',
         error instanceof Error ? error.message : 'Please try again.',
       );
+    } finally {
+      setLoading(false);
+      setTimeout(() => setSaving(false), 2500);
+      resetInputs();
     }
+  };
+
+  const resetInputs = () => {
+    setType('1'); // Reset type to default or initial value
+    setConsoleName(''); // Reset console name
+    setHandheldName(''); // Reset handheld name
+    setControllerName(''); // Reset controller name
+    setColor(''); // Reset color
+    setModel(''); // Reset model
+    setEdition(''); // Reset edition
+    setUrl(''); // Reset URL
+    setCondition('1'); // Reset condition to default
+    setForConsole(''); // Reset for console
+    setStorage(''); // Reset storage
+    setManufacturer(''); // Reset manufacturer
+    setDescription(''); // Reset description
+    setReshell('2'); // Reset reshell to default
+    setWithBox('2'); // Reset with box to default
   };
 
   const picture = getItemPicture(
@@ -876,8 +916,14 @@ const AddItem = () => {
           <Text style={styles.labelBottom}>
             All marked fields with * are required
           </Text>
-          <Pressable onPress={handleAddItem} style={styles.button}>
-            <Text style={styles.buttonText}>Add Item</Text>
+          <Pressable
+            disabled={saving}
+            onPress={handleAddItem}
+            style={[styles.button, saving && styles.buttonDisabled]}
+          >
+            <Text style={styles.buttonText}>
+              {saving ? 'Adding...' : 'Add Item'}
+            </Text>
           </Pressable>
         </ScrollView>
       </ImageBackground>
@@ -962,6 +1008,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     // marginTop: 10,
   },
+  buttonDisabled: {
+    backgroundColor: 'rgba(13, 220, 253, 0.5)',
+    opacity: 0.5,
+  },
+
   buttonText: {
     color: 'black',
     fontSize: 18,

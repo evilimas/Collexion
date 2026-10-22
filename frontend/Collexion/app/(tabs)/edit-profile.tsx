@@ -23,7 +23,7 @@ function EditProfile() {
       console.error(error);
     } finally {
       setLoading(false);
-      setTimeout(() => setSaving(false), 2500);
+      setTimeout(() => setSaving(false), 3000);
     }
   };
   const auth = getAuth();

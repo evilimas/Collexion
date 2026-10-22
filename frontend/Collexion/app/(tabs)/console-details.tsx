@@ -108,6 +108,19 @@ const ConsoleDetail = () => {
                 <Text style={styles.detailValue}>{manufacturer}</Text>
               </View>
             )}
+            {forConsole && (
+              <View style={styles.detailRow}>
+                <View style={styles.detailLabel}>
+                  <MaterialIcons
+                    name="videogame-asset"
+                    size={20}
+                    color="white"
+                  />
+                  <Text style={styles.detailInfo}>Can Use On:</Text>
+                </View>
+                <Text style={styles.detailValue}>{forConsole}</Text>
+              </View>
+            )}
             {storage && (
               <View style={styles.detailRow}>
                 <View style={styles.detailLabel}>
@@ -313,14 +326,17 @@ const styles = StyleSheet.create({
   },
   detailImage: {
     width: '100%',
-    height: 320,
+    height: 290,
+    // height: '100%',
     resizeMode: 'cover',
     marginBottom: 8,
     borderRadius: 8,
   },
   pictureContainer: {
-    alignItems: 'center',
-    borderRadius: 22,
+    width: '100%',
+    height: 320,
+    borderRadius: 10,
+    overflow: 'hidden',
     marginTop: -8,
   },
   detailName: {
