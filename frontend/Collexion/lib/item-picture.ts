@@ -14,7 +14,7 @@ export function getItemPicture(
     'Xbox One': require('@/assets/images/xboxone.png'),
     'Xbox 360': require('@/assets/images/xbox3601.png'),
     'Xbox Original(OG)': require('@/assets/images/ogxbox.png'),
-    'Nintendo Wii': require('@/assets/images/wii.png'),
+    'Nintendo Wii': require('@/assets/images/wii1.png'),
     'Nintendo WiiU': require('@/assets/images/wiiu.png'),
     'Nintendo Switch': require('@/assets/images/nswitch.png'),
     'PlayStation Vita(PSV)': require('@/assets/images/psvita1.png'),

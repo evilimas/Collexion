@@ -627,10 +627,13 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Red',
       'White',
       'Zelda: Skyward Sword Gold Edition',
+      "Luigi's Green Limited Edition",
+      'Mario Red Limited Edition',
+      'Peach Pink Limited Edition',
     ],
   },
   'Nintendo WiiU Controller': {
-    GamePad: ['Black', 'White'],
+    GamePad: ['Black', 'White', 'Zelda Limited Edition'],
     'Pro Controller': ['Black', 'White'],
   },
   'Sixaxis/DualShock 3(PS3)': {
@@ -820,6 +823,9 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Sunkissed Vibes',
       'Transparent (Clear) Edition',
       'Velocity Green',
+      'Sky Cypher',
+      'Pulse Cypher',
+      'Ghost Cypher',
     ],
   },
 };
