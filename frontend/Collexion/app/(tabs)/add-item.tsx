@@ -341,6 +341,9 @@ const AddItem = () => {
     'Xbox Original(OG)': {
       manufacturer: 'Microsoft',
     },
+    'Nintendo GameCube': {
+      manufacturer: 'Nintendo',
+    },
     'Nintendo Wii': {
       manufacturer: 'Nintendo',
     },
