@@ -38,7 +38,8 @@ export function getItemPicture(
     'Xbox Original(OG) Controller': require('@/assets/images/ogxbox.png'),
     'Nintendo Wii Controller': require('@/assets/images/wii-controller.png'),
     'Nintendo WiiU Controller': require('@/assets/images/wiiu.png'),
-    'Nintendo Switch Controller': require('@/assets/images/nswitch.png'),
+    'Nintendo Switch Controller': require('@/assets/images/switchcontroller.png'),
+    'Nintendo Switch 2 Controller': require('@/assets/images/switch2controller.png'),
   };
 
   return pictures[name];
