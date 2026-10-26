@@ -67,6 +67,7 @@ const AddItem = () => {
     'Nintendo Wii Controller',
     'Nintendo WiiU Controller',
     'Nintendo Switch Controller',
+    'Nintendo Switch 2 Controller',
     'Other Controller (Specify)',
   ];
 
@@ -266,6 +267,10 @@ const AddItem = () => {
     'Nintendo Switch Controller': {
       manufacturer: 'Nintendo',
       forConsole: 'Nintendo Switch',
+    },
+    'Nintendo Switch 2 Controller': {
+      manufacturer: 'Nintendo',
+      forConsole: 'Nintendo Switch 2',
     },
     'PlayStation 1 Controller(PS1)': {
       manufacturer: 'Sony',
