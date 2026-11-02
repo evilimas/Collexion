@@ -33,6 +33,9 @@ const EditItemForm = () => {
   const [forConsole, setForConsole] = useState(
     (params.forConsole as string) || '',
   );
+  const [canBeUsedOn, setCanBeUsedOn] = useState(
+    (params.canBeUsedOn as string) || '',
+  );
   const [description, setDescription] = useState(
     (params.description as string) || '',
   );
@@ -56,11 +59,13 @@ const EditItemForm = () => {
         edition: edition.trim(),
         manufacturer: manufacturer.trim(),
         storage: storage.trim(),
-        forConsole:
-          params.type === 'Controller' ? forConsole.trim() : deleteField(),
+        // forConsole:
+        //   params.type === 'Controller' ? forConsole.trim() : deleteField(),
         description: description.trim(),
         url: url.trim(),
         reshell,
+        canBeUsedOn:
+          params.type === 'Controller' ? canBeUsedOn.trim() : deleteField(),
         withBox,
       });
       router.replace({
@@ -75,8 +80,9 @@ const EditItemForm = () => {
           edition: edition.trim(),
           manufacturer: manufacturer.trim(),
           storage: storage.trim(),
-          forConsole:
-            params.type === 'Controller' ? forConsole.trim() : '',
+          // forConsole:
+          //   params.type === 'Controller' ? forConsole.trim() : '',
+          canBeUsedOn: params.type === 'Controller' ? canBeUsedOn.trim() : '',
           description: description.trim(),
           url: url.trim(),
           reshell: String(reshell),
@@ -155,9 +161,9 @@ const EditItemForm = () => {
         {params.type === 'Controller' && (
           <TextInput
             style={styles.input}
-            value={forConsole}
-            onChangeText={setForConsole}
-            placeholder="For console"
+            value={canBeUsedOn}
+            onChangeText={setCanBeUsedOn}
+            placeholder="Can be used on"
             placeholderTextColor="#aaa"
           />
         )}

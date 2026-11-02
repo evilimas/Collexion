@@ -86,22 +86,22 @@ const Profile = () => {
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
               <Pressable style={styles.link}>
-                <Text style={styles.linkText}>Privacy Settings</Text>{' '}
+                <Text style={styles.linkText}>Privacy Settings</Text>
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
               <Pressable style={styles.link}>
-                <Text style={styles.linkText}>Notification Settings</Text>{' '}
+                <Text style={styles.linkText}>Notification Settings</Text>
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
 
-              <Pressable style={styles.link}>
-                <Text style={styles.linkText}>Wishlist</Text>{' '}
+              <Pressable
+                style={styles.link}
+                onPress={() => router.push('/wishlist')}
+              >
+                <Text style={styles.linkText}>Wishlist</Text>
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
-              <Pressable style={styles.link}>
-                <Text style={styles.linkText}>Saved Items</Text>{' '}
-                <Text style={styles.linkText}>&gt;</Text>
-              </Pressable>
+
               <Logout />
             </View>
           </ScrollView>

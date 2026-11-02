@@ -26,12 +26,13 @@ const ConsoleDetail = () => {
   const condition = params.condition as string;
   const manufacturer = params.manufacturer as string;
   const storage = params.storage as string;
-  const forConsole = params.forConsole as string;
+  // const forConsole = params.forConsole as string;
   const description = params.description as string;
   const url = params.url as string;
   const reshell = params.reshell === 'true'; // Convert string to boolean
   const withBox = params.withBox === 'true'; // Convert string to boolean
   const from = (params.from as string) || '/consoles';
+  const canBeUsedOn = params.canBeUsedOn as string;
 
   return (
     <View style={styles.container}>
@@ -108,7 +109,7 @@ const ConsoleDetail = () => {
                 <Text style={styles.detailValue}>{manufacturer}</Text>
               </View>
             )}
-            {forConsole && (
+            {canBeUsedOn && (
               <View style={styles.detailRow}>
                 <View style={styles.detailLabel}>
                   <MaterialIcons
@@ -116,9 +117,9 @@ const ConsoleDetail = () => {
                     size={20}
                     color="white"
                   />
-                  <Text style={styles.detailInfo}>Can Use On:</Text>
+                  <Text style={styles.detailInfo}>Can Be Used On:</Text>
                 </View>
-                <Text style={styles.detailValue}>{forConsole}</Text>
+                <Text style={styles.detailValue}>{canBeUsedOn}</Text>
               </View>
             )}
             {storage && (

@@ -244,7 +244,7 @@ const AddItem = () => {
 
   const autofillMap: Record<
     string,
-    { manufacturer: string; forConsole?: string }
+    { manufacturer: string; forConsole?: string; canBeUsedOn?: string }
   > = {
     // Controllers
     'DualSense(PS5)': { manufacturer: 'Sony', forConsole: 'PS5' },
@@ -253,39 +253,53 @@ const AddItem = () => {
     'DualShock 2(PS2)': { manufacturer: 'Sony', forConsole: 'PS2' },
     'Xbox Series S|X Controller': {
       manufacturer: 'Microsoft',
-      forConsole: 'Xbox Series and Xbox One',
+      forConsole: 'Xbox Series',
+      canBeUsedOn: 'Xbox Series and Xbox One',
     },
     'Xbox One Controller': {
       manufacturer: 'Microsoft',
-      forConsole: 'Xbox One and Xbox Series',
+      forConsole: 'Xbox Series',
+      canBeUsedOn: 'Xbox One and Xbox Series',
     },
     'Xbox 360 Controller': {
       manufacturer: 'Microsoft',
       forConsole: 'Xbox 360',
+      canBeUsedOn: 'Xbox 360',
     },
     'Xbox Original(OG) Controller': {
       manufacturer: 'Microsoft',
       forConsole: 'Xbox Original',
+      canBeUsedOn: 'Xbox Original',
     },
     'Nintendo Switch Controller': {
       manufacturer: 'Nintendo',
       forConsole: 'Nintendo Switch',
+      canBeUsedOn: 'Nintendo Switch',
     },
     'Nintendo Switch 2 Controller': {
       manufacturer: 'Nintendo',
       forConsole: 'Nintendo Switch 2',
+      canBeUsedOn: 'Nintendo Switch 2',
     },
     'PlayStation 1 Controller(PS1)': {
       manufacturer: 'Sony',
-      forConsole: 'PS1 and PS2',
+      forConsole: 'PS1',
+      canBeUsedOn: 'PS1 and PS2',
+    },
+    'Nintendo GameCube Controller': {
+      manufacturer: 'Nintendo',
+      forConsole: 'Nintendo GameCube',
+      canBeUsedOn: 'Nintendo GameCube',
     },
     'Nintendo Wii Controller': {
       manufacturer: 'Nintendo',
-      forConsole: 'Nintendo Wii and Wii U',
+      forConsole: 'Nintendo Wii',
+      canBeUsedOn: 'Nintendo Wii and Wii U',
     },
     'Nintendo WiiU Controller': {
       manufacturer: 'Nintendo',
       forConsole: 'Nintendo Wii U',
+      canBeUsedOn: 'Nintendo Wii U',
     },
     // handhelds
     'PlayStation Vita(PSV)': {
@@ -384,6 +398,7 @@ const AddItem = () => {
     useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [canBeUsedOn, setCanBeUsedOn] = useState<string>('');
 
   const selectedName =
     type === '1' ? consoleName : type === '2' ? handheldName : controllerName;
@@ -448,6 +463,7 @@ const AddItem = () => {
         url: url.trim(),
         withBox: withBox === '1',
         createdAt: serverTimestamp(),
+        canBeUsedOn: canBeUsedOn.trim(),
       });
       Alert.alert('Saved', `${name} was added to your collection.`);
     } catch (error) {
@@ -477,6 +493,7 @@ const AddItem = () => {
     setManufacturer(''); // Reset manufacturer
     setDescription(''); // Reset description
     setReshell('2'); // Reset reshell to default
+    setCanBeUsedOn(''); // Reset can be used on
     setWithBox('2'); // Reset with box to default
   };
 
@@ -623,6 +640,9 @@ const AddItem = () => {
                                 if (info.forConsole) {
                                   setForConsole(info.forConsole);
                                 }
+                                if (info.canBeUsedOn) {
+                                  setCanBeUsedOn(info.canBeUsedOn);
+                                }
                               }
                               setIsConsoleSelectOpen(false);
                             }}
@@ -698,8 +718,8 @@ const AddItem = () => {
                     placeholderTextColor="rgba(255, 255, 255, 0.7)"
                     placeholder="* For What Console(PS5, Xbox One, etc.)"
                     style={styles.inputStyle}
-                    value={forConsole}
-                    onChangeText={setForConsole}
+                    value={canBeUsedOn}
+                    onChangeText={setCanBeUsedOn}
                   />
                 </>
               )}

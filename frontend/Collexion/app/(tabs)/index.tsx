@@ -35,7 +35,7 @@ const homeCollections: CollectionSquare[] = [
   {
     id: '1',
     name: 'Consoles',
-    image: require('@/assets/images/consoles.png'),
+    image: require('@/assets/images/consoles1.png'),
     tab: '/(tabs)/consoles',
   },
   {
@@ -99,41 +99,70 @@ const Collections: FilteredCollectionSquare[] = [
 const ConsoleCollections: FilteredCollectionSquare[] = [
   {
     id: '1',
+    name: 'PS1',
+    image: require('@/assets/images/ps1.png'),
+    filterKind: 'name',
+    filterValue: 'PlayStation 1,PS1',
+  },
+  {
+    id: '2',
+    name: 'PS2',
+    image: require('@/assets/images/ps2.png'),
+    filterKind: 'name',
+    filterValue: 'PlayStation 2,PS2',
+  },
+  {
+    id: '3',
     name: 'PS3',
     image: require('@/assets/images/ps3.png'),
     filterKind: 'name',
     filterValue: 'PlayStation 3,PS3',
   },
   {
-    id: '2',
+    id: '4',
     name: 'PS4',
     image: require('@/assets/images/ps4.png'),
     filterKind: 'name',
     filterValue: 'PlayStation 4,PS4',
   },
   {
-    id: '3',
+    id: '5',
     name: 'PS5',
     image: require('@/assets/images/ps5.png'),
     filterKind: 'name',
     filterValue: 'PlayStation 5,PS5',
   },
   {
-    id: '4',
-    name: 'Nintendo Switch',
+    id: '6',
+    name: 'N Switch',
     image: require('@/assets/images/nswitch.png'),
     filterKind: 'name',
     filterValue: 'Nintendo Switch,Switch',
   },
+
   {
-    id: '5',
+    id: '7',
+    name: 'Xbox(OG)',
+    image: require('@/assets/images/ogxbox.png'),
+    filterKind: 'name',
+    filterValue: 'Xbox Original,Xbox(OG)',
+  },
+  {
+    id: '8',
+    name: 'Xbox One',
+    image: require('@/assets/images/xboxone.png'),
+    filterKind: 'name',
+    filterValue: 'Xbox One',
+  },
+  {
+    id: '9',
     name: 'Xbox Series',
     image: require('@/assets/images/xboxseries.png'),
     filterKind: 'name',
     filterValue: 'Xbox Series S|X,Xbox Series',
   },
   {
-    id: '6',
+    id: '10',
     name: 'Xbox 360',
     image: require('@/assets/images/xbox3601.png'),
     filterKind: 'name',
@@ -159,6 +188,17 @@ const App = () => {
   // }, []);
 
   const { items } = useCollectionItems();
+
+  const notEmptyConsoleCollections = ConsoleCollections.filter((collection) => {
+    const filterValues = collection.filterValue
+      .split(',')
+      .map((value) => value.trim().toLocaleLowerCase());
+    return items.some((item) => {
+      return filterValues.some((value) =>
+        item.name.toLocaleLowerCase().includes(value),
+      );
+    });
+  });
   const recentlyAdded = items.sort(
     (a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0),
   );
@@ -233,7 +273,7 @@ const App = () => {
             </View>
             <Text style={styles.text}>Collections by console</Text>
             <View style={styles.collectionContainerConsole}>
-              {ConsoleCollections.map((collection) => (
+              {notEmptyConsoleCollections.map((collection) => (
                 <Link
                   key={collection.id}
                   href={{
@@ -274,15 +314,15 @@ const styles = StyleSheet.create({
     // backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   colImg: {
-    width: 50,
-    height: 50,
+    width: '160%',
+    height: 60,
     // marginBottom: 1,
     resizeMode: 'contain',
     // objectFit: 'cover',
   },
   colImgConsoles: {
-    width: 70,
-    height: 70,
+    width: '120%',
+    height: 60,
     // marginBottom: 1,
     resizeMode: 'contain',
     // objectFit: 'cover',
@@ -308,7 +348,7 @@ const styles = StyleSheet.create({
   logo: {
     width: '50%',
     height: 80,
-    marginTop: 10,
+    marginTop: 31,
     alignContent: 'center',
     alignSelf: 'center',
   },
@@ -319,7 +359,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingHorizontal: 22,
+    paddingHorizontal: 30,
     paddingVertical: 19,
     alignItems: 'center',
     borderRadius: 8,
@@ -333,7 +373,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingHorizontal: 34,
+    paddingHorizontal: 30,
     paddingVertical: 19,
     alignItems: 'center',
     borderRadius: 8,
@@ -354,7 +394,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
-    width: '32%',
+    width: '31%',
     marginBottom: 7,
   },
   recentLink: {

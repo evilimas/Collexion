@@ -17,6 +17,7 @@ export type CollectionItem = {
   reshell?: boolean;
   url?: string; // Optional URL for more information
   createdAt?: number; // Timestamp for when the item was added
+  canBeUsedOn?: string; // Only for controllers
 };
 
 // export const collection: CollectionItem[] = [
