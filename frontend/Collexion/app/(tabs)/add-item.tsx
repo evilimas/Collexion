@@ -42,6 +42,7 @@ const AddItem = () => {
   ];
   const handheldOptions: string[] = [
     'Nintendo Switch',
+    'Nintendo Switch 2',
     'PlayStation Vita(PSV)',
     'PlayStation Portable(PSP)',
     'Nintendo 3DS',
@@ -52,6 +53,8 @@ const AddItem = () => {
     'Game Gear',
     'Neo Geo Pocket',
     'Neo Geo Pocket Color',
+    'WonderSwan',
+    'Atari Lynx',
     'Other Handheld (Specify)',
   ];
   const controllerOptions: string[] = [
@@ -298,6 +301,9 @@ const AddItem = () => {
       manufacturer: 'Nintendo',
     },
     'Nintendo Switch': {
+      manufacturer: 'Nintendo',
+    },
+    'Nintendo Switch 2': {
       manufacturer: 'Nintendo',
     },
     'Game Boy': {
@@ -588,6 +594,10 @@ const AddItem = () => {
                             key={item}
                             style={styles.dropdownItemStyle}
                             onPress={() => {
+                              const info = autofillMap[item];
+                              if (info) {
+                                setManufacturer(info.manufacturer);
+                              }
                               setConsoleName(item);
                               setIsConsoleSelectOpen(false);
                             }}

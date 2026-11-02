@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   cardImage: {
-    width: 100,
+    width: 145,
     height: 100,
     marginBottom: 2,
   },
