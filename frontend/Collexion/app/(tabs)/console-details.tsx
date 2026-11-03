@@ -177,7 +177,7 @@ const ConsoleDetail = () => {
                     condition,
                     manufacturer,
                     storage,
-                    forConsole,
+                    // forConsole,
                     description,
                     url,
                     reshell: String(reshell),

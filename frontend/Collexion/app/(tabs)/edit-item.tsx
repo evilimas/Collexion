@@ -30,9 +30,9 @@ const EditItemForm = () => {
     (params.manufacturer as string) || '',
   );
   const [storage, setStorage] = useState((params.storage as string) || '');
-  const [forConsole, setForConsole] = useState(
-    (params.forConsole as string) || '',
-  );
+  // const [forConsole, setForConsole] = useState(
+  //   (params.forConsole as string) || '',
+  // );
   const [canBeUsedOn, setCanBeUsedOn] = useState(
     (params.canBeUsedOn as string) || '',
   );

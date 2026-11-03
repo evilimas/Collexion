@@ -21,7 +21,6 @@
       },
       "predictiveBackGestureEnabled": false
     },
-
     "web": {
       "output": "static",
       "favicon": "./assets/images/favicon.png"
@@ -50,6 +49,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "16371944-ca93-453d-b32e-a67618f2fea4"
+      }
+    },
+    "owner": "esuegyda"
   }
 }
