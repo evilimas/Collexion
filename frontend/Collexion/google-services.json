@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "516370418893",
+    "project_id": "collextion-6d688",
+    "storage_bucket": "collextion-6d688.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516370418893:android:29e649f3710d896d722d84",
+        "android_client_info": {
+          "package_name": "com.collexion.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516370418893-pf1k901632om6u9l9n2hb78sod0s9qld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnzqaM7NtN97DtvxG1fs0i0X3BRmK9GIk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516370418893-pf1k901632om6u9l9n2hb78sod0s9qld.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
