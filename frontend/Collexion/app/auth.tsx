@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   updateProfile,
   GoogleAuthProvider,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import {
   ActivityIndicator,
@@ -16,13 +17,14 @@ import {
   Image,
   View,
   Text,
+  Alert,
 } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { auth } from '@/lib/firebase';
 
-type Mode = 'sign-in' | 'sign-up';
+type Mode = 'sign-in' | 'sign-up' | 'forgot-password';
 
 export default function AuthScreen() {
   const router = useRouter();
@@ -55,6 +57,24 @@ export default function AuthScreen() {
       router.replace('/(tabs)');
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Sign up failed.');
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email.trim()) {
+      setError('Enter your email first.');
+      return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, email.trim());
+      setError(null);
+      Alert.alert('Password reset email sent.');
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : 'Failed to send password reset email.',
+      );
     }
   };
 
@@ -101,87 +121,157 @@ export default function AuthScreen() {
             source={require('@/assets/images/logo3.png')}
             style={styles.logo}
           />
-
-          <ThemedText type="title" style={styles.titleText}>
-            {mode === 'sign-in' ? 'Sign In' : 'Sign Up'}
-          </ThemedText>
-          <>
-            {mode === 'sign-up' && (
+          {mode === 'forgot-password' && (
+            <>
+              <ThemedText type="title" style={styles.titleText}>
+                Forgot Password
+              </ThemedText>
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                value={email}
+                onChangeText={setEmail}
+                placeholderTextColor="#aaa"
+              />
+              {error && (
+                <ThemedText style={styles.error}>❌ {error}</ThemedText>
+              )}
+              <Pressable
+                style={[
+                  styles.button,
+                  (loading || !email) && styles.buttonDisabled,
+                ]}
+                onPress={handleForgotPassword}
+                disabled={!email}
+              >
+                <ThemedText style={styles.buttonText}>
+                  Send Reset Email
+                </ThemedText>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  setMode('sign-in');
+                  setError(null);
+                }}
+              >
+                <ThemedText
+                  style={[styles.link, { color: '#aaa' }]}
+                  type="link"
+                >
+                  Back To Login
+                </ThemedText>
+              </Pressable>
+            </>
+          )}
+          {mode !== 'forgot-password' && (
+            <>
+              <ThemedText type="title" style={styles.titleText}>
+                {mode === 'sign-in' ? 'Sign In' : 'Sign Up'}
+              </ThemedText>
+            </>
+          )}
+          {mode !== 'forgot-password' && (
+            <>
               <>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Name"
-                  autoCapitalize="words"
-                  value={firstName}
-                  onChangeText={setFirstName}
-                  placeholderTextColor="#aaa"
-                />
-                {/* <TextInput
+                {mode === 'sign-up' && (
+                  <>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Name"
+                      autoCapitalize="words"
+                      value={firstName}
+                      onChangeText={setFirstName}
+                      placeholderTextColor="#aaa"
+                    />
+                    {/* <TextInput
                 style={styles.input}
                 placeholder="Last name"
                 autoCapitalize="words"
                 value={lastName}
                 onChangeText={setLastName}
-              /> */}
-              </>
-            )}
-            {/* {mode === 'sign-in' && (
+                /> */}
+                  </>
+                )}
+                {/* {mode === 'sign-in' && (
             <Pressable style={styles.googleButton} onPress={signInWithGoogle}>
-              <Image
-                source={require('@/assets/images/google.png')}
-                style={styles.googleIcon}
-              />
-              <Text style={styles.googleButtonText}>Sign in with Google</Text>
+            <Image
+            source={require('@/assets/images/google.png')}
+            style={styles.googleIcon}
+            />
+            <Text style={styles.googleButtonText}>Sign in with Google</Text>
             </Pressable>
             )} */}
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              autoCapitalize="none"
-              keyboardType="email-address"
-              value={email}
-              onChangeText={setEmail}
-              placeholderTextColor="#aaa"
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              secureTextEntry
-              value={password}
-              onChangeText={setPassword}
-              placeholderTextColor="#aaa"
-            />
-          </>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholderTextColor="#aaa"
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  secureTextEntry
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholderTextColor="#aaa"
+                />
+                {mode === 'sign-in' && (
+                  <Pressable onPress={() => setMode('forgot-password')}>
+                    <ThemedText style={styles.forgot}>
+                      Forgot password?
+                    </ThemedText>
+                  </Pressable>
+                )}
+              </>
 
-          {error && <ThemedText style={styles.error}>❌ {error}</ThemedText>}
+              {error && (
+                <ThemedText style={styles.error}>❌ {error}</ThemedText>
+              )}
 
-          <Pressable
-            style={[
-              styles.button,
-              (loading || !email || !password || signUpMissingName) &&
-                styles.buttonDisabled,
-            ]}
-            onPress={handleSubmit}
-            disabled={loading || !email || !password || signUpMissingName}
-          >
-            {loading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <ThemedText style={styles.buttonText}>
-                {mode === 'sign-in' ? 'Sign In' : 'Create Account'}
-              </ThemedText>
-            )}
-          </Pressable>
+              <Pressable
+                style={[
+                  styles.button,
+                  (loading || !email || !password || signUpMissingName) &&
+                    styles.buttonDisabled,
+                ]}
+                onPress={handleSubmit}
+                disabled={loading || !email || !password || signUpMissingName}
+              >
+                {loading ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <ThemedText style={styles.buttonText}>
+                    {mode === 'sign-in' ? 'Sign In' : 'Create Account'}
+                  </ThemedText>
+                )}
+              </Pressable>
 
-          <Pressable
-            onPress={() => setMode(mode === 'sign-in' ? 'sign-up' : 'sign-in')}
-          >
-            <ThemedText type="link">
-              {mode === 'sign-in'
-                ? "Don't have an account? Sign up"
-                : 'Already have an account? Sign in'}
-            </ThemedText>
-          </Pressable>
+              <Pressable
+                onPress={() =>
+                  setMode(mode === 'sign-in' ? 'sign-up' : 'sign-in')
+                }
+              >
+                <ThemedText style={styles.link} type="link">
+                  {mode === 'sign-in'
+                    ? "Don't have an account? "
+                    : 'Already have an account? '}
+                  <Text
+                    style={{
+                      fontWeight: '700',
+                      textDecorationLine: 'underline',
+                    }}
+                  >
+                    {mode === 'sign-in' ? 'Sign up' : 'Sign in'}
+                  </Text>
+                </ThemedText>
+              </Pressable>
+            </>
+          )}
         </View>
       </ImageBackground>
     </ThemedView>
@@ -189,6 +279,16 @@ export default function AuthScreen() {
 }
 
 const styles = StyleSheet.create({
+  link: {
+    marginTop: 5,
+
+    fontSize: 17,
+  },
+  forgot: {
+    marginTop: 5,
+    fontSize: 15,
+    color: '#aaa',
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
