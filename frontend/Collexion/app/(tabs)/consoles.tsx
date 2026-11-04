@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 43,
   },
   searchInput: {
     color: 'white',

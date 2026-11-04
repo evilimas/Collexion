@@ -991,10 +991,11 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 24,
+    fontWeight: 'bold',
     fontFamily: 'SpaceGrotesk_600SemiBold',
     marginBottom: 20,
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 43,
   },
   inputStyle: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',

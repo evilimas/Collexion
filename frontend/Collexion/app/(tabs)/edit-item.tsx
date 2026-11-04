@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     marginBottom: 18,
+    marginTop: 40,
   },
   input: {
     color: 'white',

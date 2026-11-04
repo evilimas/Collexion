@@ -239,9 +239,9 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: 'white',
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: '700',
-    marginTop: 10,
+    marginTop: 43,
     // textAlign: 'center',
     marginHorizontal: 'auto',
     // marginTop: 8,
