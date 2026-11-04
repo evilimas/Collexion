@@ -237,7 +237,19 @@ const App = () => {
             </View>
             <Text style={styles.text}>Recently Added</Text>
             <View style={styles.recentlyContainer}>
-              {recentlyAdded.slice(0, 4).map((item) => (
+              {recentlyAdded.length === 0 && (
+                <>
+                  <Pressable style={styles.recentLink}>
+                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                      No recently added items.
+                    </Text>
+                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                      Add some items to your collection to see them here.
+                    </Text>
+                  </Pressable>
+                </>
+              )}
+              {recentlyAdded.slice(0, 3).map((item) => (
                 <View key={item.id}>
                   <Pressable style={styles.recentLink}>
                     <Text style={{ color: 'white', textAlign: 'center' }}>
@@ -348,7 +360,7 @@ const styles = StyleSheet.create({
   logo: {
     width: '50%',
     height: 80,
-    marginTop: 31,
+    marginTop: 33,
     alignContent: 'center',
     alignSelf: 'center',
   },
