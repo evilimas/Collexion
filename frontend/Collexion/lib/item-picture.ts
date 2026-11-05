@@ -17,6 +17,7 @@ export function getItemPicture(
     'Nintendo GameCube': require('@/assets/images/gamecube1.png'),
     'Nintendo Wii': require('@/assets/images/wii2.png'),
     'Nintendo WiiU': require('@/assets/images/wiiu2.png'),
+    'Other Console (Specify)': require('@/assets/images/otherconsoles1.png'),
     'Nintendo Switch': require('@/assets/images/switch.png'),
     'Nintendo Switch 2': require('@/assets/images/switch2.png'),
     'PlayStation Vita(PSV)': require('@/assets/images/psvita1.png'),
@@ -31,6 +32,8 @@ export function getItemPicture(
     'Neo Geo Pocket Color': require('@/assets/images/neogeopcolor5.png'),
     WonderSwan: require('@/assets/images/wonderswan1.png'),
     'Atari Lynx': require('@/assets/images/atalilynx.png'),
+    'PC Handhelds': require('@/assets/images/pchandhelds.png'),
+    'Other Handheld (Specify)': require('@/assets/images/othershandheld.png'),
     'DualSense(PS5)': require('@/assets/images/dualsense1.png'),
     'DualShock 4(PS4)': require('@/assets/images/dualshock41.png'),
     'Sixaxis/DualShock 3(PS3)': require('@/assets/images/dualshock31.png'),
@@ -44,6 +47,7 @@ export function getItemPicture(
     'Nintendo WiiU Controller': require('@/assets/images/wiiu-controller.png'),
     'Nintendo Switch Controller': require('@/assets/images/switchcontroller.png'),
     'Nintendo Switch 2 Controller': require('@/assets/images/switch2controller.png'),
+    'Other Controller (Specify)': require('@/assets/images/othercontrollers.png'),
   };
 
   return pictures[name];
