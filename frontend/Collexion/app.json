@@ -8,8 +8,8 @@
     "scheme": "collexion",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "supportsTablet": true,
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "supportsTablet": true
+      // "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "package": "com.collexion.app",
