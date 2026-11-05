@@ -10,10 +10,11 @@ import {
 import React, { useState } from 'react';
 import ConsoleGroup from '@/components/Consoles';
 import Console from '@/components/Console';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { useCollectionItems } from '@/hooks/use-collection-items';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import MaterialIcons from '@expo/vector-icons/build/MaterialIcons';
+import EmptyNotice from '@/components/Empty-notice';
 
 const Consoles = () => {
   const [search, setSearch] = useState('');
@@ -77,6 +78,14 @@ const Consoles = () => {
             contentContainerStyle={selectedName ? styles.list : styles.grid}
             showsVerticalScrollIndicator={false}
           >
+            {groups.length === 0 && !selectedName && (
+              <EmptyNotice
+                name="Consoles"
+                onAdd={() => {
+                  router.push('/add-item');
+                }}
+              />
+            )}
             {selectedName
               ? selectedItems.map((item) => (
                   <Link
@@ -87,6 +96,7 @@ const Consoles = () => {
                         id: item.id,
                         type: item.type,
                         name: item.name,
+                        otherName: item.otherName,
                         model: item.model,
                         edition: item.edition,
                         color: item.color,
@@ -105,6 +115,7 @@ const Consoles = () => {
                     <Pressable style={{ width: '100%' }}>
                       <Console
                         name={item.name}
+                        otherName={item.otherName}
                         model={item.model}
                         edition={item.edition}
                         color={item.color}

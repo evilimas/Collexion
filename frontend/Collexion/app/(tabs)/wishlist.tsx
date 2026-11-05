@@ -61,16 +61,14 @@ export default function WishlistScreen() {
               <Text style={styles.eyebrow}>YOUR COLLECTION</Text>
               <Text style={styles.title}>Wishlist</Text>
             </View>
-            <Pressable
+            {/* <Pressable
               accessibilityRole="button"
               accessibilityLabel="Wishlist options"
               style={styles.moreButton}
             >
               <Text style={styles.more}>···</Text>
-            </Pressable>
+            </Pressable> */}
           </View>
-
-          <Text style={styles.subtitle}>Keep the things you love close.</Text>
 
           <View style={styles.summary}>
             <View>
@@ -141,10 +139,10 @@ export default function WishlistScreen() {
                   Save pieces you find while exploring and they’ll be waiting
                   for you here.
                 </Text>
-                <Pressable style={styles.button} accessibilityRole="button">
+                {/* <Pressable style={styles.button} accessibilityRole="button">
                   <Text style={styles.buttonText}>Explore collections</Text>
                   <Text style={styles.buttonArrow}>→</Text>
-                </Pressable>
+                </Pressable> */}
               </View>
             }
           />

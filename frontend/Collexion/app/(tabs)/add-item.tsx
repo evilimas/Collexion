@@ -55,6 +55,7 @@ const AddItem = () => {
     'Neo Geo Pocket Color',
     'WonderSwan',
     'Atari Lynx',
+    'PC Handhelds',
     'Other Handheld (Specify)',
   ];
   const controllerOptions: string[] = [
@@ -384,6 +385,9 @@ const AddItem = () => {
   const [color, setColor] = useState<string>('');
   const [edition, setEdition] = useState<string>('');
   const [consoleName, setConsoleName] = useState<string>('');
+  const [otherHandheldName, setOtherHandheldName] = useState<string>('');
+  const [otherConsoleName, setOtherConsoleName] = useState<string>('');
+  const [otherControllerName, setOtherControllerName] = useState<string>('');
   const [handheldName, setHandheldName] = useState<string>('');
   const [controllerName, setControllerName] = useState<string>('');
   const [forConsole, setForConsole] = useState<string>('');
@@ -408,6 +412,16 @@ const AddItem = () => {
     setSaving(true);
     const name =
       type === '1' ? consoleName : type === '2' ? handheldName : controllerName;
+
+    const otherName =
+      type === '1' && consoleName === 'Other Console (Specify)'
+        ? otherConsoleName
+        : type === '2' && handheldName === 'Other Handheld (Specify)'
+          ? otherHandheldName
+          : type === '3' && controllerName === 'Other Controller (Specify)'
+            ? otherControllerName
+            : '';
+
     const user = auth.currentUser;
 
     if (!user) {
@@ -447,6 +461,7 @@ const AddItem = () => {
         userId: user.uid,
         type: itemType,
         name,
+        otherName: otherName.trim(),
         model: model.trim(),
         color: color.trim(),
         condition: itemCondition,
@@ -481,8 +496,11 @@ const AddItem = () => {
   const resetInputs = () => {
     setType('1'); // Reset type to default or initial value
     setConsoleName(''); // Reset console name
+    setOtherConsoleName(''); // Reset other console name
     setHandheldName(''); // Reset handheld name
+    setOtherHandheldName(''); // Reset other handheld name
     setControllerName(''); // Reset controller name
+    setOtherControllerName(''); // Reset other controller name
     setColor(''); // Reset color
     setModel(''); // Reset model
     setEdition(''); // Reset edition
@@ -565,6 +583,15 @@ const AddItem = () => {
                       {consoleName || 'Select console'}
                     </Text>
                   </Pressable>
+                  {consoleName === 'Other Console (Specify)' && (
+                    <TextInput
+                      placeholder="Specify other console"
+                      placeholderTextColor="gray"
+                      style={styles.inputStyle}
+                      value={otherConsoleName}
+                      onChangeText={setOtherConsoleName}
+                    />
+                  )}
                 </>
               )}
               {type === '2' && (
@@ -578,6 +605,15 @@ const AddItem = () => {
                       {handheldName || 'Select handheld'}
                     </Text>
                   </Pressable>
+                  {handheldName === 'Other Handheld (Specify)' && (
+                    <TextInput
+                      placeholder="Specify other handheld"
+                      placeholderTextColor="gray"
+                      style={styles.inputStyle}
+                      value={otherHandheldName}
+                      onChangeText={setOtherHandheldName}
+                    />
+                  )}
                 </>
               )}
               {type === '3' && (
@@ -591,6 +627,15 @@ const AddItem = () => {
                       {controllerName || 'Select controller'}
                     </Text>
                   </Pressable>
+                  {controllerName === 'Other Controller (Specify)' && (
+                    <TextInput
+                      placeholder="Specify other controller"
+                      placeholderTextColor="gray"
+                      style={styles.inputStyle}
+                      value={otherControllerName}
+                      onChangeText={setOtherControllerName}
+                    />
+                  )}
                 </>
               )}
               <Modal

@@ -4,12 +4,17 @@ import type { ImageSourcePropType } from 'react-native';
 
 type Props = {
   name: string;
+  otherName?: string;
   count: number;
   picture?: ImageSourcePropType;
   onPress?: () => void;
 };
 
-const ConsoleGroup = ({ name, count, picture, onPress }: Props) => {
+const ConsoleGroup = ({ name, otherName, count, picture, onPress }: Props) => {
+  const othersName = name.includes('(')
+    ? name.substring(0, name.indexOf('(')).trim()
+    : name;
+
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
       <View style={styles.badge}>
@@ -21,7 +26,7 @@ const ConsoleGroup = ({ name, count, picture, onPress }: Props) => {
         <View style={styles.cardImagePlaceholder} />
       )}
       <Text style={styles.cardName} numberOfLines={2}>
-        {name}
+        {otherName ?? othersName}
       </Text>
     </TouchableOpacity>
   );
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   cardImage: {
-    width: 145,
+    width: 147,
     height: 100,
     marginBottom: 2,
   },

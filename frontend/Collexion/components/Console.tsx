@@ -4,6 +4,7 @@ import type { ImageSourcePropType } from 'react-native';
 
 type Props = {
   name: string;
+  otherName?: string;
   model?: string;
   edition?: string;
   color: string;
@@ -19,6 +20,7 @@ type Props = {
 
 const Console = ({
   name,
+  otherName,
   model,
   edition,
   color,
@@ -36,13 +38,13 @@ const Console = ({
       {picture ? (
         <Image
           source={url ? { uri: url } : picture}
-          style={styles.image}
-          resizeMode="cover"
+          style={url ? styles.image : styles.placeholder}
+          // resizeMode="cover"
           //           borderRadiusTopLeft={8}
         />
       ) : null}
       <View style={styles.content}>
-        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.name}>{otherName ?? name}</Text>
         {model ? (
           <Text
             style={{
@@ -90,11 +92,12 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
   },
   image: {
-    width: 115,
+    width: 125,
     height: 115,
     marginRight: 22,
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
+    resizeMode: 'cover',
   },
   content: {
     flex: 1,
@@ -114,5 +117,14 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 24,
+  },
+  placeholder: {
+    width: 125,
+    height: 115,
+    marginRight: 22,
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+    resizeMode: 'contain',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
 });

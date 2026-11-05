@@ -8,11 +8,12 @@ import {
   Pressable,
 } from 'react-native';
 import { useState } from 'react';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { useCollectionItems } from '@/hooks/use-collection-items';
 import ConsoleGroup from '@/components/Consoles';
 import Console from '@/components/Console';
 import MaterialIcons from '@expo/vector-icons/build/MaterialIcons';
+import EmptyNotice from '@/components/Empty-notice';
 
 const Controllers = () => {
   const [search, setSearch] = useState('');
@@ -57,6 +58,7 @@ const Controllers = () => {
             value={search}
             onChangeText={setSearch}
           />
+
           {selectedName ? (
             <Pressable
               style={styles.backText}
@@ -75,6 +77,14 @@ const Controllers = () => {
             contentContainerStyle={selectedName ? styles.list : styles.grid}
             showsVerticalScrollIndicator={false}
           >
+            {groups.length === 0 && !selectedName && (
+              <EmptyNotice
+                name="Controllers"
+                onAdd={() => {
+                  router.push('/add-item');
+                }}
+              />
+            )}
             {selectedName
               ? selectedItems.map((item) => (
                   <Link
@@ -85,6 +95,7 @@ const Controllers = () => {
                         id: item.id,
                         type: item.type,
                         name: item.name,
+                        otherName: item.otherName,
                         model: item.model,
                         edition: item.edition,
                         color: item.color,
@@ -106,6 +117,7 @@ const Controllers = () => {
                         name={item.name}
                         model={item.model}
                         edition={item.edition}
+                        otherName={item.otherName}
                         color={item.color}
                         condition={item.condition}
                         picture={item.picture}

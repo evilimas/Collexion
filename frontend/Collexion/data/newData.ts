@@ -4,6 +4,7 @@ export type CollectionItem = {
   id: string;
   type: 'Console' | 'Controller' | 'Handheld';
   name: string;
+  otherName?: string;
   model?: string;
   color: string;
   condition: 'Unopened' | 'Mint' | 'Like New' | 'Good' | 'Fair' | 'Poor';

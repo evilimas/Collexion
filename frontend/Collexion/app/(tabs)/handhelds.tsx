@@ -8,11 +8,12 @@ import {
   Pressable,
 } from 'react-native';
 import { useState } from 'react';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { useCollectionItems } from '@/hooks/use-collection-items';
 import ConsoleGroup from '@/components/Consoles';
 import Console from '@/components/Console';
 import MaterialIcons from '@expo/vector-icons/build/MaterialIcons';
+import EmptyNotice from '@/components/Empty-notice';
 
 const Handhelds = () => {
   const [search, setSearch] = useState('');
@@ -75,6 +76,12 @@ const Handhelds = () => {
             contentContainerStyle={selectedName ? styles.list : styles.grid}
             showsVerticalScrollIndicator={false}
           >
+            {groups.length === 0 && !selectedName && (
+              <EmptyNotice
+                name="Handhelds"
+                onAdd={() => router.push('/add-item')}
+              />
+            )}
             {selectedName
               ? selectedItems.map((item) => (
                   <Link
@@ -85,6 +92,7 @@ const Handhelds = () => {
                         id: item.id,
                         type: item.type,
                         name: item.name,
+                        otherName: item.otherName,
                         model: item.model,
                         edition: item.edition,
                         color: item.color,
@@ -103,6 +111,7 @@ const Handhelds = () => {
                     <Pressable style={{ width: '100%' }}>
                       <Console
                         name={item.name}
+                        otherName={item.otherName}
                         model={item.model}
                         edition={item.edition}
                         color={item.color}

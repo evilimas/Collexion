@@ -76,6 +76,13 @@ const Profile = () => {
             <View>
               <Pressable
                 style={styles.link}
+                onPress={() => router.push('/wishlist')}
+              >
+                <Text style={styles.linkText}>Wishlist</Text>
+                <Text style={styles.linkText}>&gt;</Text>
+              </Pressable>
+              <Pressable
+                style={styles.link}
                 onPress={() => router.push('/edit-profile')}
               >
                 <Text style={styles.linkText}>Edit Profile</Text>
@@ -85,20 +92,9 @@ const Profile = () => {
                 <Text style={styles.linkText}>Change Password</Text>
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
-              <Pressable style={styles.link}>
-                <Text style={styles.linkText}>Privacy Settings</Text>
-                <Text style={styles.linkText}>&gt;</Text>
-              </Pressable>
-              <Pressable style={styles.link}>
-                <Text style={styles.linkText}>Notification Settings</Text>
-                <Text style={styles.linkText}>&gt;</Text>
-              </Pressable>
 
-              <Pressable
-                style={styles.link}
-                onPress={() => router.push('/wishlist')}
-              >
-                <Text style={styles.linkText}>Wishlist</Text>
+              <Pressable style={styles.link}>
+                <Text style={styles.linkText}>Send Feedback</Text>
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
 

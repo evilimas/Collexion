@@ -200,6 +200,7 @@ export function useCollectionItems() {
               id: doc.id,
               type: data.type,
               name: data.name,
+              otherName: data.otherName || undefined,
               model: data.model || undefined,
               color: data.color,
               condition: data.condition,

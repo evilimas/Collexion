@@ -20,6 +20,7 @@ const ConsoleDetail = () => {
   // Get console data from params
   const type = params.type as string;
   const name = params.name as string;
+  const otherName = params.otherName as string;
   const model = params.model as string;
   const edition = params.edition as string;
   const color = params.color as string;
@@ -65,8 +66,12 @@ const ConsoleDetail = () => {
               />
             ) : null}
           </View>
+          {otherName ? (
+            <Text style={styles.detailName}>{otherName}</Text>
+          ) : (
+            <Text style={styles.detailName}>{name}</Text>
+          )}
 
-          <Text style={styles.detailName}>{name}</Text>
           {edition && <Text style={styles.detailEdition}> {edition}</Text>}
           <View style={styles.detailCard}>
             {model && (
@@ -146,9 +151,9 @@ const ConsoleDetail = () => {
               <Text style={styles.detailValue}>{withBox ? 'Yes' : 'No'}</Text>
             </View>
           </View>
+              {description && (
           <View style={styles.detailCard}>
             <View style={styles.descriptionContainer}>
-              {description && (
                 <View style={styles.descriptionRow}>
                   <View style={styles.descriptionLabel}>
                     <MaterialIcons name="description" size={20} color="white" />
@@ -158,9 +163,9 @@ const ConsoleDetail = () => {
                     <Text style={styles.descriptionValue}>{description}</Text>
                   </View>
                 </View>
-              )}
             </View>
           </View>
+              )}
           <View style={styles.editButtons}>
             <Pressable
               style={styles.editBtn}
@@ -225,6 +230,7 @@ export default ConsoleDetail;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
   },
   image: {
     width: '100%',
@@ -233,6 +239,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
+    // backgroundColor: 'rgba(0, 0, 0, 0.25)',
 
     paddingHorizontal: 10,
     paddingTop: 20,

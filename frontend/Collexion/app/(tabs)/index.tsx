@@ -9,7 +9,7 @@ import {
   Pressable,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { useCollectionItems } from '@/hooks/use-collection-items';
 // import { useCollectionItems } from '@/hooks/use-collection-items';
 // import { recentlyAddedItems } from '@/hooks/use-collection-items';
@@ -35,7 +35,7 @@ const homeCollections: CollectionSquare[] = [
   {
     id: '1',
     name: 'Consoles',
-    image: require('@/assets/images/consoles1.png'),
+    image: require('@/assets/images/consoles2.png'),
     tab: '/(tabs)/consoles',
   },
   {
@@ -205,7 +205,7 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <ImageBackground
           source={require('@/assets/images/background3.jpg')}
           resizeMode="cover"
@@ -239,7 +239,10 @@ const App = () => {
             <View style={styles.recentlyContainer}>
               {recentlyAdded.length === 0 && (
                 <>
-                  <Pressable style={styles.recentLink}>
+                  <Pressable
+                    style={styles.recentLink}
+                    onPress={() => router.push('/add-item')}
+                  >
                     <Text style={{ color: 'white', textAlign: 'center' }}>
                       No recently added items.
                     </Text>
@@ -285,6 +288,21 @@ const App = () => {
             </View>
             <Text style={styles.text}>Collections by console</Text>
             <View style={styles.collectionContainerConsole}>
+              {notEmptyConsoleCollections.length === 0 && (
+                <>
+                  <Pressable
+                    style={[styles.recentLink, { paddingHorizontal: 40 }]}
+                    onPress={() => router.push('/add-item')}
+                  >
+                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                      Your collection by consoles is empty.
+                    </Text>
+                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                      Add some items to your collection to see them here.
+                    </Text>
+                  </Pressable>
+                </>
+              )}
               {notEmptyConsoleCollections.map((collection) => (
                 <Link
                   key={collection.id}
@@ -323,6 +341,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+
     // backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   colImg: {
@@ -342,7 +361,7 @@ const styles = StyleSheet.create({
 
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
     width: '100%',
     height: '100%',
     paddingHorizontal: 10,
@@ -360,7 +379,7 @@ const styles = StyleSheet.create({
   logo: {
     width: '50%',
     height: 80,
-    marginTop: 33,
+    marginTop: 34,
     alignContent: 'center',
     alignSelf: 'center',
   },
