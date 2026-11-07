@@ -52,6 +52,7 @@ export async function recentlyAddedItems() {
       description: data.description || undefined,
       reshell: data.reshell,
       url: data.url || undefined,
+      localImageUri: data.localImageUri || undefined,
       picture: getItemPicture(data.type, data.name),
       createdAt: data.createdAt?.toMillis?.() ?? 0,
     };
@@ -91,6 +92,7 @@ export async function collectionsByConsole(consoleName: string) {
       description: data.description || undefined,
       reshell: data.reshell,
       url: data.url || undefined,
+      localImageUri: data.localImageUri || undefined,
       picture: getItemPicture(data.type, data.name),
       createdAt: data.createdAt?.toMillis?.() ?? 0,
     };
@@ -213,6 +215,7 @@ export function useCollectionItems() {
               description: data.description || undefined,
               reshell: data.reshell,
               url: data.url || undefined,
+              localImageUri: data.localImageUri || undefined,
               picture: getItemPicture(data.type, data.name),
               createdAt: data.createdAt?.toMillis?.() ?? 0,
             };

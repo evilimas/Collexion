@@ -17,6 +17,7 @@ export type CollectionItem = {
   description?: string;
   reshell?: boolean;
   url?: string; // Optional URL for more information
+  localImageUri?: string; // Local image URI for images picked from the phone
   createdAt?: number; // Timestamp for when the item was added
   canBeUsedOn?: string; // Only for controllers
 };
