@@ -103,6 +103,7 @@ const Controllers = () => {
                         manufacturer: item.manufacturer,
                         description: item.description,
                         url: item.url,
+                        localImageUri: item.localImageUri,
                         reshell: String(item.reshell),
                         withBox: String(item.withBox),
                         storage: item.storage,
@@ -121,6 +122,7 @@ const Controllers = () => {
                         color={item.color}
                         condition={item.condition}
                         picture={item.picture}
+                        localImageUri={item.localImageUri}
                         manufacturer={item.manufacturer}
                         description={item.description}
                         url={item.url}

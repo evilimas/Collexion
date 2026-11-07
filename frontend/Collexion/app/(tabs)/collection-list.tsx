@@ -91,6 +91,7 @@ const CollectionList = () => {
                           forConsole: item.forConsole,
                           description: item.description,
                           url: item.url,
+                          localImageUri: item.localImageUri,
                           reshell: String(item.reshell),
                           withBox: String(item.withBox),
                           from: '/(tabs)',
@@ -106,6 +107,7 @@ const CollectionList = () => {
                           color={item.color}
                           condition={item.condition}
                           picture={item.picture}
+                          localImageUri={item.localImageUri}
                           url={item.url}
                         />
                       </Pressable>
@@ -134,6 +136,7 @@ const CollectionList = () => {
                           forConsole: item.forConsole,
                           description: item.description,
                           url: item.url,
+                          localImageUri: item.localImageUri,
                           reshell: String(item.reshell),
                           withBox: String(item.withBox),
                           from: '/(tabs)',
@@ -149,6 +152,7 @@ const CollectionList = () => {
                           color={item.color}
                           condition={item.condition}
                           picture={item.picture}
+                          localImageUri={item.localImageUri}
                           url={item.url}
                         />
                       </Pressable>
@@ -177,6 +181,7 @@ const CollectionList = () => {
                           forConsole: item.forConsole,
                           description: item.description,
                           url: item.url,
+                          localImageUri: item.localImageUri,
                           reshell: String(item.reshell),
                           withBox: String(item.withBox),
                           from: '/(tabs)',
@@ -192,6 +197,7 @@ const CollectionList = () => {
                           color={item.color}
                           condition={item.condition}
                           picture={item.picture}
+                          localImageUri={item.localImageUri}
                           url={item.url}
                         />
                       </Pressable>

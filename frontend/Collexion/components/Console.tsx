@@ -15,6 +15,7 @@ type Props = {
   manufacturer?: string;
   picture?: ImageSourcePropType;
   url?: string;
+  localImageUri?: string;
   onPress?: () => void;
 };
 
@@ -29,7 +30,7 @@ const Console = ({
   onPress,
   withBox,
   description,
-
+  localImageUri,
   url,
   manufacturer,
 }: Props) => {
@@ -37,8 +38,20 @@ const Console = ({
     <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
       {picture ? (
         <Image
-          source={url ? { uri: url } : picture}
-          style={url ? styles.image : styles.placeholder}
+          source={
+            localImageUri
+              ? { uri: localImageUri }
+              : url
+                ? { uri: url }
+                : picture
+          }
+          style={
+            localImageUri
+              ? styles.image
+              : url
+                ? styles.image
+                : styles.placeholder
+          }
           // resizeMode="cover"
           //           borderRadiusTopLeft={8}
         />

@@ -100,6 +100,7 @@ const Handhelds = () => {
                         manufacturer: item.manufacturer,
                         description: item.description,
                         url: item.url,
+                        localImageUri: item.localImageUri,
                         reshell: String(item.reshell),
                         withBox: String(item.withBox),
                         storage: item.storage,
@@ -117,6 +118,7 @@ const Handhelds = () => {
                         color={item.color}
                         condition={item.condition}
                         picture={item.picture}
+                        localImageUri={item.localImageUri}
                         manufacturer={item.manufacturer}
                         description={item.description}
                         url={item.url}

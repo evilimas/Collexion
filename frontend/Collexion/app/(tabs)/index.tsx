@@ -256,7 +256,7 @@ const App = () => {
                 <View key={item.id}>
                   <Pressable style={styles.recentLink}>
                     <Text style={{ color: 'white', textAlign: 'center' }}>
-                      {item.name}-{item.model}
+                      {item.otherName ? item.otherName : item.name}-{item.model}
                     </Text>
                   </Pressable>
                 </View>

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -10,6 +11,8 @@ import {
 } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import { deleteItem } from '@/hooks/use-collection-items';
 
 const ConsoleDetail = () => {
@@ -30,10 +33,31 @@ const ConsoleDetail = () => {
   // const forConsole = params.forConsole as string;
   const description = params.description as string;
   const url = params.url as string;
+  const routeImageUri = Array.isArray(params.localImageUri)
+    ? params.localImageUri[0]
+    : params.localImageUri;
+  const [storedImageUri, setStoredImageUri] = useState<string | null>(null);
+  const localImageUri = storedImageUri || routeImageUri;
   const reshell = params.reshell === 'true'; // Convert string to boolean
   const withBox = params.withBox === 'true'; // Convert string to boolean
   const from = (params.from as string) || '/consoles';
   const canBeUsedOn = params.canBeUsedOn as string;
+
+  useEffect(() => {
+    let active = true;
+
+    getDoc(doc(db, 'collection_items', itemId))
+      .then((snapshot) => {
+        if (active && snapshot.exists()) {
+          setStoredImageUri(snapshot.data().localImageUri || null);
+        }
+      })
+      .catch((error) => console.error('Unable to load item photo', error));
+
+    return () => {
+      active = false;
+    };
+  }, [itemId]);
 
   return (
     <View style={styles.container}>
@@ -58,7 +82,13 @@ const ConsoleDetail = () => {
 
         <ScrollView style={styles.overlay}>
           <View style={styles.pictureContainer}>
-            {url ? (
+            {localImageUri ? (
+              <Image
+                source={{ uri: localImageUri }}
+                style={styles.detailImage}
+                // resizeMode="cover"
+              />
+            ) : url ? (
               <Image
                 source={{ uri: url }}
                 style={styles.detailImage}
@@ -151,9 +181,9 @@ const ConsoleDetail = () => {
               <Text style={styles.detailValue}>{withBox ? 'Yes' : 'No'}</Text>
             </View>
           </View>
-              {description && (
-          <View style={styles.detailCard}>
-            <View style={styles.descriptionContainer}>
+          {description && (
+            <View style={styles.detailCard}>
+              <View style={styles.descriptionContainer}>
                 <View style={styles.descriptionRow}>
                   <View style={styles.descriptionLabel}>
                     <MaterialIcons name="description" size={20} color="white" />
@@ -163,9 +193,9 @@ const ConsoleDetail = () => {
                     <Text style={styles.descriptionValue}>{description}</Text>
                   </View>
                 </View>
+              </View>
             </View>
-          </View>
-              )}
+          )}
           <View style={styles.editButtons}>
             <Pressable
               style={styles.editBtn}
@@ -176,6 +206,7 @@ const ConsoleDetail = () => {
                     id: itemId,
                     type,
                     name,
+                    otherName,
                     model,
                     edition,
                     color,
@@ -185,6 +216,7 @@ const ConsoleDetail = () => {
                     // forConsole,
                     description,
                     url,
+                    localImageUri,
                     reshell: String(reshell),
                     withBox: String(withBox),
                     from,

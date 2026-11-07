@@ -16,6 +16,7 @@ function EditProfile() {
   const [saving, setSaving] = useState(false);
   const [name, setName] = useState(user?.displayName);
   const [imageUrl, setImageUrl] = useState(user?.photoURL);
+  const [localImageUri, setLocalImageUri] = useState('');
 
   const handleUpdateProfile = async () => {
     setSaving(true);

@@ -8,7 +8,10 @@
   Pressable,
   ScrollView,
   Alert,
+  Image,
 } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import { File, Paths } from 'expo-file-system';
 import { useMemo, useState } from 'react';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { auth, db } from '@/lib/firebase';
@@ -34,6 +37,7 @@ const AddItem = () => {
     'Nintendo Wii',
     'Nintendo WiiU',
     'Nintendo GameCube',
+    'Nintendo 64',
     'Xbox Series S|X',
     'Xbox One',
     'Xbox 360',
@@ -70,6 +74,7 @@ const AddItem = () => {
     'Xbox Original(OG) Controller',
     'Nintendo Wii Controller',
     'Nintendo WiiU Controller',
+    'Nintendo GameCube Controller',
     'Nintendo Switch Controller',
     'Nintendo Switch 2 Controller',
     'Other Controller (Specify)',
@@ -248,10 +253,22 @@ const AddItem = () => {
     { manufacturer: string; forConsole?: string; canBeUsedOn?: string }
   > = {
     // Controllers
-    'DualSense(PS5)': { manufacturer: 'Sony', forConsole: 'PS5' },
-    'DualShock 4(PS4)': { manufacturer: 'Sony', forConsole: 'PS4' },
+    'DualSense(PS5)': {
+      manufacturer: 'Sony',
+      forConsole: 'PS5',
+      canBeUsedOn: 'PS5',
+    },
+    'DualShock 4(PS4)': {
+      manufacturer: 'Sony',
+      forConsole: 'PS4',
+      canBeUsedOn: 'PS4',
+    },
     'Sixaxis/DualShock 3(PS3)': { manufacturer: 'Sony', forConsole: 'PS3' },
-    'DualShock 2(PS2)': { manufacturer: 'Sony', forConsole: 'PS2' },
+    'DualShock 2(PS2)': {
+      manufacturer: 'Sony',
+      forConsole: 'PS2',
+      canBeUsedOn: 'PS2',
+    },
     'Xbox Series S|X Controller': {
       manufacturer: 'Microsoft',
       forConsole: 'Xbox Series',
@@ -370,6 +387,12 @@ const AddItem = () => {
     'Nintendo GameCube': {
       manufacturer: 'Nintendo',
     },
+    'Nintendo 64': {
+      manufacturer: 'Nintendo',
+    },
+    'PC Handhelds': {
+      manufacturer: 'Other',
+    },
     'Nintendo Wii': {
       manufacturer: 'Nintendo',
     },
@@ -403,6 +426,22 @@ const AddItem = () => {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [canBeUsedOn, setCanBeUsedOn] = useState<string>('');
+  const [localImageUri, setLocalImageUri] = useState<string | null>(null);
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      quality: 0.7,
+    });
+    if (result.canceled) return;
+
+    const picked = new File(result.assets[0].uri);
+    const saved = new File(Paths.document, `${Date.now()}.jpg`);
+    picked.copy(saved);
+
+    setLocalImageUri(saved.uri);
+  };
 
   const selectedName =
     type === '1' ? consoleName : type === '2' ? handheldName : controllerName;
@@ -476,6 +515,7 @@ const AddItem = () => {
         reshell: reshell === '1',
         picture: picture ?? null,
         url: url.trim(),
+        localImageUri: localImageUri ?? null,
         withBox: withBox === '1',
         createdAt: serverTimestamp(),
         canBeUsedOn: canBeUsedOn.trim(),
@@ -513,6 +553,7 @@ const AddItem = () => {
     setReshell('2'); // Reset reshell to default
     setCanBeUsedOn(''); // Reset can be used on
     setWithBox('2'); // Reset with box to default
+    setLocalImageUri(null); // Reset local image URI
   };
 
   const picture = getItemPicture(
@@ -837,6 +878,24 @@ const AddItem = () => {
                 value={url}
                 onChangeText={setUrl}
               />
+              <Text style={styles.label}>Local Image</Text>
+              <Pressable style={styles.dropdownButtonStyle} onPress={pickImage}>
+                <Text style={styles.dropdownButtonTxtStyle}>
+                  {localImageUri ? 'Change photo' : 'Pick photo from phone'}
+                </Text>
+              </Pressable>
+              {localImageUri && (
+                <Image
+                  source={{ uri: localImageUri }}
+                  style={{
+                    width: 120,
+                    height: 120,
+                    borderRadius: 8,
+                    marginBottom: 8,
+                  }}
+                />
+              )}
+
               <Text style={styles.label}>Condition*</Text>
               <View
                 style={{
