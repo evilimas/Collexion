@@ -7,19 +7,43 @@ import {
   Text,
   TextInput,
   View,
+  Image,
 } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import { File, Paths } from 'expo-file-system';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { deleteField } from 'firebase/firestore';
 import { updateItem } from '@/hooks/use-collection-items';
+
+const pickImage = async (setLocalImageUri: (uri: string) => void) => {
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ['images'],
+    allowsEditing: true,
+    quality: 0.7,
+  });
+  if (result.canceled) return;
+
+  const picked = new File(result.assets[0].uri);
+  const saved = new File(Paths.document, `${Date.now()}.jpg`);
+  picked.copy(saved);
+
+  setLocalImageUri(saved.uri);
+};
 
 const EditItemForm = () => {
   const router = useRouter();
   const params = useLocalSearchParams();
   const itemId = params.id as string;
   const from = (params.from as string) || '/consoles';
+  const initialLocalImageUri = Array.isArray(params.localImageUri)
+    ? params.localImageUri[0]
+    : params.localImageUri;
 
   const [name, setName] = useState((params.name as string) || '');
+  const [otherName, setOtherName] = useState(
+    (params.otherName as string) || '',
+  );
   const [model, setModel] = useState((params.model as string) || '');
   const [color, setColor] = useState((params.color as string) || '');
   const [condition, setCondition] = useState(
@@ -40,6 +64,9 @@ const EditItemForm = () => {
     (params.description as string) || '',
   );
   const [url, setUrl] = useState((params.url as string) || '');
+  const [localImageUri, setLocalImageUri] = useState(
+    initialLocalImageUri || '',
+  );
   const [reshell, setReshell] = useState(params.reshell === 'true');
   const [withBox, setWithBox] = useState(params.withBox === 'true');
 
@@ -53,12 +80,14 @@ const EditItemForm = () => {
       await updateItem(itemId, {
         type: params.type,
         name: name.trim(),
+        otherName: otherName.trim() || '',
         model: model.trim(),
         color: color.trim(),
         condition: condition.trim(),
         edition: edition.trim(),
         manufacturer: manufacturer.trim(),
         storage: storage.trim(),
+        localImageUri: localImageUri || '',
         // forConsole:
         //   params.type === 'Controller' ? forConsole.trim() : deleteField(),
         description: description.trim(),
@@ -74,6 +103,7 @@ const EditItemForm = () => {
           id: itemId,
           type: params.type,
           name: name.trim(),
+          otherName: otherName.trim() || '',
           model: model.trim(),
           color: color.trim(),
           condition: condition.trim(),
@@ -85,6 +115,7 @@ const EditItemForm = () => {
           canBeUsedOn: params.type === 'Controller' ? canBeUsedOn.trim() : '',
           description: description.trim(),
           url: url.trim(),
+          localImageUri: localImageUri || '',
           reshell: String(reshell),
           withBox: String(withBox),
           from,
@@ -113,7 +144,17 @@ const EditItemForm = () => {
           onChangeText={setName}
           placeholder="Name"
           placeholderTextColor="#aaa"
+          editable={false}
         />
+        {otherName && (
+          <TextInput
+            style={styles.input}
+            value={otherName}
+            onChangeText={setOtherName}
+            placeholder="Other Name"
+            placeholderTextColor="#aaa"
+          />
+        )}
         <TextInput
           style={styles.input}
           value={model}
@@ -174,6 +215,27 @@ const EditItemForm = () => {
           placeholder="Image URL"
           placeholderTextColor="#aaa"
         />
+        <Text style={styles.label}>Local Image</Text>
+        <Pressable
+          style={styles.dropdownButtonStyle}
+          onPress={() => pickImage(setLocalImageUri)}
+        >
+          <Text style={styles.dropdownButtonTxtStyle}>
+            {localImageUri ? 'Change photo' : 'Pick photo from phone'}
+          </Text>
+        </Pressable>
+        {localImageUri && (
+          <Image
+            source={{ uri: localImageUri }}
+            style={{
+              width: 120,
+              height: 120,
+              borderRadius: 8,
+              marginBottom: 8,
+            }}
+          />
+        )}
+
         <TextInput
           style={[styles.input, styles.description]}
           value={description}
@@ -302,5 +364,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 17,
     fontWeight: '700',
+  },
+  dropdownButtonStyle: {
+    width: '100%',
+    height: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 8,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginBottom: 8,
+  },
+  dropdownButtonTxtStyle: {
+    flex: 1,
+    fontSize: 17,
+    fontFamily: 'DMSans_700Bold',
+    color: 'white',
   },
 });
