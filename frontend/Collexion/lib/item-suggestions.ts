@@ -24,6 +24,25 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Zelda: The Wind Waker HD Limited Edition',
     ],
   },
+  'Nintendo GameCube': {
+    'Original (DOL-001)': ['Indigo', 'Jet Black', 'Platinum', 'Spice Orange'],
+    'DOL-101 (no digital out)': ['Indigo', 'Jet Black', 'Platinum'],
+  },
+  'Nintendo 64': {
+    Original: ['Gray'],
+    Funtastic: [
+      'Fire Orange',
+      'Grape Purple',
+      'Ice Blue',
+      'Jungle Green',
+      'Smoke Black',
+      'Watermelon Red',
+    ],
+    'Pokemon Edition': ['Pikachu Blue', 'Pikachu Orange'],
+  },
+  'Nintendo Switch 2': {
+    Standard: ['Standard'],
+  },
   'PlayStation 1': {
     'Original (PS1)': ['Crystal', 'Gray', 'Net Yaroze (Black)'],
     PSone: ['Combo (with LCD screen)', 'Crystal', 'White'],
@@ -74,7 +93,7 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Midnight Blue',
       'Silver',
       'Star Wars Battlefront Limited Edition',
-      'Uncharted 4: A Thiefâ€™s End Limited Edition',
+      "Uncharted 4: A Thief's End Limited Edition",
     ],
     Pro: [
       '500 Million Limited Edition',
@@ -83,7 +102,7 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'God of War Limited Edition',
       'Gold',
       'Jet Black',
-      'Marvelâ€™s Spider-Man Limited Edition',
+      "Marvel's Spider-Man Limited Edition",
       'Monster Hunter: World Rathalos Edition',
       'Star Wars Battlefront II Limited Edition',
       'The Last of Us Part II Limited Edition',
@@ -112,8 +131,8 @@ export const itemSuggestions: Record<string, ModelMap> = {
     ],
     'Slim Digital Edition': ['Astro Bot Limited Edition', 'White'],
     'Standard (Disc)': [
-      'God of War RagnarÃ¶k Limited Edition',
-      'Marvelâ€™s Spider-Man 2 Limited Edition',
+      'God of War Ragnarok Limited Edition',
+      "Marvel's Spider-Man 2 Limited Edition",
       'White',
     ],
     'Standard Digital Edition': ['White'],
@@ -198,7 +217,7 @@ export const itemSuggestions: Record<string, ModelMap> = {
 
   // ---------- HANDHELDS ----------
   'Game Boy': {
-    Light: ['Clear', 'Gold', 'PokÃ©mon Pikachu Edition', 'Silver'],
+    Light: ['Clear', 'Gold', 'Pokemon Pikachu Edition', 'Silver'],
     'Original (DMG)': [
       'Gray',
       'Play It Loud! Black',
@@ -256,7 +275,7 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Tribal Edition',
     ],
   },
-  'Game Boy Color': {
+  'Game Boy Color(GBC)': {
     Standard: [
       'Atomic Purple',
       'Berry',
@@ -418,7 +437,7 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Turquoise Green',
       'Vibrant Blue',
     ],
-    'E1000 (Street)': ['Black'],
+    'E1000 (Street)': ['Black', 'White'],
     Go: ['Blue', 'Pearl White', 'Piano Black'],
   },
   'PlayStation Vita(PSV)': {
@@ -434,6 +453,22 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Yellow',
     ],
     'PS TV': ['Black', 'White'],
+  },
+
+  // ---------- PC HANDHELDS ----------
+  'PC Handhelds': {
+    'Analogue Pocket': ['Black', 'White'],
+    'ASUS ROG Ally (2023)': ['White'],
+    'ASUS ROG Ally X (2024)': ['Black'],
+    'ASUS ROG Xbox Ally': ['White'],
+    'ASUS ROG Xbox Ally X': ['Black'],
+    'Lenovo Legion Go': ['Shadow Black'],
+    'Lenovo Legion Go S': ['Glacier White'],
+    'Lenovo Legion Go 2': ['Shadow Black', 'Glacier White'],
+    'Logitech G Cloud': ['White'],
+    'MSI Claw A1M': ['Black'],
+    'Steam Deck LCD': ['Black'],
+    'Steam Deck OLED': ['Black', 'Limited Edition White'],
   },
 
   'Atari Lynx': {
@@ -470,7 +505,7 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Deep Earth Collection: Nova Pink',
       'Deep Earth Collection: Sterling Silver',
       'Deep Earth Collection: Volcanic Red',
-      'Demons™ Souls Limited Edition',
+      "Demon's Souls Limited Edition",
       'Final Fantasy XVI Limited Edition',
       'Fortnite Limited Edition',
       'Galactic Purple',
@@ -487,9 +522,9 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Hogwarts Legacy Limited Edition',
       'Horizon Forbidden West Limited Edition',
       'Marathon Limited Edition',
-      'Marvels™ Spider-Man 2 Limited Edition',
-      'Marvels™ Wolverine Battle Adamantium Limited Edition',
-      'Marvels™ Wolverine Battle Yellow Limited Edition',
+      "Marvel's Spider-Man 2 Limited Edition",
+      "Marvel's Wolverine Battle Adamantium Limited Edition",
+      "Marvel's Wolverine Battle Yellow Limited Edition",
       'Midnight Black',
       'Midnight Black (Glossy)',
       'Nova Pink',
@@ -560,7 +595,7 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Steel Black',
       'Sunset Orange',
       'The Order: 1886 Limited Edition',
-      'Uncharted 4: A Thiefâ€™s End Limited Edition',
+      "Uncharted 4: A Thief's End Limited Edition",
       'Urban Camouflage',
       'Wave Blue',
     ],
@@ -588,7 +623,7 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Jet Black',
       'Kingdom Hearts III Limited Edition',
       'Magma Red',
-      'Marvels™ Spider-Man Limited Edition',
+      "Marvel's Spider-Man Limited Edition",
       'Midnight Blue',
       'Monster Hunter: World Limited Edition',
       'Persona 5 Limited Edition',
@@ -642,6 +677,17 @@ export const itemSuggestions: Record<string, ModelMap> = {
       'Mario Red Limited Edition',
       'Peach Pink Limited Edition',
     ],
+  },
+  'Nintendo GameCube Controller': {
+    Standard: [
+      'Emerald Blue',
+      'Indigo',
+      'Jet Black',
+      'Platinum',
+      'Spice Orange',
+      'White',
+    ],
+    WaveBird: ['Gray', 'Platinum'],
   },
   'Nintendo WiiU Controller': {
     GamePad: ['Black', 'White', 'Zelda Limited Edition'],
