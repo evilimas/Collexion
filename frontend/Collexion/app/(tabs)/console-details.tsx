@@ -57,7 +57,7 @@ const ConsoleDetail = () => {
     return () => {
       active = false;
     };
-  }, [itemId]);
+  }, [itemId, routeImageUri]);
 
   return (
     <View style={styles.container}>

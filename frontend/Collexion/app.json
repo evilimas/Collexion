@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Collexion",
-    "slug": "Collexion",
+    "slug": "collexion",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon2.png",
@@ -27,6 +27,8 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
       "@react-native-google-signin/google-signin",
       "expo-router",
       [
