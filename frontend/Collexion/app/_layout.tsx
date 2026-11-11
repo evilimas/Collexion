@@ -42,15 +42,16 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={DarkTheme}>
       <Stack screenOptions={{ headerShown: false }}>
-        {user ? (
+        <Stack.Protected guard={!!user}>
           <Stack.Screen name="(tabs)" />
-        ) : (
-          <Stack.Screen name="auth" options={{ headerShown: false }} />
-        )}
-        <Stack.Screen
-          name="modal"
-          options={{ presentation: 'modal', title: 'Modal' }}
-        />
+          <Stack.Screen
+            name="modal"
+            options={{ presentation: 'modal', title: 'Modal' }}
+          />
+        </Stack.Protected>
+        <Stack.Protected guard={!user}>
+          <Stack.Screen name="auth" />
+        </Stack.Protected>
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
