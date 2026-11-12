@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup,
+  // signInWithPopup,
   updateProfile,
-  GoogleAuthProvider,
+  // GoogleAuthProvider,
   sendPasswordResetEmail,
 } from 'firebase/auth';
 import {

@@ -8,7 +8,7 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
 import { Link, router } from 'expo-router';
 import { useCollectionItems } from '@/hooks/use-collection-items';
 // import { useCollectionItems } from '@/hooks/use-collection-items';
@@ -345,15 +345,16 @@ const styles = StyleSheet.create({
     // backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   colImg: {
-    width: '160%',
-    height: 60,
+    width: '100%',
+    height: 55,
+    // gap: 5,
     // marginBottom: 1,
     resizeMode: 'contain',
     // objectFit: 'cover',
   },
   colImgConsoles: {
-    width: '120%',
-    height: 60,
+    width: '110%',
+    height: 55,
     // marginBottom: 1,
     resizeMode: 'contain',
     // objectFit: 'cover',
@@ -396,6 +397,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
+    // gap: 5,
   },
   linkCollections: {
     display: 'flex',
@@ -465,6 +467,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     paddingBottom: 20,
     // paddingVertical: 10,
+    gap: 6,
   },
   collectionContainerConsole: {
     flexDirection: 'row',
