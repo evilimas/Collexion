@@ -8,13 +8,11 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-// import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
+
 import { Link, router } from 'expo-router';
 import { useCollectionItems } from '@/hooks/use-collection-items';
-// import { useCollectionItems } from '@/hooks/use-collection-items';
-// import { recentlyAddedItems } from '@/hooks/use-collection-items';
-
-// import backgroundImage from '@/assets/images/background1.png';
+import type { CollectionItem, ItemParams } from '@/data/newData';
 
 type CollectionSquare = {
   id: string;
@@ -51,27 +49,6 @@ const homeCollections: CollectionSquare[] = [
     tab: '/(tabs)/controllers',
   },
 ];
-
-// const recentlyAdded: CollectionSquare[] = [
-//   {
-//     id: '1',
-//     name: 'Nintendo Switch OLED',
-//     image: '',
-//     tab: '/(tabs)/home',
-//   },
-//   {
-//     id: '2',
-//     name: 'Xbox Elite Controller Series 2',
-//     image: '',
-//     tab: '/(tabs)/home',
-//   },
-//   {
-//     id: '3',
-//     name: 'Playstation 5 Slim',
-//     image: '',
-//     tab: '/(tabs)/home',
-//   },
-// ];
 
 const Collections: FilteredCollectionSquare[] = [
   {
@@ -171,23 +148,36 @@ const ConsoleCollections: FilteredCollectionSquare[] = [
 ];
 
 const App = () => {
-  // const [recentlyAdded, setRecentlyAdded] = useState<CollectionSquare[]>([]);
+  const { items, loading, error } = useCollectionItems();
+  const [search, setSearch] = useState('');
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const items = await recentlyAddedItems();
-  //     setRecentlyAdded(
-  //       items.map((item) => ({
-  //         id: item.id,
-  //         name: item.name,
-  //         image: item.picture,
-  //         tab: '/(tabs)/home',
-  //       })),
-  //     );
-  //   })();
-  // }, []);
+  const getItemParams = (item: CollectionItem, from = '/(tabs)') =>
+    ({
+      id: item.id,
+      type: item.type,
+      name: item.name,
+      otherName: item.otherName,
+      model: item.model,
+      edition: item.edition,
+      color: item.color,
+      condition: item.condition,
+      manufacturer: item.manufacturer,
+      storage: item.storage,
+      canBeUsedOn: item.canBeUsedOn,
+      description: item.description,
+      url: item.url,
+      localImageUri: item.localImageUri,
+      reshell: String(item.reshell),
+      withBox: String(item.withBox),
+      from,
+    }) satisfies ItemParams;
 
-  const { items } = useCollectionItems();
+  const query = search.trim().toLowerCase();
+  const searchResults = items.filter((item) =>
+    [item.name, item.otherName, item.model, item.edition].some((value) =>
+      value?.toLowerCase().includes(query),
+    ),
+  );
 
   const notEmptyConsoleCollections = ConsoleCollections.filter((collection) => {
     const filterValues = collection.filterValue
@@ -220,7 +210,41 @@ const App = () => {
               placeholder="🔍 Search for controllers, consoles, and more..."
               placeholderTextColor="gray"
               style={styles.search}
+              value={search}
+              onChangeText={setSearch}
             />
+            {query !== '' && (
+              <View style={styles.searchResultsContainer}>
+                <Text style={styles.text}>Search results..</Text>
+                {loading ? (
+                  <Text style={{ color: 'white' }}>Loading..</Text>
+                ) : error ? (
+                  <Text style={{ color: 'white' }}>
+                    Error loading search results.
+                  </Text>
+                ) : searchResults.length === 0 ? (
+                  <Text style={{ color: 'white' }}>No items found.</Text>
+                ) : (
+                  searchResults.slice(0, 8).map((item) => (
+                    <Link
+                      key={item.id}
+                      href={{
+                        pathname: '/console-details',
+                        params: getItemParams(item),
+                      }}
+                      asChild
+                    >
+                      <Pressable style={{ paddingVertical: 8 }}>
+                        <Text style={styles.searchResultText}>
+                          {item.otherName || item.name}-{item.model}-
+                          {item.edition}
+                        </Text>
+                      </Pressable>
+                    </Link>
+                  ))
+                )}
+              </View>
+            )}
 
             <Text style={styles.text}>Your Collection</Text>
             <View style={styles.collectionContainer}>
@@ -345,19 +369,14 @@ const styles = StyleSheet.create({
     // backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   colImg: {
-    width: '100%',
+    width: '130%',
     height: 55,
-    // gap: 5,
-    // marginBottom: 1,
     resizeMode: 'contain',
-    // objectFit: 'cover',
   },
   colImgConsoles: {
-    width: '110%',
+    width: '120%',
     height: 55,
-    // marginBottom: 1,
     resizeMode: 'contain',
-    // objectFit: 'cover',
   },
 
   overlay: {
@@ -391,13 +410,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingHorizontal: 30,
+    paddingHorizontal: 24,
     paddingVertical: 19,
     alignItems: 'center',
     borderRadius: 8,
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
-    // gap: 5,
+    width: '31%',
   },
   linkCollections: {
     display: 'flex',
@@ -406,12 +425,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingHorizontal: 30,
+    paddingHorizontal: 24,
     paddingVertical: 19,
     alignItems: 'center',
     borderRadius: 8,
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
+    width: '31%',
   },
   linkConsole: {
     display: 'flex',
@@ -495,5 +515,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     // textAlign: 'center',
     marginTop: 8,
+  },
+
+  // search results container
+  searchResultsContainer: {
+    backgroundColor: 'rgba(15, 15, 15, 0.5)',
+    borderColor: 'gray',
+    borderWidth: 1.5,
+    marginHorizontal: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 15,
+    marginBottom: 10,
+    // paddingBottom: 8,
+  },
+  searchResultText: {
+    color: 'white',
+    backgroundColor: 'rgba(15, 15, 15, 0.5)',
+    borderColor: 'gray',
+    borderBottomWidth: 0.6,
   },
 });
