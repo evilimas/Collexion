@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useState } from 'react';
 import { getAuth, updateProfile } from 'firebase/auth';
+import { router } from 'expo-router';
 
 function EditProfile() {
   const user = getAuth().currentUser;
@@ -39,6 +40,16 @@ function EditProfile() {
       style={styles.image}
     >
       <View style={styles.overlay}>
+        <Pressable
+          onPress={() => {
+            router.replace('/profile');
+          }}
+          accessibilityRole="button"
+          accessibilityLabel="Back to profile"
+          style={styles.back}
+        >
+          <Text style={styles.backText}>‹ Profile</Text>
+        </Pressable>
         <Text style={styles.eyebrow}>YOUR ACCOUNT</Text>
         <Text style={styles.header}>Edit Profile</Text>
         <View style={styles.profileCard}>
@@ -132,7 +143,8 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingTop: 40,
+    paddingTop: 70,
+    // marginTop: 40,
     alignItems: 'center',
   },
   input: {
@@ -160,4 +172,13 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: { opacity: 0.5 },
   buttonText: { color: '#0DDCFD', fontWeight: '700', fontSize: 15 },
+
+  // Back button styles
+  back: {
+    alignSelf: 'flex-start',
+    paddingVertical: 8,
+    marginBottom: 22,
+    marginLeft: 22,
+  },
+  backText: { color: '#0DDCFD', fontSize: 16, fontWeight: '600' },
 });

@@ -22,6 +22,26 @@ export type CollectionItem = {
   canBeUsedOn?: string; // Only for controllers
 };
 
+export interface ItemParams {
+  id: string;
+  type: string;
+  name: string;
+  otherName?: string;
+  model?: string;
+  edition?: string;
+  color?: string;
+  condition?: string;
+  manufacturer?: string;
+  storage?: string;
+  canBeUsedOn?: string;
+  description?: string;
+  url?: string;
+  localImageUri?: string;
+  reshell?: string;
+  withBox?: string;
+  from: string;
+}
+
 // export const collection: CollectionItem[] = [
 //   {
 //     id: '1',

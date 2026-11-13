@@ -1294,7 +1294,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 8,
     alignItems: 'center',
-    width: '33%',
+    width: '32%',
     borderWidth: 1,
     borderColor: 'transparent',
   },
@@ -1302,13 +1302,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#0DDCFD',
     borderColor: '#48ffff',
     borderWidth: 1,
-    // borderVerticalWidth: 1,
-    // borderHorizontalWidth: 1,
   },
   conditionTypeOptionText: {
     color: 'white',
     fontFamily: 'DMSans_700Bold',
-    fontSize: 16,
+    fontSize: 15,
   },
   conditionTypeOptionTextSelected: {
     color: 'black',

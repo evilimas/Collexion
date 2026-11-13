@@ -58,6 +58,7 @@ const Console = ({
       ) : null}
       <View style={styles.content}>
         <Text style={styles.name}>{otherName ?? name}</Text>
+        {edition ? <Text style={styles.meta}>{edition}</Text> : null}
         {model ? (
           <Text
             style={{
@@ -69,7 +70,6 @@ const Console = ({
             Model: {model}
           </Text>
         ) : null}
-        {edition ? <Text style={styles.meta}>{edition}</Text> : null}
         <Text style={styles.meta}>Color: {color}</Text>
         <Text style={styles.meta}>Condition: {condition}</Text>
       </View>
@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.15)',
-    //     padding: 12,
     display: 'flex',
     marginBottom: 12,
     flexDirection: 'row',
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
   image: {
     width: 125,
     height: 115,
-    marginRight: 22,
+    marginRight: 10,
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
     resizeMode: 'cover',
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
   },
   meta: {
     color: 'rgba(255, 255, 255, 0.85)',
-    fontSize: 13,
+    fontSize: 12.5,
     marginTop: 1,
   },
   text: {
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
   placeholder: {
     width: 125,
     height: 115,
-    marginRight: 22,
+    marginRight: 10,
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
     resizeMode: 'contain',

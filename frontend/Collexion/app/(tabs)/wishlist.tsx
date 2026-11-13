@@ -22,6 +22,7 @@ import {
   useWishlistItems,
   deleteWishlistItem,
 } from '@/hooks/use-wishlist-items';
+import { router } from 'expo-router';
 
 export default function WishlistScreen() {
   const { wishlistItems } = useWishlistItems();
@@ -56,6 +57,16 @@ export default function WishlistScreen() {
     >
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         <View style={styles.container}>
+          <Pressable
+            onPress={() => {
+              router.replace('/profile');
+            }}
+            accessibilityRole="button"
+            accessibilityLabel="Back to profile"
+            style={styles.back}
+          >
+            <Text style={styles.backText}>‹ Profile</Text>
+          </Pressable>
           <View style={styles.header}>
             <View>
               <Text style={styles.eyebrow}>YOUR COLLECTION</Text>
@@ -353,4 +364,8 @@ const styles = StyleSheet.create({
     color: '#FF4D4D',
     fontSize: 16,
   },
+
+  // Back button styles
+  back: { alignSelf: 'flex-start', paddingVertical: 8, marginBottom: 22 },
+  backText: { color: '#0DDCFD', fontSize: 16, fontWeight: '600' },
 });

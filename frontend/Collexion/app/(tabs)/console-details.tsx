@@ -30,7 +30,6 @@ const ConsoleDetail = () => {
   const condition = params.condition as string;
   const manufacturer = params.manufacturer as string;
   const storage = params.storage as string;
-  // const forConsole = params.forConsole as string;
   const description = params.description as string;
   const url = params.url as string;
   const routeImageUri = Array.isArray(params.localImageUri)

@@ -6,11 +6,13 @@ import {
   ScrollView,
   Pressable,
   Image,
+  Alert,
 } from 'react-native';
+import { useState, useCallback } from 'react';
 import { useCollectionItems } from '@/hooks/use-collection-items';
-import { signOut } from 'firebase/auth';
+import { sendPasswordResetEmail, signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { router, useRouter } from 'expo-router';
+import { router, useRouter, useFocusEffect } from 'expo-router';
 
 const Logout = () => {
   const router = useRouter();
@@ -32,9 +34,49 @@ const Logout = () => {
 
 const Profile = () => {
   const user = auth.currentUser;
+  const email = user?.email ?? '';
+  const [error, setError] = useState<string | null>(null);
   const { items } = useCollectionItems();
-  const userName = user?.displayName || 'UserName';
   const userEmail = user?.email || 'user@example.com';
+  const [userName, setUserName] = useState(auth.currentUser?.displayName || 'UserName');
+
+  const handleForgotPassword = async (email: string | undefined) => {
+    Alert.alert(
+      'Reset Password',
+      'Are you sure you want to reset your password?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'OK',
+          onPress: async () => {
+            if (!email) {
+              setError('Enter your email first.');
+              return;
+            }
+            try {
+              await sendPasswordResetEmail(auth, email);
+              setError(null);
+              Alert.alert('Password reset email sent.');
+            } catch (error) {
+              setError(
+                error instanceof Error
+                  ? error.message
+                  : 'Failed to send password reset email.',
+              );
+            }
+          },
+        },
+      ],
+    );
+    return;
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      setUserName(auth.currentUser?.displayName || 'UserName');
+    }, []),
+  );
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -88,12 +130,18 @@ const Profile = () => {
                 <Text style={styles.linkText}>Edit Profile</Text>
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
-              <Pressable style={styles.link}>
+              <Pressable
+                style={styles.link}
+                onPress={() => handleForgotPassword(email)}
+              >
                 <Text style={styles.linkText}>Change Password</Text>
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
 
-              <Pressable style={styles.link}>
+              <Pressable
+                style={styles.link}
+                onPress={() => router.push('/feedback')}
+              >
                 <Text style={styles.linkText}>Send Feedback</Text>
                 <Text style={styles.linkText}>&gt;</Text>
               </Pressable>
