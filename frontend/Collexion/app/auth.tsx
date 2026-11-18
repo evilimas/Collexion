@@ -379,6 +379,7 @@ const styles = StyleSheet.create({
   },
 
   // google button styles
+
   googleButton: {
     flexDirection: 'row',
     alignItems: 'center',
