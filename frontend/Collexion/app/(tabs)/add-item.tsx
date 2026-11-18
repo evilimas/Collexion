@@ -89,6 +89,8 @@ const AddItem = () => {
     'Other',
   ];
 
+  const currencyOptions: string[] = ['USD', 'EUR', 'GBP', 'NOK'];
+
   // const radioButtons: RadioButtonProps[] = useMemo(
   //   () => [
   //     {
@@ -423,10 +425,15 @@ const AddItem = () => {
     useState<boolean>(false);
   const [isManufacturerSelectOpen, setIsManufacturerSelectOpen] =
     useState<boolean>(false);
+  const [isCurrencyInputVisible, setIsCurrencyInputVisible] =
+    useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [canBeUsedOn, setCanBeUsedOn] = useState<string>('');
   const [localImageUri, setLocalImageUri] = useState<string | null>(null);
+  const [price, setPrice] = useState<string>('');
+  const [estimatedValue, setEstimatedValue] = useState<string>('');
+  const [currency, setCurrency] = useState<string>('');
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -519,6 +526,9 @@ const AddItem = () => {
         withBox: withBox === '1',
         createdAt: serverTimestamp(),
         canBeUsedOn: canBeUsedOn.trim(),
+        price: price ? parseFloat(price) : undefined,
+        estimatedValue: estimatedValue ? parseFloat(estimatedValue) : undefined,
+        currency: currency || undefined,
       });
       Alert.alert('Saved', `${name} was added to your collection.`);
     } catch (error) {
@@ -554,6 +564,9 @@ const AddItem = () => {
     setCanBeUsedOn(''); // Reset can be used on
     setWithBox('2'); // Reset with box to default
     setLocalImageUri(null); // Reset local image URI
+    setPrice(''); // Reset price
+    setEstimatedValue(''); // Reset estimated value
+    setCurrency(''); // Reset currency
   };
 
   const picture = getItemPicture(
@@ -1053,6 +1066,56 @@ const AddItem = () => {
                   }}
                 /> */}
               </View>
+              <Text style={styles.label}>Price</Text>
+              <View style={styles.priceContainer}>
+                <TextInput
+                  placeholder="Price"
+                  placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                  style={styles.inputStylePrice}
+                  keyboardType="numeric"
+                  value={price}
+                  onChangeText={setPrice}
+                />
+
+                <Pressable
+                  style={styles.dropdownButtonStylePrice}
+                  onPress={() => setIsCurrencyInputVisible(true)}
+                >
+                  <Text style={styles.dropdownButtonTxtStyle}>
+                    {currency || 'Select Currency'}
+                  </Text>
+                </Pressable>
+                <Modal
+                  visible={isCurrencyInputVisible}
+                  transparent
+                  animationType="fade"
+                  onRequestClose={() => setIsCurrencyInputVisible(false)}
+                >
+                  <Pressable
+                    style={styles.modalBackdrop}
+                    onPress={() => setIsCurrencyInputVisible(false)}
+                  >
+                    <Pressable style={styles.dropdownMenuStyle}>
+                      <ScrollView>
+                        {currencyOptions.map((item) => (
+                          <Pressable
+                            key={item}
+                            style={styles.dropdownItemStyle}
+                            onPress={() => {
+                              setCurrency(item);
+                              setIsCurrencyInputVisible(false);
+                            }}
+                          >
+                            <Text style={styles.dropdownItemTxtStyle}>
+                              {item}
+                            </Text>
+                          </Pressable>
+                        ))}
+                      </ScrollView>
+                    </Pressable>
+                  </Pressable>
+                </Modal>
+              </View>
             </View>
           </View>
           <Text style={styles.labelBottom}>
@@ -1310,5 +1373,39 @@ const styles = StyleSheet.create({
   },
   conditionTypeOptionTextSelected: {
     color: 'black',
+  },
+
+  // price input container style
+  priceContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // alignItems: 'center',
+    // width: '100%',
+  },
+
+  dropdownButtonStylePrice: {
+    width: '49%',
+    height: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 8,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginBottom: 8,
+  },
+
+  inputStylePrice: {
+    width: '49%',
+    height: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 8,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 1,
+    paddingHorizontal: 20,
+    marginBottom: 8,
+    color: 'white',
   },
 });

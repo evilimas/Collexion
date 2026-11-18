@@ -35,7 +35,13 @@ const Controllers = () => {
     name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const selectedItems = selectedName ? (grouped[selectedName] ?? []) : [];
+  const selectedItems = selectedName
+    ? (grouped[selectedName] ?? []).filter((item) =>
+        [item.name, item.otherName, item.model, item.edition, item.color].some(
+          (value) => value?.toLowerCase().includes(search.trim().toLowerCase()),
+        ),
+      )
+    : [];
 
   return (
     <View style={styles.container}>
@@ -62,7 +68,10 @@ const Controllers = () => {
           {selectedName ? (
             <Pressable
               style={styles.backText}
-              onPress={() => setSelectedName(null)}
+              onPress={() => {
+                setSelectedName(null);
+                setSearch('');
+              }}
             >
               <MaterialIcons
                 name="arrow-back"
@@ -138,7 +147,10 @@ const Controllers = () => {
                     name={name}
                     count={groupItems.length}
                     picture={groupItems[0].picture}
-                    onPress={() => setSelectedName(name)}
+                    onPress={() => {
+                      setSelectedName(name);
+                      setSearch('');
+                    }}
                   />
                 ))}
           </ScrollView>

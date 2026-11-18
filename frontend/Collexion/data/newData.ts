@@ -20,6 +20,9 @@ export type CollectionItem = {
   localImageUri?: string; // Local image URI for images picked from the phone
   createdAt?: number; // Timestamp for when the item was added
   canBeUsedOn?: string; // Only for controllers
+  price?: number;
+  estimatedValue?: number; // Optional estimated value of the item
+  currency?: string; // Optional currency for the price and estimated value
 };
 
 export interface ItemParams {

@@ -70,6 +70,9 @@ const EditItemForm = () => {
   const [reshell, setReshell] = useState(params.reshell === 'true');
   const [withBox, setWithBox] = useState(params.withBox === 'true');
 
+  const [price, setPrice] = useState((params.price as string) || '');
+  const [currency, setCurrency] = useState((params.currency as string) || '');
+
   const saveChanges = async () => {
     if (!name.trim() || !color.trim()) {
       Alert.alert('Missing information', 'Name and color are required.');
@@ -138,8 +141,10 @@ const EditItemForm = () => {
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>Edit Item</Text>
 
+        <Text style={styles.inputLabel}>Name</Text>
         <TextInput
           style={styles.input}
+          accessibilityLabel="Name"
           value={name}
           onChangeText={setName}
           placeholder="Name"
@@ -147,69 +152,85 @@ const EditItemForm = () => {
           editable={false}
         />
         {otherName && (
-          <TextInput
-            style={styles.input}
-            value={otherName}
-            onChangeText={setOtherName}
-            placeholder="Other Name"
-            placeholderTextColor="#aaa"
-          />
+          <>
+            <Text style={styles.inputLabel}>Other Name</Text>
+            <TextInput
+              style={styles.input}
+              accessibilityLabel="Other Name"
+              value={otherName}
+              onChangeText={setOtherName}
+              placeholder="Other Name"
+              placeholderTextColor="#aaa"
+            />
+          </>
         )}
+        <Text style={styles.inputLabel}>Model</Text>
         <TextInput
           style={styles.input}
+          accessibilityLabel="Model"
           value={model}
           onChangeText={setModel}
           placeholder="Model"
           placeholderTextColor="#aaa"
         />
+        <Text style={styles.inputLabel}>Color</Text>
         <TextInput
           style={styles.input}
+          accessibilityLabel="Color"
           value={color}
           onChangeText={setColor}
           placeholder="Color"
           placeholderTextColor="#aaa"
         />
+
+        <Text style={styles.inputLabel}>Edition</Text>
         <TextInput
           style={styles.input}
-          value={condition}
-          onChangeText={setCondition}
-          placeholder="Condition"
-          placeholderTextColor="#aaa"
-        />
-        <TextInput
-          style={styles.input}
+          accessibilityLabel="Edition"
           value={edition}
           onChangeText={setEdition}
           placeholder="Edition"
           placeholderTextColor="#aaa"
         />
+        <Text style={styles.inputLabel}>Manufacturer</Text>
         <TextInput
           style={styles.input}
+          accessibilityLabel="Manufacturer"
           value={manufacturer}
           onChangeText={setManufacturer}
           placeholder="Manufacturer"
           placeholderTextColor="#aaa"
         />
         {params.type !== 'Controller' && (
-          <TextInput
-            style={styles.input}
-            value={storage}
-            onChangeText={setStorage}
-            placeholder="Storage"
-            placeholderTextColor="#aaa"
-          />
+          <>
+            <Text style={styles.inputLabel}>Storage</Text>
+            <TextInput
+              style={styles.input}
+              accessibilityLabel="Storage"
+              value={storage}
+              onChangeText={setStorage}
+              placeholder="Storage"
+              placeholderTextColor="#aaa"
+            />
+          </>
         )}
         {params.type === 'Controller' && (
-          <TextInput
-            style={styles.input}
-            value={canBeUsedOn}
-            onChangeText={setCanBeUsedOn}
-            placeholder="Can be used on"
-            placeholderTextColor="#aaa"
-          />
+          <>
+            <Text style={styles.inputLabel}>Can be used on</Text>
+            <TextInput
+              style={styles.input}
+              accessibilityLabel="Can be used on"
+              value={canBeUsedOn}
+              onChangeText={setCanBeUsedOn}
+              placeholder="Can be used on"
+              placeholderTextColor="#aaa"
+            />
+          </>
         )}
+        <Text style={styles.inputLabel}>Image URL</Text>
         <TextInput
           style={styles.input}
+          accessibilityLabel="Image URL"
           value={url}
           onChangeText={setUrl}
           placeholder="Image URL"
@@ -236,13 +257,49 @@ const EditItemForm = () => {
           />
         )}
 
+        <Text style={styles.inputLabel}>Description</Text>
         <TextInput
           style={[styles.input, styles.description]}
+          accessibilityLabel="Description"
           value={description}
           onChangeText={setDescription}
           placeholder="Description"
           placeholderTextColor="#aaa"
           multiline
+        />
+        <View style={styles.priceContainer}>
+          <View style={styles.priceField}>
+            <Text style={styles.inputLabel}>Price</Text>
+            <TextInput
+              style={styles.inputStylePrice}
+              accessibilityLabel="Price"
+              value={price}
+              onChangeText={setPrice}
+              placeholder="Price"
+              placeholderTextColor="#aaa"
+              keyboardType="numeric"
+            />
+          </View>
+          <View style={styles.priceField}>
+            <Text style={styles.inputLabel}>Currency</Text>
+            <TextInput
+              style={styles.inputStylePrice}
+              accessibilityLabel="Currency"
+              value={currency}
+              onChangeText={setCurrency}
+              placeholder="Currency"
+              placeholderTextColor="#aaa"
+            />
+          </View>
+        </View>
+        <Text style={styles.inputLabel}>Condition</Text>
+        <TextInput
+          style={styles.input}
+          accessibilityLabel="Condition"
+          value={condition}
+          onChangeText={setCondition}
+          placeholder="Condition"
+          placeholderTextColor="#aaa"
         />
 
         <BooleanField label="Reshelled" value={reshell} onChange={setReshell} />
@@ -330,6 +387,12 @@ const styles = StyleSheet.create({
     marginVertical: 6,
   },
   label: { color: 'white', fontSize: 16, fontWeight: '600' },
+  inputLabel: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
   options: { flexDirection: 'row', gap: 8 },
   option: {
     paddingHorizontal: 16,
@@ -382,6 +445,25 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontFamily: 'DMSans_700Bold',
+    color: 'white',
+  },
+
+  // price input container style
+  priceContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  priceField: { width: '49%' },
+  inputStylePrice: {
+    width: '100%',
+    height: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 8,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 1,
+    paddingHorizontal: 20,
+    marginBottom: 8,
     color: 'white',
   },
 });

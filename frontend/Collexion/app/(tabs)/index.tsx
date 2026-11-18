@@ -277,13 +277,20 @@ const App = () => {
                 </>
               )}
               {recentlyAdded.slice(0, 3).map((item) => (
-                <View key={item.id}>
+                <Link
+                  key={item.id}
+                  href={{
+                    pathname: '/console-details',
+                    params: getItemParams(item),
+                  }}
+                  asChild
+                >
                   <Pressable style={styles.recentLink}>
                     <Text style={{ color: 'white', textAlign: 'center' }}>
                       {item.otherName ? item.otherName : item.name}-{item.model}
                     </Text>
                   </Pressable>
-                </View>
+                </Link>
               ))}
             </View>
             <Text style={styles.text}>Collections</Text>
@@ -365,7 +372,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-
     // backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   colImg: {
@@ -466,6 +472,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   search: {
+    position: 'relative',
     color: 'white',
     fontSize: 15,
     backgroundColor: 'rgba(15, 15, 15, 0.5)',
@@ -519,15 +526,19 @@ const styles = StyleSheet.create({
 
   // search results container
   searchResultsContainer: {
-    backgroundColor: 'rgba(15, 15, 15, 0.5)',
+    position: 'absolute',
+    top: 160,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(15, 15, 15, 0.97)',
     borderColor: 'gray',
     borderWidth: 1.5,
-    marginHorizontal: 5,
-    paddingHorizontal: 12,
+    marginHorizontal: 13,
+    paddingHorizontal: 10,
     paddingVertical: 8,
     borderRadius: 15,
     marginBottom: 10,
-    // paddingBottom: 8,
+    zIndex: 1,
   },
   searchResultText: {
     color: 'white',

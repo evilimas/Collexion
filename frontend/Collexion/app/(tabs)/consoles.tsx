@@ -37,7 +37,13 @@ const Consoles = () => {
     name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const selectedItems = selectedName ? (grouped[selectedName] ?? []) : [];
+  const selectedItems = selectedName
+    ? (grouped[selectedName] ?? []).filter((item) =>
+        [item.name, item.otherName, item.model, item.edition, item.color].some(
+          (value) => value?.toLowerCase().includes(search.trim().toLowerCase()),
+        ),
+      )
+    : [];
 
   return (
     <View style={styles.container}>
@@ -63,7 +69,10 @@ const Consoles = () => {
           {selectedName ? (
             <Pressable
               style={styles.backText}
-              onPress={() => setSelectedName(null)}
+              onPress={() => {
+                setSelectedName(null);
+                setSearch('');
+              }}
             >
               <MaterialIcons
                 name="arrow-back"
@@ -137,7 +146,10 @@ const Consoles = () => {
                     name={name}
                     count={items.length}
                     picture={items[0].picture}
-                    onPress={() => setSelectedName(name)}
+                    onPress={() => {
+                      setSelectedName(name);
+                      setSearch('');
+                    }}
                   />
                 ))}
           </ScrollView>

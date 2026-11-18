@@ -54,6 +54,9 @@ export async function recentlyAddedItems() {
       url: data.url || undefined,
       localImageUri: data.localImageUri || undefined,
       picture: getItemPicture(data.type, data.name),
+      price: data.price,
+      estimatedValue: data.estimatedValue,
+      currency: data.currency || undefined,
       createdAt: data.createdAt?.toMillis?.() ?? 0,
     };
   });
@@ -93,6 +96,9 @@ export async function collectionsByConsole(consoleName: string) {
       reshell: data.reshell,
       url: data.url || undefined,
       localImageUri: data.localImageUri || undefined,
+      price: data.price,
+      estimatedValue: data.estimatedValue,
+      currency: data.currency || undefined,
       picture: getItemPicture(data.type, data.name),
       createdAt: data.createdAt?.toMillis?.() ?? 0,
     };
@@ -216,6 +222,9 @@ export function useCollectionItems() {
               reshell: data.reshell,
               url: data.url || undefined,
               localImageUri: data.localImageUri || undefined,
+              price: data.price,
+              estimatedValue: data.estimatedValue,
+              currency: data.currency || undefined,
               picture: getItemPicture(data.type, data.name),
               createdAt: data.createdAt?.toMillis?.() ?? 0,
             };
