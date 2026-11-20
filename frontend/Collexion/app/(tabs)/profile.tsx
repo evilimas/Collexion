@@ -38,7 +38,9 @@ const Profile = () => {
   const [error, setError] = useState<string | null>(null);
   const { items } = useCollectionItems();
   const userEmail = user?.email || 'user@example.com';
-  const [userName, setUserName] = useState(auth.currentUser?.displayName || 'UserName');
+  const [userName, setUserName] = useState(
+    auth.currentUser?.displayName || 'UserName',
+  );
 
   const handleForgotPassword = async (email: string | undefined) => {
     Alert.alert(
@@ -249,8 +251,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
   },
-  // headingLeft: {},
-  // headingRight: {},
+  headingLeft: {},
+  headingRight: {},
   logout: {
     color: 'rgb(247, 0, 0)',
     fontSize: 18,
