@@ -249,8 +249,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
   },
-  headingLeft: {},
-  headingRight: {},
+  // headingLeft: {},
+  // headingRight: {},
   logout: {
     color: 'rgb(247, 0, 0)',
     fontSize: 18,
