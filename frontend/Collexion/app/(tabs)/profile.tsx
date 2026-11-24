@@ -42,6 +42,8 @@ const Profile = () => {
     auth.currentUser?.displayName || 'UserName',
   );
 
+  const totalWorth = items.reduce((sum, item) => sum + (item.price ?? 0), 0);
+
   const handleForgotPassword = async (email: string | undefined) => {
     Alert.alert(
       'Reset Password',
@@ -114,6 +116,9 @@ const Profile = () => {
                 </Text>
                 <Text style={styles.textHeaderemail}>
                   {items.length} Items in collection
+                </Text>
+                <Text style={styles.textHeaderemail}>
+                  Total Worth: ${totalWorth}
                 </Text>
               </View>
             </View>
