@@ -1326,7 +1326,6 @@ const styles = StyleSheet.create({
     // borderColor: 'rgba(255, 255, 255, 0.5)',
     // marginHorizontal: 5,
     alignItems: 'center',
-    // width: '100%',
   },
   radioTypeOptionSelected: {
     backgroundColor: '#0DDCFD',
@@ -1347,7 +1346,6 @@ const styles = StyleSheet.create({
   conditionTypeOptions: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    // flexDirection: '',
     justifyContent: 'space-between',
     marginBottom: 0,
     borderRadius: 8,
@@ -1379,8 +1377,6 @@ const styles = StyleSheet.create({
   priceContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // alignItems: 'center',
-    // width: '100%',
   },
 
   dropdownButtonStylePrice: {
