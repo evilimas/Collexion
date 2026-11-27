@@ -1290,11 +1290,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     borderRadius: 15,
-    // borderWidth: 1,
-    // borderColor: 'rgba(255, 255, 255, 0.5)',
-    // marginHorizontal: 5,
     alignItems: 'center',
-    // width: '100%',
   },
   typeOptionSelected: {
     backgroundColor: '#0DDCFD',
