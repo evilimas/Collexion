@@ -1320,7 +1320,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     // borderWidth: 1,
     // borderColor: 'rgba(255, 255, 255, 0.5)',
-    // marginHorizontal: 5,
     alignItems: 'center',
   },
   radioTypeOptionSelected: {
